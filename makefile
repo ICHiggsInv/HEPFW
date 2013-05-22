@@ -1,6 +1,3 @@
-# name of the library
-LIBNAME = ICHiggsTauTauCore
-
 #Necessary to use shell built-in commands
 SHELL=bash
 
@@ -44,27 +41,39 @@ LIBS += $(USERLIBS)
 BASEDIR = $(shell pwd)
 LIBDIR = $(BASEDIR)/lib
 EXEDIR = $(BASEDIR)/bin
-SRCDIR = $(BASEDIR)/src
 OBJDIR = $(BASEDIR)/obj
 TESTDIR = $(BASEDIR)/test
 DOCDIR= $(BASEDIR)/docs
-OBJ_EXT=o
-TEST_EXT=cpp
 
 # Build a list of srcs and bins to build
-PKG = $(wildcard $(CMS_PATH)/ICTools/*/)
+
+OBJ_EXT  = o
+SRC_EXT = cxx
+
+SRCDIR  = $(CMSSW_BASE)/src/ICTools
+
+DIRS  = $(wildcard $(CMSSW_BASE)/src/ICTools/*/src/)
+PKG   = $(subst /src/,,$(subst $(SRCDIR)/,,$(DIRS)))
+SRCS  = $(wildcard $(SRCDIR)/*/src/*.cxx)
+EXES  = $(wildcard $(SRCDIR)/*/main/*.cxx)
+
+OBJS=$(subst cxx,$(OBJ_EXT),$(SRCS))
+BINS=$(subst .$(SRC_EXT),,$(EXES))
 
 
-SRCS=$(wildcard $(BASEDIR)//src/*.cxx)
-EXES=$(wildcard $(BASEDIR)//main/*.cxx)
-OBJS=$(subst $(SRCDIR), $(OBJDIR),$(subst cc,$(OBJ_EXT),$(SRCS)))
-BINS=$(subst $(TESTDIR), $(EXEDIR),$(subst .$(TEST_EXT),,$(EXES)))
+OBJS = $(SRCDIR)$(subst src/,obj/,$(subst $(SRCDIR),,$(subst cxx,$(OBJ_EXT),$(SRCS))))
+BINS = $(SRCDIR)$(subst main/,bin/,$(subst $(SRCDIR),,$(subst .$(SRC_EXT),,$(EXES))))
 
 test:
-	echo $(PKG)
+	@echo "SRCDIR: "$(SRCDIR)
+	@echo "PKG   : "$(PKG)
+	@echo "SRCS  : "$(SRCS)
+	@echo "BINS  : "$(EXES)
+	@echo "OBJS  : "$(OBJS)
+	@echo "BINS  : "$(BINS)
 
-
-all:  lib $(BINS)
+# all:  lib $(BINS)
+all:  lib $(OBJS)
 
 docs: all
 	doxygen Doxyfile
@@ -72,13 +81,17 @@ docs: all
 $(EXEDIR)/%: $(TESTDIR)/%.cpp $(LIBDIR)/lib$(LIBNAME).so $(BASEDIR)/interface/*.h
 	$(CXX) -o $@ $(CXXFLAGS) $< $(LIBS) -L$(LIBDIR) -l$(LIBNAME)
 
-$(OBJDIR)/%.$(OBJ_EXT): $(SRCDIR)/%.cc $(BASEDIR)/interface/%.h
+$(SRCDIR)/$(PKG)/obj/%.$(OBJ_EXT): $(SRCDIR)/$(PKG)/src/%.$(SRC_EXT) $(SRCDIR)/$(PKG)/interface/%.h
+	@echo "----->Compiling object: " $@
 	$(CXX) $(CXXFLAGS) -fPIC -c $<  -o $@
+	@echo ""
 
-$(LIBDIR)/lib$(LIBNAME).so: $(OBJS)
-	$(LD) $(LDFLAGS) -o $(LIBDIR)/lib$(LIBNAME).so $(OBJS) $(LIBS)
+$(SRCDIR)/$(PKG)/obj/lib%.so: $(filter %,$(OBJS))
+	@echo "----->Producing shared lib: " $@
+	$(LD) $(LDFLAGS) -o $@ $<
+	@echo ""
 	
-lib: $(LIBDIR)/lib$(LIBNAME).so
+lib: $(SRCDIR)/$(PKG)/obj/lib$(PKG).so
 
 # info:
 # 	@echo "LIBS: " $(LIBS)
@@ -88,4 +101,4 @@ lib: $(LIBDIR)/lib$(LIBNAME).so
 # 	@echo "Executables:  " $(TARGETS)
 
 clean:
-	rm -rf $(OBJS) $(LIBDIR)/lib$(LIBNAME).so $(BINS)
+	rm -rf $(OBJS) $(SRCDIR)/$(PKG)/obj/lib$(PKG).so $(BINS)
