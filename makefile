@@ -1,5 +1,9 @@
 #Necessary to use shell built-in commands
-SHELL=bash
+SHELL = bash
+CXX   = g++
+LD    = g++
+
+.PHONY: clean
 
 # Define include paths
 USERINCLUDES += -I$(ROOTSYS)/include/
@@ -17,88 +21,79 @@ USERLIBS += -L$(CMSSW_RELEASE_BASE)/lib/$(SCRAM_ARCH) -lFWCoreFWLite -lPhysicsTo
 
 #CXXFLAGS = -Wall -W -Wno-unused-function -Wno-parentheses -Wno-char-subscripts -Wno-unused-parameter -O2 
 CXXFLAGS = -Wall -W -O2 -std=c++0x -Wno-deprecated-declarations -Wno-unused-parameter
-LDFLAGS = -shared -Wall -W 
-
-# If possible we'll use the clang compiler, it's faster and gives more helpful error messages
-# If it's not available, then fallback to gcc.
-CXX=g++
-LD=g++
-
-# Update 17/2/2013:  Remove support for compiling with clang as there are issues with
-# C++11
-
-# CLANGPATH := $(shell type -p clang++)
-# ifeq ($(CLANGPATH),)
-# $(warning clang++ not found, reverting to g++!)
-# CXX=g++
-# LD=g++
-# endif
+LDFLAGS  = -shared -Wall -W 
 
 CXXFLAGS += $(USERINCLUDES)
-LIBS += $(USERLIBS)
+LIBS     += $(USERLIBS)
 
 # A list of directories
 BASEDIR = $(shell pwd)
-LIBDIR = $(BASEDIR)/lib
-EXEDIR = $(BASEDIR)/bin
-OBJDIR = $(BASEDIR)/obj
+EXEDIR  = $(BASEDIR)/bin
+OBJDIR  = $(BASEDIR)/obj
 TESTDIR = $(BASEDIR)/test
-DOCDIR= $(BASEDIR)/docs
+DOCDIR  = $(BASEDIR)/docs
 
 # Build a list of srcs and bins to build
 
-OBJ_EXT  = o
+# File extensions
+OBJ_EXT = o
 SRC_EXT = cxx
 
-SRCDIR  = $(CMSSW_BASE)/src/ICTools
+SRCDIR = $(CMSSW_BASE)/src/ICTools
+LIBDIR = $(SRCDIR)/lib
 
-DIRS  = $(wildcard $(CMSSW_BASE)/src/ICTools/*/src/)
-PKG   = $(subst /src/,,$(subst $(SRCDIR)/,,$(DIRS)))
-SRCS  = $(wildcard $(SRCDIR)/*/src/*.cxx)
-EXES  = $(wildcard $(SRCDIR)/*/main/*.cxx)
+PKGS = $(subst /src/,,$(wildcard */src/))
+SRCS = $(wildcard */src/*.cxx)
+EXES = $(wildcard */main/*.cxx)
 
-OBJS=$(subst cxx,$(OBJ_EXT),$(SRCS))
-BINS=$(subst .$(SRC_EXT),,$(EXES))
+OBJS = $(subst cxx,$(OBJ_EXT),$(SRCS))
+LIBS = lib/lib$(PKGS).so
 
+OBJS = $(subst src/,obj/,$(subst $(SRCDIR),,$(subst $(SRC_EXT),$(OBJ_EXT),$(SRCS))))
+BINS = $(subst main/,bin/,$(subst $(PKGS)/,,$(subst .$(SRC_EXT),,$(EXES))))
 
-OBJS = $(SRCDIR)$(subst src/,obj/,$(subst $(SRCDIR),,$(subst cxx,$(OBJ_EXT),$(SRCS))))
-BINS = $(SRCDIR)$(subst main/,bin/,$(subst $(SRCDIR),,$(subst .$(SRC_EXT),,$(EXES))))
+# Making directories
+$(shell mkdir -p lib)
+$(shell mkdir -p bin)
+$(shell mkdir -p $(PKGS)/obj)
 
 test:
 	@echo "SRCDIR: "$(SRCDIR)
-	@echo "PKG   : "$(PKG)
+	@echo "PKGS  : "$(PKGS)
 	@echo "SRCS  : "$(SRCS)
-	@echo "BINS  : "$(EXES)
+	@echo "EXES  : "$(EXES)
 	@echo "OBJS  : "$(OBJS)
 	@echo "BINS  : "$(BINS)
-
+	@echo "LIBS  : "$(LIBS)
+	
 # all:  lib $(BINS)
-all:  lib $(OBJS)
+all: $(LIBS) $(BINS)
 
 docs: all
 	doxygen Doxyfile
-	
-$(EXEDIR)/%: $(TESTDIR)/%.cpp $(LIBDIR)/lib$(LIBNAME).so $(BASEDIR)/interface/*.h
-	$(CXX) -o $@ $(CXXFLAGS) $< $(LIBS) -L$(LIBDIR) -l$(LIBNAME)
 
-$(SRCDIR)/$(PKG)/obj/%.$(OBJ_EXT): $(SRCDIR)/$(PKG)/src/%.$(SRC_EXT) $(SRCDIR)/$(PKG)/interface/%.h
+$(PKGS)/obj/%.$(OBJ_EXT): $(PKGS)/src/%.$(SRC_EXT) $(PKGS)/interface/%.h
 	@echo "----->Compiling object: " $@
+	@echo "----->Depends on: " $^
 	$(CXX) $(CXXFLAGS) -fPIC -c $<  -o $@
 	@echo ""
 
-$(SRCDIR)/$(PKG)/obj/lib%.so: $(filter %,$(OBJS))
+lib/lib%.so: $(filter %,$(OBJS))
 	@echo "----->Producing shared lib: " $@
-	$(LD) $(LDFLAGS) -o $@ $<
+	@echo "----->Depends on: " $^
+	$(LD) $(LDFLAGS) -o $@ $(filter %,$(OBJS)) 
 	@echo ""
-	
-lib: $(SRCDIR)/$(PKG)/obj/lib$(PKG).so
 
-# info:
-# 	@echo "LIBS: " $(LIBS)
-# 	@echo "CXXFLAGS: " $(CXXFLAGS)
-# 	@echo "Source files: " $(SRCS) 
-# 	@echo "Object files: " $(OBJS)
-# 	@echo "Executables:  " $(TARGETS)
+bin/%: $(PKGS)/main/%.cxx lib/lib$(PKGS).so $(PKGS)/interface/*.h
+	@echo "----->Compiling executable: " $@
+	@echo "----->Depends on: " $^
+	$(CXX) -o $@ $(CXXFLAGS) $< $(LIBS) -L$(LIBDIR) -l$(PKGS) `root-config --cflags --libs`
+	@echo ""
 
 clean:
-	rm -rf $(OBJS) $(SRCDIR)/$(PKG)/obj/lib$(PKG).so $(BINS)
+	@echo "-----> Cleaning Objects:"
+	rm -rf $(OBJS)
+	@echo "-----> Cleaning Libraries:"
+	rm -rf $(LIBS)
+	@echo "-----> Cleaning Binaries:"
+	rm -fr $(BINS)
