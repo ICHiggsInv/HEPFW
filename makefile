@@ -20,11 +20,11 @@ USERLIBS += -L$(CMSSW_BASE)/lib/$(SCRAM_ARCH) -lUserCodeICHiggsTauTau -lTauAnaly
 USERLIBS += -L$(CMSSW_RELEASE_BASE)/lib/$(SCRAM_ARCH) -lFWCoreFWLite -lPhysicsToolsFWLite -lCommonToolsUtils
 
 #CXXFLAGS = -Wall -W -Wno-unused-function -Wno-parentheses -Wno-char-subscripts -Wno-unused-parameter -O2 
-CXXFLAGS = -Wall -W -O2 -std=c++0x -Wno-deprecated-declarations -Wno-unused-parameter
-LDFLAGS  = -shared -Wall -W 
-
+CXXFLAGS  = -Wall -W -O2 -std=c++0x -Wno-deprecated-declarations -Wno-unused-parameter
+CXXFLAGS += -Wno-unused-but-set-variable
 CXXFLAGS += $(USERINCLUDES)
-LIBS     += $(USERLIBS)
+
+LDFLAGS  = -shared -Wall -W 
 
 # A list of directories
 BASEDIR  = $(shell pwd)
