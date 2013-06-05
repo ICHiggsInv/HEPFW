@@ -27,11 +27,13 @@ CXXFLAGS += $(USERINCLUDES)
 LIBS     += $(USERLIBS)
 
 # A list of directories
-BASEDIR = $(shell pwd)
-EXEDIR  = $(BASEDIR)/bin
-OBJDIR  = $(BASEDIR)/obj
-TESTDIR = $(BASEDIR)/test
-DOCDIR  = $(BASEDIR)/docs
+BASEDIR  = $(shell pwd)
+EXEDIR   = $(BASEDIR)/bin
+OBJDIR   = $(BASEDIR)/obj
+TESTDIR  = $(BASEDIR)/test
+DOCDIR   = $(BASEDIR)/docs
+CMSSWLIB = $(CMSSW_BASE)/lib/$(SCRAM_ARCH)
+CMSSWBIN = $(CMSSW_BASE)/bin/$(SCRAM_ARCH)
 
 # Build a list of srcs and bins to build
 
@@ -40,17 +42,18 @@ OBJ_EXT = o
 SRC_EXT = cxx
 
 SRCDIR = $(CMSSW_BASE)/src/ICTools
-LIBDIR = $(SRCDIR)/lib
+# LIBDIR = $(SRCDIR)/lib
 
 PKGS = $(subst /src/,,$(wildcard */src/))
 SRCS = $(wildcard */src/*.cxx)
 EXES = $(wildcard */main/*.cxx)
 
 OBJS = $(subst cxx,$(OBJ_EXT),$(SRCS))
-LIBS = lib/lib$(PKGS).so
+
+LIBS = $(CMSSWLIB)/libICTools_$(PKGS).so
+BINS = $(subst main/,$(CMSSWBIN)/,$(subst $(PKGS)/,,$(subst .$(SRC_EXT),,$(EXES))))
 
 OBJS = $(subst src/,obj/,$(subst $(SRCDIR),,$(subst $(SRC_EXT),$(OBJ_EXT),$(SRCS))))
-BINS = $(subst main/,bin/,$(subst $(PKGS)/,,$(subst .$(SRC_EXT),,$(EXES))))
 
 # Making directories
 $(shell mkdir -p lib)
@@ -58,13 +61,14 @@ $(shell mkdir -p bin)
 $(shell mkdir -p $(PKGS)/obj)
 
 test:
-	@echo "SRCDIR: "$(SRCDIR)
-	@echo "PKGS  : "$(PKGS)
-	@echo "SRCS  : "$(SRCS)
-	@echo "EXES  : "$(EXES)
-	@echo "OBJS  : "$(OBJS)
-	@echo "BINS  : "$(BINS)
-	@echo "LIBS  : "$(LIBS)
+	@echo "SRCDIR   : "$(SRCDIR)
+	@echo "PKGS     : "$(PKGS)
+	@echo "SRCS     : "$(SRCS)
+	@echo "EXES     : "$(EXES)
+	@echo "OBJS     : "$(OBJS)
+	@echo "BINS     : "$(BINS)
+	@echo "LIBS     : "$(LIBS)
+	@echo "CMSSWLIB : "$(CMSSWLIB)
 	
 # all:  lib $(BINS)
 all: $(LIBS) $(BINS)
@@ -78,16 +82,17 @@ $(PKGS)/obj/%.$(OBJ_EXT): $(PKGS)/src/%.$(SRC_EXT) $(PKGS)/interface/%.h
 	$(CXX) $(CXXFLAGS) -fPIC -c $<  -o $@
 	@echo ""
 
-lib/lib%.so: $(filter %,$(OBJS))
+$(CMSSWLIB)/libICTools_%.so: $(filter %,$(OBJS))
 	@echo "----->Producing shared lib: " $@
 	@echo "----->Depends on: " $^
 	$(LD) $(LDFLAGS) -o $@ $(filter %,$(OBJS)) 
 	@echo ""
 
-bin/%: $(PKGS)/main/%.cxx lib/lib$(PKGS).so $(PKGS)/interface/*.h
+$(CMSSWBIN)/%: $(PKGS)/main/%.cxx $(CMSSWLIB)/libICTools_$(PKGS).so $(PKGS)/interface/*.h
 	@echo "----->Compiling executable: " $@
 	@echo "----->Depends on: " $^
-	$(CXX) -o $@ $(CXXFLAGS) $< $(LIBS) -L$(LIBDIR) -l$(PKGS) `root-config --cflags --libs`
+	$(CXX) -o $@ $(CXXFLAGS) $< $(LIBS)  `root-config --cflags --libs`
+# 	-L$(LIBDIR)
 	@echo ""
 
 clean:
