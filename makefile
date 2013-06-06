@@ -20,7 +20,9 @@ USERLIBS += -L$(CMSSW_BASE)/lib/$(SCRAM_ARCH) -lUserCodeICHiggsTauTau -lTauAnaly
 USERLIBS += -L$(CMSSW_RELEASE_BASE)/lib/$(SCRAM_ARCH) -lFWCoreFWLite -lPhysicsToolsFWLite -lCommonToolsUtils
 
 #CXXFLAGS = -Wall -W -Wno-unused-function -Wno-parentheses -Wno-char-subscripts -Wno-unused-parameter -O2 
-CXXFLAGS  = -Wall -W -O2 -std=c++0x -Wno-deprecated-declarations -Wno-unused-parameter
+CXXFLAGS  = -Wall -W -O2 -std=c++0x 
+CXXFLAGS += -Wno-deprecated-declarations
+CXXFLAGS += -Wno-unused-parameter
 CXXFLAGS += -Wno-unused-but-set-variable
 CXXFLAGS += $(USERINCLUDES)
 
@@ -40,25 +42,26 @@ CMSSWBIN = $(CMSSW_BASE)/bin/$(SCRAM_ARCH)
 # File extensions
 OBJ_EXT = o
 SRC_EXT = cxx
+HEA_EXT = h
 
 SRCDIR = $(CMSSW_BASE)/src/ICTools
 # LIBDIR = $(SRCDIR)/lib
 
 PKGS = $(subst /src/,,$(wildcard */src/))
 SRCS = $(wildcard */src/*.cxx)
+HEAS = $(wildcard */interface/*.h)
 EXES = $(wildcard */main/*.cxx)
 
-OBJS = $(subst cxx,$(OBJ_EXT),$(SRCS))
-
-LIBS = $(CMSSWLIB)/libICTools_$(PKGS).so
-BINS = $(subst main/,$(CMSSWBIN)/,$(subst $(PKGS)/,,$(subst .$(SRC_EXT),,$(EXES))))
-
 OBJS = $(subst src/,obj/,$(subst $(SRCDIR),,$(subst $(SRC_EXT),$(OBJ_EXT),$(SRCS))))
+LIBS = $(patsubst %,$(CMSSWLIB)/libICTools_%.so,$(PKGS))
+BINS = $(addprefix $(CMSSWBIN)/,$(notdir $(subst .$(SRC_EXT),,$(EXES))))
 
-# Making directories
-$(shell mkdir -p lib)
-$(shell mkdir -p bin)
-$(shell mkdir -p $(PKGS)/obj)
+all: dir $(LIBS) $(BINS)
+	@echo "done!"
+
+dir:
+	@$(shell mkdir -p obj;)
+	@$(foreach dir,$(PKGS),mkdir -p $(dir)/obj;)
 
 test:
 	@echo "SRCDIR   : "$(SRCDIR)
@@ -69,29 +72,27 @@ test:
 	@echo "BINS     : "$(BINS)
 	@echo "LIBS     : "$(LIBS)
 	@echo "CMSSWLIB : "$(CMSSWLIB)
-	
-# all:  lib $(BINS)
-all: $(LIBS) $(BINS)
 
 docs: all
 	doxygen Doxyfile
 
-$(PKGS)/obj/%.$(OBJ_EXT): $(PKGS)/src/%.$(SRC_EXT) $(PKGS)/interface/%.h
+%.$(OBJ_EXT) : #$(SRCS) $(HEAS)
 	@echo "----->Compiling object: " $@
-	@echo "----->Depends on: " $^
-	$(CXX) $(CXXFLAGS) -fPIC -c $<  -o $@
+	$(CXX) $(CXXFLAGS) -fPIC -c $(addsuffix .cxx,$(subst obj,src,$*)) -o $@
 	@echo ""
 
-$(CMSSWLIB)/libICTools_%.so: $(filter %,$(OBJS))
+$(CMSSWLIB)/libICTools_%.so : $(OBJS) 
 	@echo "----->Producing shared lib: " $@
 	@echo "----->Depends on: " $^
-	$(LD) $(LDFLAGS) -o $@ $(filter %,$(OBJS)) 
+	@echo "----->Matches   : " $*
+	@echo "----->Test      : " $(filter $*/obj/%,$(OBJS))
+	$(LD) $(LDFLAGS) -o $@ $(filter $*/obj/%,$(OBJS)) 
 	@echo ""
 
-$(CMSSWBIN)/%: $(PKGS)/main/%.cxx $(CMSSWLIB)/libICTools_$(PKGS).so $(PKGS)/interface/*.h
+$(CMSSWBIN)/% : $(EXES) $(LIBS) $(HEAS)
 	@echo "----->Compiling executable: " $@
 	@echo "----->Depends on: " $^
-	$(CXX) -o $@ $(CXXFLAGS) $< $(LIBS)  `root-config --cflags --libs`
+	$(CXX) -o $@ $(CXXFLAGS) $(filter %/$*.cxx,$(EXES)) $(LIBS)  `root-config --cflags --libs`
 # 	-L$(LIBDIR)
 	@echo ""
 
