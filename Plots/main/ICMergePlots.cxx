@@ -47,6 +47,16 @@ int main(int argc, char *argv[]){
     if(myPar.isPSetSet("Global")){
       cout<<myPar.getByName("Global").toString()<<endl;
     }
+    cout << "Is PSet:Weights Defined: " << myPar.isPSetSet("Weights") << endl;
+    if(myPar.isPSetSet("Weights")){
+      cout<<myPar.getByName("Weights").toString()<<endl;
+    }
+    cout << "Is PSet:Merge Defined: " << myPar.isPSetSet("Merge") << endl;
+    if(myPar.isPSetSet("Global")){
+      cout<<myPar.getByName("Merge").toString()<<endl;
+    }
+    
+    
   }
   
   printf("Output file: %s\n", argv[firstArg]);
