@@ -25,6 +25,7 @@ public:
   
 private:  
   std::vector<std::string> removeComments(std::vector<std::string> words);
+  std::vector<std::string> removeEmpty   (std::vector<std::string> words);
   void                     parse();
 
 private:

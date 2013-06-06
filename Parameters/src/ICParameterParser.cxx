@@ -41,6 +41,19 @@ vector<string> ICParameterParser::removeComments(vector<string> words){
   return out;
 }
 
+vector<string> ICParameterParser::removeEmpty(vector<string> words){
+
+  vector<string> out;
+  
+  for(unsigned i=0; i<words.size(); i++){
+    if((words[i])!=string("")){
+      out.push_back(words[i]);
+    }
+  }
+  
+  return out;
+}
+
 void ICParameterParser::parse(){
 
   ifstream infile;
@@ -51,29 +64,30 @@ void ICParameterParser::parse(){
   cout << "Opening configuration file: "<<m_fileName<< endl;
   while (!infile.eof()){
 
-    lineCount++;
-    
     string sLine = "";
     getline(infile, sLine);
-
+    trim(sLine);           // removing leading spaces
+    lineCount++;
+    
     if(sLine.size()==0) continue; // If empty line continue
     
     // Line is not empty, so we get all words
     vector<string> words;
     split(words, sLine, is_any_of(" "), token_compress_on );
     words = removeComments(words);
-    
-    if(words.size()==0) continue; // If empty line continue
+    words = removeEmpty(words);
+  
+    if(words.size()==0) continue; // If empty line or comment so continue
 
     // Dealing with wrong number if words
     if(words.size()!=3){
-      printf("Malformed PSet initialization:%i Incorrect number of arguments (%i present, expected 3).",lineCount,words.size());
+      printf("Malformed PSet initialization:%i Incorrect number of arguments (%i present, expected 3).\n",lineCount,words.size());
       return;
     } 
     
     // Dealing with missing PSet word 
     if(words[0]!=string("PSet")){
-      printf("Malformed PSet initialization:%i Missing key word \"PSet\".",lineCount);
+      printf("Malformed PSet initialization:%i Missing key word \"PSet\"\n.",lineCount);
       return;
     }
 
@@ -89,11 +103,17 @@ void ICParameterParser::parse(){
     
     while (sLine!="EndPSet" && !infile.eof()){
       getline(infile, sLine);
-
+      trim(sLine);            // removing leading spaces
+      lineCount++;
+      
       vector<string> words;
       split(words, sLine, is_any_of(" "), token_compress_on );
       words = removeComments(words);
+      words = removeEmpty(words);
 
+      // If empty line or comment so continue
+      if(words.size()==0) continue; 
+      
       // If reached end of block continue
       if(words[0]=="EndPSet"){
         psetClosed=true;
@@ -102,7 +122,8 @@ void ICParameterParser::parse(){
 
       // Variable definition always has 3 fields, return if not
       if(words.size()!=3){
-        printf("Malformed variable:%i Incorrect number of fields (%i present, expected 3).",lineCount,words.size());
+        printf("Malformed variable:%i Incorrect number of fields (%i present, expected 3).\n",lineCount,words.size());
+	for(unsigned i=0; i<words.size(); i++){cout<<"word ["<<i<<"]: \""<<words[i]<<"\""<<endl;}
         return;
       }
 
