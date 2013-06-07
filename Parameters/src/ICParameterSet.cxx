@@ -145,6 +145,106 @@ map<string,string> ICParameterSet::getMsString(string key){
   else                   {return map<string,string>();} //TODO: need some handling
 }
 
+bool ICParameterSet::isSetBool    (std::string key){
+  if(pBool_.find(key)!=pBool_.end()){return true;}
+  else{return false;}
+}
+
+bool ICParameterSet::isSetInt     (std::string key){
+  if(pInt_.find(key)!=pInt_.end()){return true;}
+  else{return false;}
+}
+
+bool ICParameterSet::isSetFloat   (std::string key){
+  if(pFloat_.find(key)!=pFloat_.end()){return true;}
+  else{return false;}
+}
+
+bool ICParameterSet::isSetDouble  (std::string key){
+  if(pDouble_.find(key)!=pDouble_.end()){return true;}
+  else{return false;}
+}
+
+bool ICParameterSet::isSetString  (std::string key){
+  if(pString_.find(key)!=pString_.end()){return true;}
+  else{return false;}
+}
+
+bool ICParameterSet::isSetVBool   (std::string key){ 
+  if(pVBool_.find(key)!=pVBool_.end()){return true;}
+  else{return false;}
+}
+
+bool ICParameterSet::isSetVInt    (std::string key){
+  if(pVInt_.find(key)!=pVInt_.end()){return true;}
+  else{return false;}
+}
+
+bool ICParameterSet::isSetVFloat  (std::string key){
+  if(pVFloat_.find(key)!=pVFloat_.end()){return true;}
+  else{return false;}
+}
+
+bool ICParameterSet::isSetVDouble (std::string key){
+  if(pVDouble_.find(key)!=pVDouble_.end()){return true;}
+  else{return false;}
+}
+
+bool ICParameterSet::isSetVString (std::string key){  
+  if(pVString_.find(key)!=pVString_.end()){return true;}
+  else{return false;}
+}
+
+bool ICParameterSet::isSetMiBool  (std::string key){  
+  if(pMsBool_.find(key)!=pMsBool_.end()){return true;}
+  else{return false;}
+}
+
+bool ICParameterSet::isSetMiInt   (std::string key){
+  if(pMsInt_.find(key)!=pMsInt_.end()){return true;}
+  else{return false;}
+}
+
+bool ICParameterSet::isSetMiFloat (std::string key){
+  if(pMsFloat_.find(key)!=pMsFloat_.end()){return true;}
+  else{return false;}
+}
+
+bool ICParameterSet::isSetMiDouble(std::string key){  
+  if(pMsDouble_.find(key)!=pMsDouble_.end()){return true;}
+  else{return false;}
+}
+
+bool ICParameterSet::isSetMiString(std::string key){
+  if(pMsString_.find(key)!=pMsString_.end()){return true;}
+  else{return false;}
+}
+
+bool ICParameterSet::isSetMsBool  (std::string key){
+  if(pMiBool_.find(key)!=pMiBool_.end()){return true;}
+  else{return false;}
+}
+
+bool ICParameterSet::isSetMsInt   (std::string key){
+  if(pMiInt_.find(key)!=pMiInt_.end()){return true;}
+  else{return false;}
+}
+
+bool ICParameterSet::isSetMsFloat (std::string key){
+  if(pMiFloat_.find(key)!=pMiFloat_.end()){return true;}
+  else{return false;}
+}
+
+bool ICParameterSet::isSetMsDouble(std::string key){
+  if(pMiDouble_.find(key)!=pMiDouble_.end()){return true;}
+  else{return false;}
+}
+
+bool ICParameterSet::isSetMsString(std::string key){
+  if(pMiString_.find(key)!=pMiString_.end()){return true;}
+  else{return false;}
+}
+
 string ICParameterSet::toString(){
 
   string out = "Parameters List:\n\n";

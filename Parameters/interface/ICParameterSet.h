@@ -51,6 +51,27 @@ public:
   std::map<std::string,double>      getMsDouble(std::string key);
   std::map<std::string,std::string> getMsString(std::string key);
 
+  bool isSetBool    (std::string key);
+  bool isSetInt     (std::string key);
+  bool isSetFloat   (std::string key);
+  bool isSetDouble  (std::string key);
+  bool isSetString  (std::string key);
+  bool isSetVBool   (std::string key);
+  bool isSetVInt    (std::string key);
+  bool isSetVFloat  (std::string key);
+  bool isSetVDouble (std::string key);
+  bool isSetVString (std::string key);
+  bool isSetMiBool  (std::string key);
+  bool isSetMiInt   (std::string key);
+  bool isSetMiFloat (std::string key);
+  bool isSetMiDouble(std::string key);
+  bool isSetMiString(std::string key);
+  bool isSetMsBool  (std::string key);
+  bool isSetMsInt   (std::string key);
+  bool isSetMsFloat (std::string key);
+  bool isSetMsDouble(std::string key);
+  bool isSetMsString(std::string key);
+  
   std::string toString();
   
 private:
