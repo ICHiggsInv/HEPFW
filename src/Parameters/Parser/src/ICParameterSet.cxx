@@ -1,4 +1,4 @@
-#include "ICTools/Parameters/interface/ICParameterSet.h"
+#include "Parameters/Parser/interface/ICParameterSet.h"
 
 #include "TString.h"
 

@@ -1,7 +1,7 @@
 #ifndef ICTOOLS_PARAMETERS_ICPARAMETERPARSER
 #define ICTOOLS_PARAMETERS_ICPARAMETERPARSER
 
-#include "ICTools/Parameters/interface/ICParameterSet.h"
+#include "Parameters/Parser/interface/ICParameterSet.h"
 
 // C++ Included
 #include <boost/algorithm/string.hpp>

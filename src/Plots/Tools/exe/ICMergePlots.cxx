@@ -1,8 +1,8 @@
 // TODO: Description
 
 // ICTools includes
-#include "ICTools/Parameters/interface/ICParameterSet.h"
-#include "ICTools/Parameters/interface/ICParameterParser.h"
+#include "Parameters/Parser/interface/ICParameterSet.h"
+#include "Parameters/Parser/interface/ICParameterParser.h"
 
 // ROOT includes
 #include "TFile.h"

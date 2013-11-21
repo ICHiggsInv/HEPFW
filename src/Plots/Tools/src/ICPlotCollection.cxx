@@ -1,4 +1,4 @@
-#include "ICTools/Plots/interface/ICPlotCollection.h"
+#include "Plots/Tools/interface/ICPlotCollection.h"
 
 #include "TLegend.h"
 

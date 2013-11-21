@@ -1,4 +1,4 @@
-#include "ICTools/Parameters/interface/ICParameterParser.h"
+#include "Parameters/Parser/interface/ICParameterParser.h"
 
 #include "TString.h"
 
@@ -55,7 +55,7 @@ vector<string> ICParameterParser::removeEmpty(vector<string> words){
 }
 
 void ICParameterParser::parse(){
-
+/*
   ifstream infile;
   infile.open(m_fileName);
 
@@ -205,6 +205,6 @@ void ICParameterParser::parse(){
     }
   }
   infile.close();
-  cout << "Close configuration file" << endl;
+  cout << "Close configuration file" << endl;*/
   
 }
