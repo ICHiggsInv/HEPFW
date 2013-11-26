@@ -24,7 +24,7 @@ USERLIBS += -L$(ROOFITSYS)/lib/ -lRooFit -lRooFitCore
 CXXFLAGS  = -Wall -W -O2
 CXXFLAGS += -Wno-deprecated-declarations
 CXXFLAGS += -Wno-unused-parameter
-# CXXFLAGS += -Wno-unused-but-set-variable
+CXXFLAGS += -Wno-unused-but-set-variable
 CXXFLAGS += $(USERINCLUDES)
 
 LDFLAGS  = -shared -Wall -W 
@@ -77,7 +77,7 @@ test:
 	@echo "LIBS : "$(LIBS)
 
 
-%.$(OBJ_EXT) : #$(SRCS) $(HEAS)
+%.$(OBJ_EXT) :
 	@echo "----->Compiling object: " $@
 	$(CXX) $(CXXFLAGS) -fPIC -c $(filter %$(notdir $*.cxx),$(SRCS)) -o $@
 	@echo ""
