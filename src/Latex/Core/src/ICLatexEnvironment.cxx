@@ -4,9 +4,10 @@ using namespace std;
 
 ICLatexEnvironment::ICLatexEnvironment(){
   
-  m_name = "";
+  m_name            = "";
   m_optionsPosition = "";
-
+  m_centering       = false;
+  
 }
 
 ICLatexEnvironment::~ICLatexEnvironment(){}
@@ -31,9 +32,10 @@ string ICLatexEnvironment::toStringEnvBegin(){
   if(m_optionsPosition != ""){
     out += "["+m_optionsPosition+"]";
   }
-  
   out += "\n";
   
+  if(m_centering){out += "\\centering\n";}
+
   return out;
   
 }
@@ -51,7 +53,9 @@ string ICLatexEnvironment::toStringEnvInner(){
 string ICLatexEnvironment::toStringEnvEnd(){
   
   string out;
-  out = "\\end{"+m_name+"}";
+  out = "\\end{"+m_name+"}\n";
   return out;
   
 }
+
+void ICLatexEnvironment::setCentering(bool centering){m_centering=centering;}

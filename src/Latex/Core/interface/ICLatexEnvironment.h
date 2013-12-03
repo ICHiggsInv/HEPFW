@@ -15,6 +15,8 @@ public:
     
   std::string toString();
 
+  void setCentering(bool centering=true);
+  
   // Public variables
   std::vector<ICLatexObject*> innerObjects;
   
@@ -32,6 +34,8 @@ protected:
 private:
   
   // Private variables
+  bool m_centering;
+
   std::string m_optionsPosition;
   
 };
