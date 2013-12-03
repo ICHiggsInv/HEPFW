@@ -15,7 +15,6 @@ public:
   ~ICTable(){};
   
   // set/get methods
-  void setCentering(bool centering=true);
   void setLabel(std::string label);
 
 private:
@@ -24,9 +23,7 @@ private:
   void        init();
   virtual std::string toStringEnvInner();
   
-  // Private variables
-  bool m_centering;
-  
+  // Private variables  
   std::string m_label;
   
   //ICTabular*      m_tabular;
