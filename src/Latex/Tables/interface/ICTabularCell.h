@@ -8,9 +8,13 @@
 class ICTabularCell {
 public:
   
+  void set(std::string value);
+  std::string toString();
+  
+  
 private:
 
-  string m_cells;
+  std::string m_cells;
 
 };
 
