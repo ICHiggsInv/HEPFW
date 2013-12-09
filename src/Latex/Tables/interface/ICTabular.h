@@ -14,8 +14,12 @@ public:
   ICTabular(int nCol=2, int nRow=2);
   
   void set(int iCol,int iRow,std::string value);
-  
-  
+
+  void setColumnDecorationBefore(int iCol,std::string value);
+  void setColumnDecorationAfter (int iCol,std::string value);
+
+  void setRowDecorationBefore(int iRow,std::string value);
+  void setRowDecorationAfter (int iRow,std::string value);
   
   //void addRowAfter (int index);
   //void addRowBefore(int index);
@@ -24,8 +28,9 @@ private:
 
   // Private methods
   void                init();
+  virtual std::string toStringEnvBegin();
   virtual std::string toStringEnvInner();
-    
+  
   // Private variables
   std::vector<std::string>  m_columnAlignment;
   std::vector<std::string>  m_columnDecoration;
