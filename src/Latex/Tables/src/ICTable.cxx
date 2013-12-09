@@ -18,7 +18,7 @@ void ICTable::init(){
 string ICTable::toStringEnvInner(){
   
   string out;
-  if(m_label != ""){out += "\\label("+m_label+")\n";}
+  if(m_label != ""){out += "\\label{"+m_label+"}\n";}
     
   for(unsigned i=0; i<innerObjects.size(); i++){
     out += innerObjects[i]->toString();
