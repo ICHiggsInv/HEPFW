@@ -14,8 +14,6 @@ string ICTabularRow::toString(){
   
   string out="";
   
-  cout << size() << endl;
-  
   for(unsigned i=0; i<size(); i++){
     out += operator[](i).toString();  
     
