@@ -5,15 +5,6 @@
 #include <string>
 #include <vector>
 
-enum varType{
-  kBool,
-  kInt
-  kUnsigned,
-  kFloat
-  kDouble,
-  kString
-};
-
 class ICTabularCell {
 public:
   
@@ -30,8 +21,6 @@ public:
   
   
 private:
-
-  varType cellType;
   
   std::string m_cells;
 
