@@ -4,7 +4,7 @@
 
 using namespace std;
 
-ICTabular::ICTabular(int nCol, int nRow){
+ICTabular::ICTabular(int nRow,int nCol){
   
   init();
   
@@ -31,19 +31,67 @@ void ICTabular::init(){
   
 }
 
-void ICTabular::set(int iCol,int iRow,string value){
+void ICTabular::set(int iRow,int iCol,bool value){
   
-  if(iCol<0 || iCol>=int(m_rows[0].size())){
-    cout << "ERROR: Request tabular position is out of bounds in columns." << endl;
-    return;
+  if(isCoordinateValid(iRow,iCol)){
+    ((m_rows[iRow])[iCol]).set(value);
+  }else{
+    cout << "ERROR: Request tabular position is out of bounds." << endl;
   }
+}
+
+void ICTabular::set(int iRow,int iCol,int value){
   
-  if(iRow<0 || iRow>=int(m_rows.size())){
-    cout << "ERROR: Request tabular position is out of bounds in rows." << endl;
-    return; 
+  if(isCoordinateValid(iRow,iCol)){
+    ((m_rows[iRow])[iCol]).set(value);
+  }else{
+    cout << "ERROR: Request tabular position is out of bounds." << endl;
   }
+}
+
+void ICTabular::set(int iRow,int iCol,unsigned value){
   
-  ((m_rows[iRow])[iCol]).set(value);
+  if(isCoordinateValid(iRow,iCol)){
+    ((m_rows[iRow])[iCol]).set(value);
+  }else{
+    cout << "ERROR: Request tabular position is out of bounds." << endl;
+  }
+}
+
+void ICTabular::set(int iRow,int iCol,float value){
+  
+  if(isCoordinateValid(iRow,iCol)){
+    ((m_rows[iRow])[iCol]).set(value);
+  }else{
+    cout << "ERROR: Request tabular position is out of bounds." << endl;
+  }
+}
+
+void ICTabular::set(int iRow,int iCol,double value){
+  
+  if(isCoordinateValid(iRow,iCol)){
+    ((m_rows[iRow])[iCol]).set(value);
+  }else{
+    cout << "ERROR: Request tabular position is out of bounds." << endl;
+  }
+}
+
+void ICTabular::set(int iRow,int iCol,const char* value){
+
+  if(isCoordinateValid(iRow,iCol)){
+    ((m_rows[iRow])[iCol]).set(string(value));
+  }else{
+    cout << "ERROR: Request tabular position is out of bounds." << endl;
+  }  
+}
+
+void ICTabular::set(int iRow,int iCol,string value){
+
+  if(isCoordinateValid(iRow,iCol)){
+    ((m_rows[iRow])[iCol]).set(value);
+  }else{
+    cout << "ERROR: Request tabular position is out of bounds." << endl;
+  }
 }
   
 void ICTabular::setColumnDecorationBefore(int iCol,std::string value){m_columnDecoration[iCol]=value;}
@@ -102,4 +150,14 @@ string ICTabular::toStringEnvInner(){
   }
   
   return out;  
+}
+
+bool ICTabular::isCoordinateValid(int iRow,int iCol){
+  
+  bool out = true;
+  
+  if(iCol<0 || iCol>=int(m_rows[0].size())){out=false;}
+  if(iRow<0 || iRow>=int(m_rows   .size())){out=false;}
+
+  return out;
 }
