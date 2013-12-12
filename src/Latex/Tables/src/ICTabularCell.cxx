@@ -58,7 +58,7 @@ void ICTabularCell::set(std::string value){
 }
 
 string ICTabularCell::toString(){
-  cout << m_data->getType() << endl;
+
   if     (m_data->getType() == kBool){
     ICBool* p = (ICBool*) m_data;
     if(p->get()){return "1";}
