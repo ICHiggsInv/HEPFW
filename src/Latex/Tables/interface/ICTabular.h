@@ -11,9 +11,15 @@
 class ICTabular : public ICLatexEnvironment {
 public:
 
-  ICTabular(int nCol=2, int nRow=2);
-  
-  void set(int iCol,int iRow,std::string value);
+  ICTabular(int nRow=2,int nCol=2);
+
+  void set(int iRow,int iCol,bool        value);
+  void set(int iRow,int iCol,int         value);
+  void set(int iRow,int iCol,unsigned    value);
+  void set(int iRow,int iCol,float       value);
+  void set(int iRow,int iCol,double      value);
+  void set(int iRow,int iCol,const char* value);
+  void set(int iRow,int iCol,std::string value);
 
   void setColumnDecorationBefore(int iCol,std::string value);
   void setColumnDecorationAfter (int iCol,std::string value);
@@ -30,6 +36,8 @@ private:
   void                init();
   virtual std::string toStringEnvBegin();
   virtual std::string toStringEnvInner();
+  bool                isCoordinateValid(int iRow,int iCol);
+  
   
   // Private variables
   std::vector<std::string>  m_columnAlignment;
