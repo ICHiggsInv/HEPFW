@@ -3,6 +3,7 @@
 // ICTools includes
 #include "Latex/Tables/interface/ICTable.h"
 #include "Latex/Tables/interface/ICTabular.h"
+#include "Latex/Tables/interface/ICTableCaption.h"
 
 // Standard libraries includes
 #include <iostream>
@@ -40,6 +41,10 @@ int main(int argc, char *argv[]){
   tabular0.set(2,2,4);  
 
   table0.innerObjects.push_back(&tabular0);
+  
+  ICTableCaption caption = ICTableCaption("This is a table caption!");
+  
+  table0.innerObjects.push_back(&caption);
   
   table0.saveAs("text0.tex");
   
