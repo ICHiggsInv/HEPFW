@@ -33,11 +33,11 @@ int main(int argc, char *argv[]){
   tabular0.set(0,1,"A");
   tabular0.set(0,2,"B");
   tabular0.set(1,0,"X");
-  tabular0.set(1,1,"1");
-  tabular0.set(1,2,"2");  
+  tabular0.set(1,1,1);
+  tabular0.set(1,2,2.);  
   tabular0.set(2,0,"Y");
-  tabular0.set(2,1,"3");
-  tabular0.set(2,2,"4");  
+  tabular0.set(2,1,3);
+  tabular0.set(2,2,4);  
 
   table0.innerObjects.push_back(&tabular0);
   
