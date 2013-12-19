@@ -1,17 +1,17 @@
-#ifndef LATEX_TABLES_ICTABULAR
-#define LATEX_TABLES_ICTABULAR
+#ifndef LATEX_TABLES_ICLATEXTABULAR
+#define LATEX_TABLES_ICLATEXTABULAR
 
 #include "Latex/Core/interface/ICLatexEnvironment.h"
-#include "Latex/Tables/interface/ICTabularRow.h"
+#include "Latex/Tables/interface/ICLatexTabularRow.h"
 
 // C++ Included
 #include <string>
 #include <vector>
 
-class ICTabular : public ICLatexEnvironment {
+class ICLatexTabular : public ICLatexEnvironment {
 public:
 
-  ICTabular(int nRow=2,int nCol=2);
+  ICLatexTabular(int nRow=2,int nCol=2);
 
   void set(int iRow,int iCol,bool        value);
   void set(int iRow,int iCol,int         value);
@@ -43,7 +43,7 @@ private:
   std::vector<std::string>  m_columnAlignment;
   std::vector<std::string>  m_columnDecoration;
   std::vector<std::string>  m_rowsDecoration;
-  std::vector<ICTabularRow> m_rows;
+  std::vector<ICLatexTabularRow> m_rows;
   
   
 };

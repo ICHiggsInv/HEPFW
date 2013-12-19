@@ -1,17 +1,17 @@
-#include "Latex/Tables/interface/ICTabular.h"
+#include "Latex/Tables/interface/ICLatexTabular.h"
 
 #include <iostream>
 
 using namespace std;
 
-ICTabular::ICTabular(int nRow,int nCol){
+ICLatexTabular::ICLatexTabular(int nRow,int nCol){
   
   init();
   
   if(nCol<1 || nRow<1){cout << "ERROR: tabular size needs to be bigger than 1 in columns or rows!" << endl;}
   
   for(int a=0; a<nRow; a++){
-    m_rows           .push_back(ICTabularRow(nCol));
+    m_rows           .push_back(ICLatexTabularRow(nCol));
     m_columnAlignment.push_back("c");
     m_rowsDecoration .push_back("");
   }
@@ -25,13 +25,13 @@ ICTabular::ICTabular(int nRow,int nCol){
   
 }
 
-void ICTabular::init(){
+void ICLatexTabular::init(){
   
   m_name = "tabular";
   
 }
 
-void ICTabular::set(int iRow,int iCol,bool value){
+void ICLatexTabular::set(int iRow,int iCol,bool value){
   
   if(isCoordinateValid(iRow,iCol)){
     ((m_rows[iRow])[iCol]).set(value);
@@ -40,7 +40,7 @@ void ICTabular::set(int iRow,int iCol,bool value){
   }
 }
 
-void ICTabular::set(int iRow,int iCol,int value){
+void ICLatexTabular::set(int iRow,int iCol,int value){
   
   if(isCoordinateValid(iRow,iCol)){
     ((m_rows[iRow])[iCol]).set(value);
@@ -49,7 +49,7 @@ void ICTabular::set(int iRow,int iCol,int value){
   }
 }
 
-void ICTabular::set(int iRow,int iCol,unsigned value){
+void ICLatexTabular::set(int iRow,int iCol,unsigned value){
   
   if(isCoordinateValid(iRow,iCol)){
     ((m_rows[iRow])[iCol]).set(value);
@@ -58,7 +58,7 @@ void ICTabular::set(int iRow,int iCol,unsigned value){
   }
 }
 
-void ICTabular::set(int iRow,int iCol,float value){
+void ICLatexTabular::set(int iRow,int iCol,float value){
   
   if(isCoordinateValid(iRow,iCol)){
     ((m_rows[iRow])[iCol]).set(value);
@@ -67,7 +67,7 @@ void ICTabular::set(int iRow,int iCol,float value){
   }
 }
 
-void ICTabular::set(int iRow,int iCol,double value){
+void ICLatexTabular::set(int iRow,int iCol,double value){
   
   if(isCoordinateValid(iRow,iCol)){
     ((m_rows[iRow])[iCol]).set(value);
@@ -76,7 +76,7 @@ void ICTabular::set(int iRow,int iCol,double value){
   }
 }
 
-void ICTabular::set(int iRow,int iCol,const char* value){
+void ICLatexTabular::set(int iRow,int iCol,const char* value){
 
   if(isCoordinateValid(iRow,iCol)){
     ((m_rows[iRow])[iCol]).set(string(value));
@@ -85,7 +85,7 @@ void ICTabular::set(int iRow,int iCol,const char* value){
   }  
 }
 
-void ICTabular::set(int iRow,int iCol,string value){
+void ICLatexTabular::set(int iRow,int iCol,string value){
 
   if(isCoordinateValid(iRow,iCol)){
     ((m_rows[iRow])[iCol]).set(value);
@@ -94,15 +94,15 @@ void ICTabular::set(int iRow,int iCol,string value){
   }
 }
   
-void ICTabular::setColumnDecorationBefore(int iCol,std::string value){m_columnDecoration[iCol]=value;}
+void ICLatexTabular::setColumnDecorationBefore(int iCol,std::string value){m_columnDecoration[iCol]=value;}
 
-void ICTabular::setColumnDecorationAfter (int iCol,std::string value){m_columnDecoration[iCol+1]=value;}
+void ICLatexTabular::setColumnDecorationAfter (int iCol,std::string value){m_columnDecoration[iCol+1]=value;}
 
-void ICTabular::setRowDecorationBefore(int iRow,std::string value){m_rowsDecoration[iRow]=value;}
+void ICLatexTabular::setRowDecorationBefore(int iRow,std::string value){m_rowsDecoration[iRow]=value;}
 
-void ICTabular::setRowDecorationAfter (int iRow,std::string value){m_rowsDecoration[iRow+1]=value;}
+void ICLatexTabular::setRowDecorationAfter (int iRow,std::string value){m_rowsDecoration[iRow+1]=value;}
   
-string ICTabular::toStringEnvBegin(){
+string ICLatexTabular::toStringEnvBegin(){
   
   string out;
 
@@ -134,7 +134,7 @@ string ICTabular::toStringEnvBegin(){
   
 }
   
-string ICTabular::toStringEnvInner(){
+string ICLatexTabular::toStringEnvInner(){
   
   string out = "";  
   
@@ -152,7 +152,7 @@ string ICTabular::toStringEnvInner(){
   return out;  
 }
 
-bool ICTabular::isCoordinateValid(int iRow,int iCol){
+bool ICLatexTabular::isCoordinateValid(int iRow,int iCol){
   
   bool out = true;
   

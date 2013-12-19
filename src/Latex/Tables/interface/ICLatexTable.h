@@ -1,18 +1,18 @@
-#ifndef LATEX_TABLES_ICTABLE
-#define LATEX_TABLES_ICTABLE
+#ifndef LATEX_TABLES_ICLATEXTABLE
+#define LATEX_TABLES_ICLATEXTABLE
 
 #include "Latex/Core/interface/ICLatexEnvironment.h"
 
 // C++ Included
 #include <string>
 
-class ICTable : public ICLatexEnvironment{
+class ICLatexTable : public ICLatexEnvironment{
 public:
   
-  ICTable();
-  //ICTable(TH2* histogram);
+  ICLatexTable();
+  //ICLatexTable(TH2* histogram);
   
-  ~ICTable(){};
+  ~ICLatexTable(){};
   
   // set/get methods
   void setLabel(std::string label);
@@ -27,7 +27,7 @@ private:
   std::string m_label;
   
   //ICTabular*      m_tabular;
-  //ICTableCaption* m_caption;
+  //ICLatexTableCaption* m_caption;
   
 };
 

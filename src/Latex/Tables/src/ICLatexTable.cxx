@@ -1,21 +1,21 @@
-#include "Latex/Tables/interface/ICTable.h"
+#include "Latex/Tables/interface/ICLatexTable.h"
 
 using namespace std;
 
-ICTable::ICTable(){
+ICLatexTable::ICLatexTable(){
   
   init();
   
 }
 
-void ICTable::init(){
+void ICLatexTable::init(){
  
   m_name      = "table";
   m_label     = "";
   
 }
 
-string ICTable::toStringEnvInner(){
+string ICLatexTable::toStringEnvInner(){
   
   string out;
   if(m_label != ""){out += "\\label{"+m_label+"}\n";}
@@ -28,4 +28,4 @@ string ICTable::toStringEnvInner(){
   
 }
 
-void ICTable::setLabel(string label){m_label=label;}
+void ICLatexTable::setLabel(string label){m_label=label;}

@@ -1,4 +1,4 @@
-#include "Latex/Tables/interface/ICTabularCell.h"
+#include "Latex/Tables/interface/ICLatexTabularCell.h"
 
 #include "FWCore/DataFormats/interface/ICBool.h"
 #include "FWCore/DataFormats/interface/ICInt.h"
@@ -12,52 +12,52 @@
 
 using namespace std;
 
-ICTabularCell::ICTabularCell(){
+ICLatexTabularCell::ICLatexTabularCell(){
   m_data = NULL;
 }
 
-ICTabularCell::ICTabularCell(bool        value){m_data = new ICBool    (value);}
-ICTabularCell::ICTabularCell(int         value){m_data = new ICInt     (value);}  
-ICTabularCell::ICTabularCell(unsigned    value){m_data = new ICUnsigned(value);}
-ICTabularCell::ICTabularCell(float       value){m_data = new ICFloat   (value);}
-ICTabularCell::ICTabularCell(double      value){m_data = new ICDouble  (value);}
-ICTabularCell::ICTabularCell(std::string value){m_data = new ICString  (value);}
+ICLatexTabularCell::ICLatexTabularCell(bool        value){m_data = new ICBool    (value);}
+ICLatexTabularCell::ICLatexTabularCell(int         value){m_data = new ICInt     (value);}  
+ICLatexTabularCell::ICLatexTabularCell(unsigned    value){m_data = new ICUnsigned(value);}
+ICLatexTabularCell::ICLatexTabularCell(float       value){m_data = new ICFloat   (value);}
+ICLatexTabularCell::ICLatexTabularCell(double      value){m_data = new ICDouble  (value);}
+ICLatexTabularCell::ICLatexTabularCell(std::string value){m_data = new ICString  (value);}
 
-ICTabularCell::~ICTabularCell(){
+ICLatexTabularCell::~ICLatexTabularCell(){
   if(m_data==NULL){delete m_data;}
 }
 
-void ICTabularCell::set(bool value){
+void ICLatexTabularCell::set(bool value){
   if(m_data==NULL){delete m_data;}
   m_data = new ICBool(value);
 }
 
-void ICTabularCell::set(int value){
+void ICLatexTabularCell::set(int value){
   if(m_data==NULL){delete m_data;}
   m_data = new ICInt(value);
 }
 
-void ICTabularCell::set(unsigned value){
+void ICLatexTabularCell::set(unsigned value){
   if(m_data==NULL){delete m_data;}
   m_data = new ICUnsigned(value);
 }
 
-void ICTabularCell::set(float value){
+void ICLatexTabularCell::set(float value){
   if(m_data==NULL){delete m_data;}
   m_data = new ICFloat(value);
 }
 
-void ICTabularCell::set(double value){
+void ICLatexTabularCell::set(double value){
   if(m_data==NULL){delete m_data;}
   m_data = new ICDouble(value);
 }
 
-void ICTabularCell::set(std::string value){
+void ICLatexTabularCell::set(std::string value){
   if(m_data==NULL){delete m_data;}
   m_data = new ICString(value);
 }
 
-string ICTabularCell::toString(){
+string ICLatexTabularCell::toString(){
 
   if     (m_data->getType() == kBool){
     ICBool* p = (ICBool*) m_data;

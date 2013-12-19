@@ -1,16 +1,16 @@
-#ifndef LATEX_TABLES_ICTABLECAPTION
-#define LATEX_TABLES_ICTABLECAPTION
+#ifndef LATEX_TABLES_ICLATEXCAPTION
+#define LATEX_TABLES_ICLATEXCAPTION
 
 #include "Latex/Core/interface/ICLatexObject.h"
 
 // C++ Included
 #include <string>
 
-class ICTableCaption : public ICLatexObject {
+class ICLatexCaption : public ICLatexObject {
 public:
 
-  ICTableCaption();
-  ICTableCaption(const char* value);
+  ICLatexCaption();
+  ICLatexCaption(const char* value);
 
   void       set(std::string value);
   
