@@ -1,4 +1,4 @@
-#include "Latex/Tables/interface/ICLatexTabular.h"
+#include "Latex/Table/interface/ICLatexTabular.h"
 
 #include <iostream>
 

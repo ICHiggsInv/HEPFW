@@ -1,9 +1,9 @@
 // TODO: Description
 
 // ICTools includes
-#include "Latex/Tables/interface/ICLatexTable.h"
-#include "Latex/Tables/interface/ICLatexTabular.h"
-#include "Latex/Tables/interface/ICLatexCaption.h"
+#include "Latex/Table/interface/ICLatexTable.h"
+#include "Latex/Table/interface/ICLatexTabular.h"
+#include "Latex/Table/interface/ICLatexCaption.h"
 
 // Standard libraries includes
 #include <iostream>

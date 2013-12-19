@@ -1,4 +1,4 @@
-#include "Latex/Tables/interface/ICLatexTable.h"
+#include "Latex/Table/interface/ICLatexTable.h"
 
 using namespace std;
 

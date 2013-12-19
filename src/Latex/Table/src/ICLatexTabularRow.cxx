@@ -1,4 +1,4 @@
-#include "Latex/Tables/interface/ICLatexTabularRow.h"
+#include "Latex/Table/interface/ICLatexTabularRow.h"
 
 using namespace std;
 

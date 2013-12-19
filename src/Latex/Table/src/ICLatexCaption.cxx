@@ -1,4 +1,4 @@
-#include "Latex/Tables/interface/ICLatexCaption.h"
+#include "Latex/Table/interface/ICLatexCaption.h"
 
 #include "TString.h"
 

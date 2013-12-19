@@ -2,7 +2,7 @@
 #define LATEX_TABLES_ICLATEXTABULAR
 
 #include "Latex/Core/interface/ICLatexEnvironment.h"
-#include "Latex/Tables/interface/ICLatexTabularRow.h"
+#include "Latex/Table/interface/ICLatexTabularRow.h"
 
 // C++ Included
 #include <string>

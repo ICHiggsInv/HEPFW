@@ -1,4 +1,4 @@
-#include "Latex/Tables/interface/ICLatexTabularCell.h"
+#include "Latex/Table/interface/ICLatexTabularCell.h"
 
 #include "FWCore/DataFormats/interface/ICBool.h"
 #include "FWCore/DataFormats/interface/ICInt.h"
