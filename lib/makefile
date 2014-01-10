@@ -18,8 +18,8 @@ USERINCLUDES += -I$(ROOFITSYS)/include/
 USERINCLUDES += -I$(realpath $(BASEDIR)/../src/)
 
 # Define libraries to link
-USERLIBS += $(shell root-config --glibs) -lGenVector -lTreePlayer -lTMVA
-USERLIBS += -L$(ROOFITSYS)/lib/ -lRooFit -lRooFitCore
+# USERLIBS += $(shell root-config --glibs) -lGenVector -lTreePlayer -lTMVA
+# USERLIBS += -L$(ROOFITSYS)/lib/ -lRooFit -lRooFitCore
 # USERLIBS += -L$(CMS_PATH)/$(SCRAM_ARCH)/external/boost/1.47.0/lib/ -lboost_regex -lboost_program_options -lboost_filesystem
 # USERLIBS += -L$(CMSSW_BASE)/lib/$(SCRAM_ARCH) -lUserCodeICHiggsTauTau -lTauAnalysisCandidateTools
 # USERLIBS += -L$(CMSSW_RELEASE_BASE)/lib/$(SCRAM_ARCH) -lFWCoreFWLite -lPhysicsToolsFWLite -lCommonToolsUtils
@@ -33,22 +33,13 @@ CXXFLAGS += $(USERINCLUDES)
 
 LDFLAGS  = -shared -Wall -W 
 
-# A list of directories
-EXEDIR   = $(BASEDIR)/bin
-OBJDIR   = $(BASEDIR)/obj
-TESTDIR  = $(BASEDIR)/test
-DOCDIR   = $(BASEDIR)/docs
-CMSSWLIB = $(CMSSW_BASE)/lib/$(SCRAM_ARCH)
-CMSSWBIN = $(CMSSW_BASE)/bin/$(SCRAM_ARCH)
-
-# Build a list of srcs and bins to build
-
 # File extensions
 OBJ_EXT = o
 EXE_EXT = exe
 SRC_EXT = cxx
 HEA_EXT = h
 
+# Lists of packages, files and targets
 PKGS = $(subst ../src/,,$(wildcard ../src/*))
 SPKG = $(subst ../src/,,$(wildcard ../src/*/*))
 SRCS = $(wildcard ../src/*/*/src/*.cxx)
