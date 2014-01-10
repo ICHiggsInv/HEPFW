@@ -91,7 +91,7 @@ clean:
 	@rm -r $(LIBS)
 	@echo "-----> Cleaning Binaries"
 	@rm -f $(BINS)
-	@rm -f ../bin/*
+	@$(foreach bin,$(BINS),rm -f ../bin/$(notdir $(subst .exe,,$(bin)));)
 
 test:
 	@echo "PKGS : "$(PKGS)
