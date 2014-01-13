@@ -59,30 +59,34 @@ void ICLatexTabularCell::set(std::string value){
 
 string ICLatexTabularCell::toString(){
 
+  string out="";
+  
   if     (m_data->getType() == kBool){
     ICBool* p = (ICBool*) m_data;
-    if(p->get()){return "1";}
-    else        {return "0";}
+    if(p->get()){out = "1";}
+    else        {out = "0";}
   }
   else if(m_data->getType() == kInt){
     ICInt* p = (ICInt*) m_data;
-    return Form("%i",p->get());
+    out = Form("%i",p->get());
   }
   else if(m_data->getType() == kUnsigned){
     ICUnsigned* p = (ICUnsigned*) m_data;
-    return Form("%i",p->get());    
+    out = Form("%i",p->get());    
   }
   else if(m_data->getType() == kFloat){
     ICFloat* p = (ICFloat*) m_data;
-    return Form("%f",p->get());
+    out = Form("%f",p->get());
   }
   else if(m_data->getType() == kDouble){
     ICDouble* p = (ICDouble*) m_data;
-    return Form("%f",p->get());
+    out = Form("%f",p->get());
   }  
   else if(m_data->getType() == kString){
     ICString* p = (ICString*) m_data;
-    return p->get();
+    out = p->get();
   }
+  
+  return out;
   
 }
