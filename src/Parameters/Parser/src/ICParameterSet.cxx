@@ -429,7 +429,7 @@ string ICParameterSet::toString(){
     for(map<string,map<string,double> >::iterator i=pMsDouble_.begin(); i!=pMsDouble_.end(); i++){
       out += Form("%s: {\n",i->first.c_str());
       for(map<string,double>::iterator a=i->second.begin(); a!=i->second.end();a++){
-        Form("  %d = %f\n",a->first.c_str(),a->second);
+        Form("  %s = %f\n",a->first.c_str(),a->second);
       }
       out += "}\n";
     }
