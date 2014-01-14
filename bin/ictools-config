@@ -17,8 +17,10 @@ else
     FILES=$ICTOOLSSYS/lib/*.so
     for f in $FILES
     do
-      y=${f%.*}
-      ICLIBS="$ICLIBS -l${y##*/}"
+      a=${f%.*}
+      b=${a##*/}
+      c=${b#lib}
+      ICLIBS="$ICLIBS -l$c"
     done
   
     echo "-L$ICTOOLSSYS/lib $ICLIBS"
