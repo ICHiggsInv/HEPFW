@@ -1,0 +1,32 @@
+#!/bin/bash
+
+if [ "x${BASH_ARGV[0]}" = "x" ]; then
+
+  echo Need to specify '--cflags' or '--libs'
+
+else
+  
+  if [ "${BASH_ARGV[0]}" = "--cflags" ]; then
+    echo "-I$ICTOOLSSYS/src"
+  fi
+
+  if [ "${BASH_ARGV[0]}" = "--libs" ]; then
+  
+    ICLIBS=""
+  
+    FILES=$ICTOOLSSYS/lib/*.so
+    for f in $FILES
+    do
+      a=${f%.*}
+      b=${a##*/}
+      c=${b#lib}
+      ICLIBS="$ICLIBS -l$c"
+    done
+  
+    echo "-L$ICTOOLSSYS/lib $ICLIBS"
+  fi
+  
+fi
+
+
+
