@@ -8,20 +8,20 @@ ICLatexTabular::ICLatexTabular(int nRow,int nCol){
   
   init();
   
-  if(nCol<1 || nRow<1){cout << "ERROR: tabular size needs to be bigger than 1 in columns or rows!" << endl;}
+  if(nRow<1 || nCol<1){cout << "ERROR: tabular size needs to be bigger than 1 in columns or rows!" << endl;}
   
   for(int a=0; a<nRow; a++){
     m_rows           .push_back(ICLatexTabularRow(nCol));
-    m_columnAlignment.push_back("c");
     m_rowsDecoration .push_back("");
   }
+  m_rowsDecoration.push_back("");
   
   for(int b=0; b<nCol; b++){     
+    m_columnAlignment .push_back("c");
     m_columnDecoration.push_back(""); 
   }
-  
-  m_rowsDecoration  .push_back("");
   m_columnDecoration.push_back("");  
+  
   
 }
 
@@ -103,12 +103,12 @@ void ICLatexTabular::setRowDecorationBefore(int iRow,std::string value){m_rowsDe
 void ICLatexTabular::setRowDecorationAfter (int iRow,std::string value){m_rowsDecoration[iRow+1]=value;}
   
 string ICLatexTabular::toStringEnvBegin(){
-  
+
   string out;
 
   // Beginning environment
   out = "\\begin{"+m_name+"}";
-  
+
   // Adding position options
   if(m_position != ""){
     out += "["+m_position+"]";
@@ -124,9 +124,9 @@ string ICLatexTabular::toStringEnvBegin(){
     }
   }
   out += "}";
-    
+
   out += "\n";
-  
+
   // Adding centering options
   if(m_centering){out += "\\centering\n";}
 
@@ -135,20 +135,20 @@ string ICLatexTabular::toStringEnvBegin(){
 }
   
 string ICLatexTabular::toStringEnvInner(){
-  
+
   string out = "";  
-  
+
   for(unsigned i=0; i<m_rows.size(); i++){
     if(m_rowsDecoration[i]!=""){
       out += m_rowsDecoration[i]+"\n";  
     }
     out += m_rows[i].toString();
   }
-  
+
   if(m_rowsDecoration[m_rows.size()]!=""){
     out += m_rowsDecoration[m_rows.size()]+"\n";
   }
-  
+
   return out;  
 }
 
