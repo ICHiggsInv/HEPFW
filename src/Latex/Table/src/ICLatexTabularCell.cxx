@@ -16,52 +16,54 @@ ICLatexTabularCell::ICLatexTabularCell(){
   m_data = NULL;
 }
 
-ICLatexTabularCell::ICLatexTabularCell(bool        value){m_data = new ICBool    (value);}
-ICLatexTabularCell::ICLatexTabularCell(int         value){m_data = new ICInt     (value);}  
-ICLatexTabularCell::ICLatexTabularCell(unsigned    value){m_data = new ICUnsigned(value);}
-ICLatexTabularCell::ICLatexTabularCell(float       value){m_data = new ICFloat   (value);}
-ICLatexTabularCell::ICLatexTabularCell(double      value){m_data = new ICDouble  (value);}
-ICLatexTabularCell::ICLatexTabularCell(std::string value){m_data = new ICString  (value);}
+ICLatexTabularCell::ICLatexTabularCell(bool     value){m_data = new ICBool    (value);}
+ICLatexTabularCell::ICLatexTabularCell(int      value){m_data = new ICInt     (value);}  
+ICLatexTabularCell::ICLatexTabularCell(unsigned value){m_data = new ICUnsigned(value);}
+ICLatexTabularCell::ICLatexTabularCell(float    value){m_data = new ICFloat   (value);}
+ICLatexTabularCell::ICLatexTabularCell(double   value){m_data = new ICDouble  (value);}
+ICLatexTabularCell::ICLatexTabularCell(string   value){m_data = new ICString  (value);}
 
 ICLatexTabularCell::~ICLatexTabularCell(){
-  if(m_data==NULL){delete m_data;}
+  if(m_data!=NULL){delete m_data;}
 }
 
 void ICLatexTabularCell::set(bool value){
-  if(m_data==NULL){delete m_data;}
+  if(m_data!=NULL){delete m_data;}
   m_data = new ICBool(value);
 }
 
 void ICLatexTabularCell::set(int value){
-  if(m_data==NULL){delete m_data;}
+  if(m_data!=NULL){delete m_data;}
   m_data = new ICInt(value);
 }
 
 void ICLatexTabularCell::set(unsigned value){
-  if(m_data==NULL){delete m_data;}
+  if(m_data!=NULL){delete m_data;}
   m_data = new ICUnsigned(value);
 }
 
 void ICLatexTabularCell::set(float value){
-  if(m_data==NULL){delete m_data;}
+  if(m_data!=NULL){delete m_data;}
   m_data = new ICFloat(value);
 }
 
 void ICLatexTabularCell::set(double value){
-  if(m_data==NULL){delete m_data;}
+  if(m_data!=NULL){delete m_data;}
   m_data = new ICDouble(value);
 }
 
 void ICLatexTabularCell::set(std::string value){
-  if(m_data==NULL){delete m_data;}
+  if(m_data!=NULL){delete m_data;}
   m_data = new ICString(value);
 }
 
 string ICLatexTabularCell::toString(){
 
   string out="";
+
+  if(m_data==NULL){return out;}
   
-  if     (m_data->getType() == kBool){
+  if(m_data->getType() == kBool){
     ICBool* p = (ICBool*) m_data;
     if(p->get()){out = "1";}
     else        {out = "0";}
