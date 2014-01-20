@@ -94,6 +94,15 @@ void ICLatexTabular::setCellContent(int iRow,int iCol,string value){
   }
 }
 
+void ICLatexTabular::setCellPrecision(int iRow,int iCol,std::string value){
+
+  if(isCoordinateValid(iRow,iCol)){
+    ((m_rows[iRow])[iCol]).setCellPrecision(value);
+  }else{
+    cout << "ERROR: Request tabular position is out of bounds." << endl;
+  }  
+}
+
 void ICLatexTabular::setCellColor(int iRow,int iCol,string value){
   
   if(isCoordinateValid(iRow,iCol)){
@@ -111,7 +120,16 @@ void ICLatexTabular::setColumnDecorationAfter (int iCol,std::string value){m_col
 void ICLatexTabular::setRowDecorationBefore(int iRow,std::string value){m_rowsDecoration[iRow]=value;}
 
 void ICLatexTabular::setRowDecorationAfter (int iRow,std::string value){m_rowsDecoration[iRow+1]=value;}
-  
+
+void ICLatexTabular::setTabularPrecision(std::string value){
+ 
+  for(int iRow=0; iRow<int(m_rows.size()); iRow++){      
+    for(int iCol=0; iCol<int(m_rows[0].size()); iCol++){
+      ((m_rows[iRow])[iCol]).setCellPrecision(value);      
+    }  
+  }
+}
+
 string ICLatexTabular::toStringEnvBegin(){
 
   string out = getRequiredPackagesString();
