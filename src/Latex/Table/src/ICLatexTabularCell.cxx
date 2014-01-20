@@ -57,6 +57,15 @@ void ICLatexTabularCell::setCellContent(std::string value){
   m_data = new ICString(value);
 }
 
+void ICLatexTabularCell::setCellPrecision(std::string color){
+  m_precision = color;  
+}
+
+std::string ICLatexTabularCell::getCellPrecision(){
+  return m_precision;
+}
+
+
 void ICLatexTabularCell::setCellColor(std::string color){
   m_cellColor = color;  
 }
@@ -78,19 +87,23 @@ string ICLatexTabularCell::toString(){
   }
   else if(m_data->getType() == kInt){
     ICInt* p = (ICInt*) m_data;
-    out = Form("%i",p->get());
+    string printString = Form("%%%si",m_precision.c_str());
+    out = Form(printString.c_str(),p->get());
   }
   else if(m_data->getType() == kUnsigned){
     ICUnsigned* p = (ICUnsigned*) m_data;
-    out = Form("%i",p->get());    
+    string printString = Form("%%%si",m_precision.c_str());
+    out = Form(printString.c_str(),p->get());
   }
   else if(m_data->getType() == kFloat){
     ICFloat* p = (ICFloat*) m_data;
-    out = Form("%f",p->get());
+    string printString = Form("%%%sf",m_precision.c_str());
+    out = Form(printString.c_str(),p->get());
   }
   else if(m_data->getType() == kDouble){
     ICDouble* p = (ICDouble*) m_data;
-    out = Form("%f",p->get());
+    string printString = Form("%%%sf",m_precision.c_str());
+    out = Form(printString.c_str(),p->get());
   }  
   else if(m_data->getType() == kString){
     ICString* p = (ICString*) m_data;

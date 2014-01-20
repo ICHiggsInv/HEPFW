@@ -27,6 +27,9 @@ public:
   void setCellContent(double      value);
   void setCellContent(std::string value);
   
+  void        setCellPrecision(std::string precision);
+  std::string getCellPrecision();  
+  
   void        setCellColor(std::string color);
   std::string getCellColor();
   
@@ -37,6 +40,7 @@ public:
 private:
   
   ICDataType* m_data;
+  std::string m_precision;
   std::string m_cellColor;
   
 };
