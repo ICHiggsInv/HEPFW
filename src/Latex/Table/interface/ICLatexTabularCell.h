@@ -20,12 +20,16 @@ public:
   
   ~ICLatexTabularCell();
   
-  void set(bool        value);
-  void set(int         value);
-  void set(unsigned    value);
-  void set(float       value);
-  void set(double      value);
-  void set(std::string value);
+  void setCellContent(bool        value);
+  void setCellContent(int         value);
+  void setCellContent(unsigned    value);
+  void setCellContent(float       value);
+  void setCellContent(double      value);
+  void setCellContent(std::string value);
+  
+  void        setCellColor(std::string color);
+  std::string getCellColor();
+  
   
   std::string toString();
   
@@ -33,7 +37,8 @@ public:
 private:
   
   ICDataType* m_data;
-
+  std::string m_cellColor;
+  
 };
 
 #endif

@@ -27,34 +27,42 @@ ICLatexTabularCell::~ICLatexTabularCell(){
   if(m_data!=NULL){delete m_data;}
 }
 
-void ICLatexTabularCell::set(bool value){
+void ICLatexTabularCell::setCellContent(bool value){
   if(m_data!=NULL){delete m_data;}
   m_data = new ICBool(value);
 }
 
-void ICLatexTabularCell::set(int value){
+void ICLatexTabularCell::setCellContent(int value){
   if(m_data!=NULL){delete m_data;}
   m_data = new ICInt(value);
 }
 
-void ICLatexTabularCell::set(unsigned value){
+void ICLatexTabularCell::setCellContent(unsigned value){
   if(m_data!=NULL){delete m_data;}
   m_data = new ICUnsigned(value);
 }
 
-void ICLatexTabularCell::set(float value){
+void ICLatexTabularCell::setCellContent(float value){
   if(m_data!=NULL){delete m_data;}
   m_data = new ICFloat(value);
 }
 
-void ICLatexTabularCell::set(double value){
+void ICLatexTabularCell::setCellContent(double value){
   if(m_data!=NULL){delete m_data;}
   m_data = new ICDouble(value);
 }
 
-void ICLatexTabularCell::set(std::string value){
+void ICLatexTabularCell::setCellContent(std::string value){
   if(m_data!=NULL){delete m_data;}
   m_data = new ICString(value);
+}
+
+void ICLatexTabularCell::setCellColor(std::string color){
+  m_cellColor = color;  
+}
+
+std::string ICLatexTabularCell::getCellColor(){
+  return m_cellColor;
 }
 
 string ICLatexTabularCell::toString(){
