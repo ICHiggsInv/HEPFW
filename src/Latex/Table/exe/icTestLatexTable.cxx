@@ -30,15 +30,15 @@ int main(int argc, char *argv[]){
   tabular0.setRowDecorationBefore(2,"\\hline");
   tabular0.setRowDecorationAfter (2,"\\hline");
 
-  tabular0.set(0,0," ");
-  tabular0.set(0,1,"A");
-  tabular0.set(0,2,"B");
-  tabular0.set(1,0,"X");
-  tabular0.set(1,1,1);
-  tabular0.set(1,2,2.);  
-  tabular0.set(2,0,"Y");
-  tabular0.set(2,1,3);
-  tabular0.set(2,2,4);  
+  tabular0.setCellContent(0,0," ");
+  tabular0.setCellContent(0,1,"A");
+  tabular0.setCellContent(0,2,"B");
+  tabular0.setCellContent(1,0,"X");
+  tabular0.setCellContent(1,1,1);
+  tabular0.setCellContent(1,2,2.);  
+  tabular0.setCellContent(2,0,"Y");
+  tabular0.setCellContent(2,1,3);
+  tabular0.setCellContent(2,2,4);  
 
   table0.innerObjects.push_back(&tabular0);
   
