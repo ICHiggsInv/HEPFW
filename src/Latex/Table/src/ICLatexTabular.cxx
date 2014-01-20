@@ -31,69 +31,79 @@ void ICLatexTabular::init(){
   
 }
 
-void ICLatexTabular::set(int iRow,int iCol,bool value){
+void ICLatexTabular::setCellContent(int iRow,int iCol,bool value){
   
   if(isCoordinateValid(iRow,iCol)){
-    ((m_rows[iRow])[iCol]).set(value);
+    ((m_rows[iRow])[iCol]).setCellContent(value);
   }else{
     cout << "ERROR: Request tabular position is out of bounds." << endl;
   }
 }
 
-void ICLatexTabular::set(int iRow,int iCol,int value){
+void ICLatexTabular::setCellContent(int iRow,int iCol,int value){
   
   if(isCoordinateValid(iRow,iCol)){
-    ((m_rows[iRow])[iCol]).set(value);
+    ((m_rows[iRow])[iCol]).setCellContent(value);
   }else{
     cout << "ERROR: Request tabular position is out of bounds." << endl;
   }
 }
 
-void ICLatexTabular::set(int iRow,int iCol,unsigned value){
+void ICLatexTabular::setCellContent(int iRow,int iCol,unsigned value){
   
   if(isCoordinateValid(iRow,iCol)){
-    ((m_rows[iRow])[iCol]).set(value);
+    ((m_rows[iRow])[iCol]).setCellContent(value);
   }else{
     cout << "ERROR: Request tabular position is out of bounds." << endl;
   }
 }
 
-void ICLatexTabular::set(int iRow,int iCol,float value){
+void ICLatexTabular::setCellContent(int iRow,int iCol,float value){
   
   if(isCoordinateValid(iRow,iCol)){
-    ((m_rows[iRow])[iCol]).set(value);
+    ((m_rows[iRow])[iCol]).setCellContent(value);
   }else{
     cout << "ERROR: Request tabular position is out of bounds." << endl;
   }
 }
 
-void ICLatexTabular::set(int iRow,int iCol,double value){
+void ICLatexTabular::setCellContent(int iRow,int iCol,double value){
   
   if(isCoordinateValid(iRow,iCol)){
-    ((m_rows[iRow])[iCol]).set(value);
+    ((m_rows[iRow])[iCol]).setCellContent(value);
   }else{
     cout << "ERROR: Request tabular position is out of bounds." << endl;
   }
 }
 
-void ICLatexTabular::set(int iRow,int iCol,const char* value){
+void ICLatexTabular::setCellContent(int iRow,int iCol,const char* value){
 
   if(isCoordinateValid(iRow,iCol)){
-    ((m_rows[iRow])[iCol]).set(string(value));
+    ((m_rows[iRow])[iCol]).setCellContent(string(value));
   }else{
     cout << "ERROR: Request tabular position is out of bounds." << endl;
   }  
 }
 
-void ICLatexTabular::set(int iRow,int iCol,string value){
+void ICLatexTabular::setCellContent(int iRow,int iCol,string value){
 
   if(isCoordinateValid(iRow,iCol)){
-    ((m_rows[iRow])[iCol]).set(value);
+    ((m_rows[iRow])[iCol]).setCellContent(value);
   }else{
     cout << "ERROR: Request tabular position is out of bounds." << endl;
   }
 }
+
+void ICLatexTabular::setCellColor(int iRow,int iCol,string value){
   
+  if(isCoordinateValid(iRow,iCol)){
+    ((m_rows[iRow])[iCol]).setCellColor(value);
+    addRequiredPackage("xcolor");
+  }else{
+    cout << "ERROR: Request tabular position is out of bounds." << endl;
+  }
+}
+
 void ICLatexTabular::setColumnDecorationBefore(int iCol,std::string value){m_columnDecoration[iCol]=value;}
 
 void ICLatexTabular::setColumnDecorationAfter (int iCol,std::string value){m_columnDecoration[iCol+1]=value;}
@@ -104,10 +114,11 @@ void ICLatexTabular::setRowDecorationAfter (int iRow,std::string value){m_rowsDe
   
 string ICLatexTabular::toStringEnvBegin(){
 
-  string out;
+  string out = getRequiredPackagesString();
+  out += "\n";
 
   // Beginning environment
-  out = "\\begin{"+m_name+"}";
+  out += "\\begin{"+m_name+"}";
 
   // Adding position options
   if(m_position != ""){
