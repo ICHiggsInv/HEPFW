@@ -1,6 +1,10 @@
 #include "Plots/Tools/interface/ICPlotCollection.h"
 
 #include "TLegend.h"
+#include "TH1F.h"
+#include "TH1D.h"
+#include "TH2F.h"
+#include "TH2D.h"
 
 using namespace std;
 
@@ -9,6 +13,15 @@ ICPlotCollection<PlotIndex,PlotType>::ICPlotCollection(){
 
   drawLegend_=false;
 
+}
+
+template <class PlotIndex,class PlotType>
+ICPlotCollection<PlotIndex,PlotType>::ICPlotCollection(map<PlotIndex,TFile*> samples,std::string path){
+  
+  
+  for(typename map<PlotIndex,TFile*>::iterator i=samples.begin(); i!=samples.end(); i++){
+    (*this)[i->first] = (PlotType*) i->second->Get(path.c_str());
+  } 
 }
 
 template <class PlotIndex,class PlotType>
@@ -110,6 +123,16 @@ void ICPlotCollection<PlotIndex,PlotType>::Scale(double factor){
 
 //___________________________________________________________
 template <class PlotIndex,class PlotType>
+void ICPlotCollection<PlotIndex,PlotType>::Scale(map<PlotIndex,double> weights){
+  
+  // Looping over plots
+  for(typename map<PlotIndex,double>::iterator i=weights.begin(); i!=weights.end(); i++){
+    (*this)[i->first]->Scale(i->second);
+  }  
+}
+
+//___________________________________________________________
+template <class PlotIndex,class PlotType>
 void ICPlotCollection<PlotIndex,PlotType>::ScaleTo1(){
 
   // Looping over plots
@@ -125,6 +148,23 @@ void ICPlotCollection<PlotIndex,PlotType>::Rebin(int factor){
   for(typename map<PlotIndex,PlotType*>::iterator i=this->begin(); i!=this->end(); i++){
     i->second->Rebin(factor);
   }
+}
+
+//___________________________________________________________
+template <class PlotIndex,class PlotType>
+PlotType* ICPlotCollection<PlotIndex,PlotType>::getMerged(string name, vector<PlotIndex> selection){
+  
+  PlotType* out = NULL;  
+  
+  if(selection.size()==0){return out;}
+  
+  out = (PlotType*) (*this)[selection[0]]->Clone("name");
+  
+  for(unsigned i=1; i<selection.size(); i++){
+    out->Add((*this)[selection[i]]);
+  }
+  
+  return out;
 }
 
 //___________________________________________________________
@@ -172,3 +212,18 @@ void ICPlotCollection<PlotIndex,PlotType>::Draw(TCanvas *canv, std::vector< std:
   }
   if(drawLegend_){l->Draw();}
 }
+
+//The explicit instantiation part
+template class ICPlotCollection<int,TH1I>;
+template class ICPlotCollection<int,TH1F>;
+template class ICPlotCollection<int,TH1D>;
+template class ICPlotCollection<int,TH2I>;
+template class ICPlotCollection<int,TH2F>;
+template class ICPlotCollection<int,TH2D>;
+
+template class ICPlotCollection<string,TH1I>;
+template class ICPlotCollection<string,TH1F>;
+template class ICPlotCollection<string,TH1D>;
+template class ICPlotCollection<string,TH2I>;
+template class ICPlotCollection<string,TH2F>;
+template class ICPlotCollection<string,TH2D>;

@@ -1,7 +1,8 @@
-#ifndef ICTOOLS_PLOTS_ICPLOTCOLLECTION
-#define ICTOOLS_PLOTS_ICPLOTCOLLECTION
+#ifndef PLOTS_TOOLS_ICPLOTCOLLECTION
+#define PLOTS_TOOLS_ICPLOTCOLLECTION
 
 #include "TCanvas.h"
+#include "TFile.h"
 
 #include <map>
 
@@ -11,7 +12,8 @@ class ICPlotCollection : public std::map<PlotIndex,PlotType*> {
 public:
 
   ICPlotCollection();
-
+  ICPlotCollection(std::map<PlotIndex,TFile*> samples,std::string path);
+  
   void SetXaxisRangeUser(double min,double max);
   void SetXaxisTitle(std::string title);
 
@@ -26,9 +28,12 @@ public:
   
   void Sumw2();
   void Scale(double factor);
+  void Scale(std::map<PlotIndex,double> weights);
   void ScaleTo1();
   void Rebin(int factor);
 
+  PlotType* getMerged(std::string name,std::vector<PlotIndex> selection);
+  
   void Draw(TCanvas *canv,std::vector< std::pair<PlotIndex,Option_t*> > attributes);
 
 private:
