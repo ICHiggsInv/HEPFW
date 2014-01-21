@@ -113,13 +113,41 @@ void ICLatexTabular::setCellColor(int iRow,int iCol,string value){
   }
 }
 
-void ICLatexTabular::setColumnDecorationBefore(int iCol,std::string value){m_columnDecoration[iCol]=value;}
+void ICLatexTabular::setColumnDecorationBefore(int iCol,std::string value){
+  
+  if(iCol<0 || iCol>=int(m_rows[0].size())){
+    cout << "ERROR: Request column position is out of bounds." << endl;
+  }else{
+    m_columnDecoration[iCol]=value;
+  }
+}
 
-void ICLatexTabular::setColumnDecorationAfter (int iCol,std::string value){m_columnDecoration[iCol+1]=value;}
+void ICLatexTabular::setColumnDecorationAfter (int iCol,std::string value){
+  
+  if(iCol<0 || iCol>=int(m_rows[0].size())){
+    cout << "ERROR: Request column position is out of bounds." << endl;
+  }else{
+    m_columnDecoration[iCol+1]=value;
+  }
+}
 
-void ICLatexTabular::setRowDecorationBefore(int iRow,std::string value){m_rowsDecoration[iRow]=value;}
+void ICLatexTabular::setRowDecorationBefore(int iRow,std::string value){
+  
+  if(iRow<0 || iRow>=int(m_rows.size())){
+    cout << "ERROR: Request row position is out of bounds." << endl;
+  }else{
+    m_rowsDecoration[iRow]=value;
+  }
+}
 
-void ICLatexTabular::setRowDecorationAfter (int iRow,std::string value){m_rowsDecoration[iRow+1]=value;}
+void ICLatexTabular::setRowDecorationAfter (int iRow,std::string value){
+  
+  if(iRow<0 || iRow>=int(m_rows.size())){  
+    cout << "ERROR: Request row position is out of bounds." << endl;
+  }else{
+    m_rowsDecoration[iRow+1]=value;
+  }
+}
 
 void ICLatexTabular::setTabularPrecision(std::string value){
  
