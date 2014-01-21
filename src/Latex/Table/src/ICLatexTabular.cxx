@@ -149,6 +149,22 @@ void ICLatexTabular::setRowDecorationAfter (int iRow,std::string value){
   }
 }
 
+void ICLatexTabular::setTabularColumnDecoration(std::string value){
+
+ setColumnDecorationBefore(0,value);
+  for(int iCol=0; iCol<int(m_rows[0].size()); iCol++){
+    setColumnDecorationAfter(iCol,value);
+  }  
+}
+
+void ICLatexTabular::setTabularRowDecoration(std::string value){
+  
+  setRowDecorationBefore(0,value);
+  for(int iRow=0; iRow<int(m_rows.size()); iRow++){      
+    setRowDecorationAfter(iRow,value);
+  }
+}
+
 void ICLatexTabular::setTabularPrecision(std::string value){
  
   for(int iRow=0; iRow<int(m_rows.size()); iRow++){      

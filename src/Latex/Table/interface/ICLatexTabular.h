@@ -29,7 +29,9 @@ public:
   void setRowDecorationBefore(int iRow,std::string value);
   void setRowDecorationAfter (int iRow,std::string value);
 
-  void setTabularPrecision(std::string value);
+  void setTabularColumnDecoration(std::string value);
+  void setTabularRowDecoration   (std::string value);
+  void setTabularPrecision       (std::string value);
 
   //void addRowAfter (int index);
   //void addRowBefore(int index);
