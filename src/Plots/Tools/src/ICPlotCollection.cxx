@@ -121,13 +121,19 @@ void ICPlotCollection<PlotIndex,PlotType>::Scale(double factor){
   }
 }
 
+#include <iostream>
+
 //___________________________________________________________
 template <class PlotIndex,class PlotType>
 void ICPlotCollection<PlotIndex,PlotType>::Scale(map<PlotIndex,double> weights){
   
   // Looping over plots
   for(typename map<PlotIndex,double>::iterator i=weights.begin(); i!=weights.end(); i++){
-    (*this)[i->first]->Scale(i->second);
+
+    // Protection for when weights have elements not present in this map
+    if(this->find(i->first) != this->end()){
+      (*this)[i->first]->Scale(i->second);
+    }
   }  
 }
 
@@ -158,10 +164,23 @@ PlotType* ICPlotCollection<PlotIndex,PlotType>::getMerged(string name, vector<Pl
   
   if(selection.size()==0){return out;}
   
-  out = (PlotType*) (*this)[selection[0]]->Clone("name");
+  int counter=0;
   
-  for(unsigned i=1; i<selection.size(); i++){
-    out->Add((*this)[selection[i]]);
+  for(unsigned i=0; i<selection.size(); i++){
+    
+    // Protection for when asking to merge elements not present on this map 
+    if(this->find(selection[i]) != this->end()){
+    
+      if(counter==0){
+        out = (PlotType*) (*this)[selection[i]]->Clone("name");
+        counter++;
+      }else{
+        out->Add((*this)[selection[i]]);
+      }
+      
+    }else{
+      cout << "Could not find plots with identifier: " << selection[i] << endl;
+    }
   }
   
   return out;
