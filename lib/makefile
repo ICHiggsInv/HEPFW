@@ -81,6 +81,7 @@ bin: $(BINS)
 	@echo "----->Producing binary: " $@
 	@$(shell mkdir -p $(dir $@);)
 	@$(MAKEDEPEND) -MT $@ -o $*.d $<
+	@$(shell rm -f ../bin/$(notdir $(subst .exe,,$@));)
 	@$(CXX) -o $@ $(CXXFLAGS) $< $(LIBS) `root-config --cflags --libs`
 	@$(shell ln -s $(BASEDIR)/$@ ../bin/$(notdir $(subst .exe,,$@));)
 
