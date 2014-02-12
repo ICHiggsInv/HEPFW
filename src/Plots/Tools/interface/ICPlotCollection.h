@@ -13,34 +13,41 @@ public:
 
   ICPlotCollection();
   ICPlotCollection(std::map<PlotIndex,TFile*> samples,std::string path);
-  
-  void SetXaxisRangeUser(double min,double max);
-  void SetXaxisTitle(std::string title);
 
-  void SetYaxisRangeUser(double min,double max);
-  void SetYaxisTitle(std::string title);
+  // X-Axis  
+  void setXaxisRangeUser(double min,double max);
+  void setXaxisTitle(std::string title);
 
-  void SetFillColor  (std::map<PlotIndex,int> attributes);
-  void SetFillStyle  (std::map<PlotIndex,int> attributes);
-  void SetMarkerColor(std::map<PlotIndex,int> attributes);
-  void SetMarkerStyle(std::map<PlotIndex,int> attributes);
-  void SetLegend(std::map<PlotIndex,std::string> legend,std::map<PlotIndex,std::string> legendAttributes);
+  // Y-Axis
+  void setYaxisRangeUser(double min,double max);
+  void setYaxisTitle(std::string title);
   
-  void Sumw2();
-  void Scale(double factor);
-  void Scale(std::map<PlotIndex,double> weights);
-  void ScaleTo1();
-  void Rebin(int factor);
+  // Fill
+  void setFillColor  (std::map<PlotIndex,int> attributes);
+  void setFillStyle  (std::map<PlotIndex,int> attributes);
+
+  // Marker
+  void setMarkerColor(std::map<PlotIndex,int> attributes);
+  void setMarkerStyle(std::map<PlotIndex,int> attributes);
+  void setMarkerSize(std::map<PlotIndex,int> attributes);  
+
+  void setLegend     (std::map<PlotIndex,std::string> legend,std::map<PlotIndex,std::string> legendAttributes);
+  
+  void scale   (double factor);
+  void scale   (std::map<PlotIndex,double> weights);
+  void scaleTo1();
+  void sumw2();
+  void rebin(int factor);
 
   PlotType* getMerged(std::string name,std::vector<PlotIndex> selection);
   
-  void Draw(TCanvas *canv,std::vector< std::pair<PlotIndex,Option_t*> > attributes);
+  void draw(TCanvas *canv,std::vector< std::pair<PlotIndex,Option_t*> > attributes);
 
 private:
 
-  bool drawLegend_;
-  std::map<PlotIndex,std::string> legend_;
-  std::map<PlotIndex,std::string> legendAttributes_;
+  bool m_drawLegend;
+  std::map<PlotIndex,std::string> m_legendText;
+  std::map<PlotIndex,std::string> m_legendOptions;
   
 };
 

@@ -8,10 +8,13 @@
 
 using namespace std;
 
+/********************************************//**
+ * Constructor for this class
+ ***********************************************/
 template <class PlotIndex,class PlotType>
 ICPlotCollection<PlotIndex,PlotType>::ICPlotCollection(){
 
-  drawLegend_=false;
+  m_drawLegend=false;
 
 }
 
@@ -25,7 +28,7 @@ ICPlotCollection<PlotIndex,PlotType>::ICPlotCollection(map<PlotIndex,TFile*> sam
 }
 
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::SetXaxisRangeUser(double min,double max){
+void ICPlotCollection<PlotIndex,PlotType>::setXaxisRangeUser(double min,double max){
 
   // Looping over plots
   for(typename map<PlotIndex,PlotType*>::iterator i=this->begin(); i!=this->end(); i++){
@@ -34,7 +37,7 @@ void ICPlotCollection<PlotIndex,PlotType>::SetXaxisRangeUser(double min,double m
 }
 
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::SetXaxisTitle(std::string title){
+void ICPlotCollection<PlotIndex,PlotType>::setXaxisTitle(std::string title){
 
   // Looping over plots
   for(typename map<PlotIndex,PlotType*>::iterator i=this->begin(); i!=this->end(); i++){
@@ -43,7 +46,7 @@ void ICPlotCollection<PlotIndex,PlotType>::SetXaxisTitle(std::string title){
 }
 
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::SetYaxisRangeUser(double min,double max){
+void ICPlotCollection<PlotIndex,PlotType>::setYaxisRangeUser(double min,double max){
 
   // Looping over plots
   for(typename map<PlotIndex,PlotType*>::iterator i=this->begin(); i!=this->end(); i++){
@@ -52,7 +55,7 @@ void ICPlotCollection<PlotIndex,PlotType>::SetYaxisRangeUser(double min,double m
 }
 
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::SetYaxisTitle(std::string title){
+void ICPlotCollection<PlotIndex,PlotType>::setYaxisTitle(std::string title){
 
   // Looping over plots
   for(typename map<PlotIndex,PlotType*>::iterator i=this->begin(); i!=this->end(); i++){
@@ -60,8 +63,13 @@ void ICPlotCollection<PlotIndex,PlotType>::SetYaxisTitle(std::string title){
   }
 }
 
+
+/********************************************//**
+ * Set fill colour for all plots in this container
+ * @param attributes map of colours to be applied to each plot 
+ ***********************************************/
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::SetFillColor  (std::map<PlotIndex,int> attributes){
+void ICPlotCollection<PlotIndex,PlotType>::setFillColor  (std::map<PlotIndex,int> attributes){
 
   for(typename std::map<PlotIndex,int>::iterator i=attributes.begin(); i!=attributes.end(); i++){
     if((*this)[i->first])
@@ -70,41 +78,70 @@ void ICPlotCollection<PlotIndex,PlotType>::SetFillColor  (std::map<PlotIndex,int
   }
 }
 
+/********************************************//**
+* Set fill style for all plots in this container
+* @param attributes map of styles to be applied to each plot 
+***********************************************/
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::SetFillStyle  (std::map<PlotIndex,int> attributes){
+void ICPlotCollection<PlotIndex,PlotType>::setFillStyle  (std::map<PlotIndex,int> attributes){
 
   for(typename std::map<PlotIndex,int>::iterator i=attributes.begin(); i!=attributes.end(); i++){
     (*this)[i->first]->SetFillStyle(i->second);
   }
 }
 
+/********************************************//**
+* Set marker colour for all plots in this container
+* @param attributes map of colours to be applied to each plot markers 
+***********************************************/
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::SetMarkerColor(std::map<PlotIndex,int> attributes){
+void ICPlotCollection<PlotIndex,PlotType>::setMarkerColor(std::map<PlotIndex,int> attributes){
 
   for(typename std::map<PlotIndex,int>::iterator i=attributes.begin(); i!=attributes.end(); i++){
     (*this)[i->first]->SetMarkerColor(i->second);
   }
 }
 
+/********************************************//**
+* Set marker style for all plots in this container
+* @param attributes map of styles to be applied to each plot markers 
+***********************************************/
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::SetMarkerStyle(std::map<PlotIndex,int> attributes){
+void ICPlotCollection<PlotIndex,PlotType>::setMarkerStyle(std::map<PlotIndex,int> attributes){
 
   for(typename std::map<PlotIndex,int>::iterator i=attributes.begin(); i!=attributes.end(); i++){
     (*this)[i->first]->SetMarkerStyle(i->second);
   }
 }
 
+/********************************************//**
+ * Set marker size for all plots in this container
+ * @param attributes map of sizes to be applied to each plot markers 
+ ***********************************************/
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::SetLegend(std::map<PlotIndex,std::string> legend,
-                                                     std::map<PlotIndex,std::string> legendAttributes){
+void ICPlotCollection<PlotIndex,PlotType>::setMarkerSize(std::map<PlotIndex,int> attributes){
+  
+  for(typename std::map<PlotIndex,int>::iterator i=attributes.begin(); i!=attributes.end(); i++){
+    (*this)[i->first]->SetMarkerSize(i->second);
+  }
+}
 
-  drawLegend_       = true;
-  legend_           = legend;
-  legendAttributes_ = legendAttributes;
+/********************************************//**
+ * Passing legend text and option to be draw when calling draw(...)
+ * @param legend map of sizes to be applied to each plot markers
+ * @param options options of each entry of the legend 
+ ***********************************************/
+template <class PlotIndex,class PlotType>
+void ICPlotCollection<PlotIndex,PlotType>::setLegend(std::map<PlotIndex,std::string> legend,
+                                                     std::map<PlotIndex,std::string> options){
+
+  m_drawLegend    = true;
+  m_legendText    = legend;
+  m_legendOptions = options;
 }
 
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::Sumw2(){
+void ICPlotCollection<PlotIndex,PlotType>::sumw2(){
 
   // Looping over plots
   for(typename map<PlotIndex,PlotType*>::iterator i=this->begin(); i!=this->end(); i++){
@@ -113,7 +150,7 @@ void ICPlotCollection<PlotIndex,PlotType>::Sumw2(){
 }
 
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::Scale(double factor){
+void ICPlotCollection<PlotIndex,PlotType>::scale(double factor){
 
   // Looping over plots
   for(typename map<PlotIndex,PlotType*>::iterator i=this->begin(); i!=this->end(); i++){
@@ -125,7 +162,7 @@ void ICPlotCollection<PlotIndex,PlotType>::Scale(double factor){
 
 //___________________________________________________________
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::Scale(map<PlotIndex,double> weights){
+void ICPlotCollection<PlotIndex,PlotType>::scale(map<PlotIndex,double> weights){
   
   // Looping over plots
   for(typename map<PlotIndex,double>::iterator i=weights.begin(); i!=weights.end(); i++){
@@ -139,7 +176,7 @@ void ICPlotCollection<PlotIndex,PlotType>::Scale(map<PlotIndex,double> weights){
 
 //___________________________________________________________
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::ScaleTo1(){
+void ICPlotCollection<PlotIndex,PlotType>::scaleTo1(){
 
   // Looping over plots
   for(typename map<PlotIndex,PlotType*>::iterator i=this->begin(); i!=this->end(); i++){
@@ -149,7 +186,7 @@ void ICPlotCollection<PlotIndex,PlotType>::ScaleTo1(){
 
 //___________________________________________________________
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::Rebin(int factor){
+void ICPlotCollection<PlotIndex,PlotType>::rebin(int factor){
   // Looping over plots
   for(typename map<PlotIndex,PlotType*>::iterator i=this->begin(); i!=this->end(); i++){
     i->second->Rebin(factor);
@@ -188,7 +225,7 @@ PlotType* ICPlotCollection<PlotIndex,PlotType>::getMerged(string name, vector<Pl
 
 //___________________________________________________________
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::Draw(TCanvas *canv, std::vector< std::pair<PlotIndex,Option_t*> > attributes){
+void ICPlotCollection<PlotIndex,PlotType>::draw(TCanvas *canv, std::vector< std::pair<PlotIndex,Option_t*> > attributes){
 
   double minValue=0;
   double maxValue=0;
@@ -211,28 +248,28 @@ void ICPlotCollection<PlotIndex,PlotType>::Draw(TCanvas *canv, std::vector< std:
   }
 
   // Updating the vertical
-  SetYaxisRangeUser(0,maxValue*1.25);
+  setYaxisRangeUser(0,maxValue*1.25);
 
   // Selecting input canvas for drawing
   canv->cd();
 
-  if(drawLegend_ && legend_.size()==legendAttributes_.size()){
+  if(m_drawLegend && m_legendText.size()==m_legendOptions.size()){
+   
     l = new TLegend(0.7,0.75,0.9,0.85);
-  }else{
-    drawLegend_=false;
-  }
-
-  for(unsigned i=0; i<attributes.size(); i++){
-    (*this)[attributes[i].first]->Draw(attributes[i].second);
-
-    if(drawLegend_){
-      l->AddEntry((*this)[attributes[i].first],legend_[attributes[i].first].c_str(),legendAttributes_[attributes[i].first].c_str());
+    
+    for(unsigned i=0; i<attributes.size(); i++){
+      (*this)[attributes[i].first]->Draw(attributes[i].second);
+      
+      if(m_drawLegend){
+        l->AddEntry((*this)[attributes[i].first],m_legendText[attributes[i].first].c_str(),m_legendOptions[attributes[i].first].c_str());
+      }
     }
+    
+    l->Draw();    
   }
-  if(drawLegend_){l->Draw();}
 }
 
-//The explicit instantiation part
+//The explicit instantiating part
 template class ICPlotCollection<int,TH1I>;
 template class ICPlotCollection<int,TH1F>;
 template class ICPlotCollection<int,TH1D>;
