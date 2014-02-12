@@ -6,10 +6,12 @@
 #include "TH2F.h"
 #include "TH2D.h"
 
+#include <iostream>
+
 using namespace std;
 
 /********************************************//**
- * Constructor for this class
+ * Defaults constructor for this class
  ***********************************************/
 template <class PlotIndex,class PlotType>
 ICPlotCollection<PlotIndex,PlotType>::ICPlotCollection(){
@@ -18,15 +20,27 @@ ICPlotCollection<PlotIndex,PlotType>::ICPlotCollection(){
 
 }
 
+/********************************************//**
+ * Constructor that will take a map of files and a path to a plot,
+ * open all files and retrive the plot stored at that path. 
+ * @param samples minimum value to be visible on this axis 
+ * @param path maximum value to be visible on this axis
+ ***********************************************/
 template <class PlotIndex,class PlotType>
 ICPlotCollection<PlotIndex,PlotType>::ICPlotCollection(map<PlotIndex,TFile*> samples,std::string path){
   
+  m_drawLegend=false;
   
   for(typename map<PlotIndex,TFile*>::iterator i=samples.begin(); i!=samples.end(); i++){
     (*this)[i->first] = (PlotType*) i->second->Get(path.c_str());
   } 
 }
 
+/********************************************//**
+ * Set x-axis user defined range (zooms plot to new range) from min to max
+ * @param min minimum value to be visible on this axis 
+ * @param max maximum value to be visible on this axis 
+ ***********************************************/
 template <class PlotIndex,class PlotType>
 void ICPlotCollection<PlotIndex,PlotType>::setXaxisRangeUser(double min,double max){
 
@@ -36,6 +50,10 @@ void ICPlotCollection<PlotIndex,PlotType>::setXaxisRangeUser(double min,double m
   }
 }
 
+/********************************************//**
+ * Set y-axis title (axis caption) for all plots in this container
+ * @param title title to be applied to x-axis of all plots
+ ***********************************************/
 template <class PlotIndex,class PlotType>
 void ICPlotCollection<PlotIndex,PlotType>::setXaxisTitle(std::string title){
 
@@ -45,6 +63,11 @@ void ICPlotCollection<PlotIndex,PlotType>::setXaxisTitle(std::string title){
   }
 }
 
+/********************************************//**
+ * Set y-axis user defined range (zooms plot to new range) from min to max
+ * @param min minimum value to be visible on this axis 
+ * @param max maximum value to be visible on this axis 
+ ***********************************************/
 template <class PlotIndex,class PlotType>
 void ICPlotCollection<PlotIndex,PlotType>::setYaxisRangeUser(double min,double max){
 
@@ -54,6 +77,10 @@ void ICPlotCollection<PlotIndex,PlotType>::setYaxisRangeUser(double min,double m
   }
 }
 
+/********************************************//**
+ * Set y-axis title (axis caption) for all plots in this container
+ * @param title title to be applied to y-axis of all plots
+ ***********************************************/
 template <class PlotIndex,class PlotType>
 void ICPlotCollection<PlotIndex,PlotType>::setYaxisTitle(std::string title){
 
@@ -140,6 +167,9 @@ void ICPlotCollection<PlotIndex,PlotType>::setLegend(std::map<PlotIndex,std::str
   m_legendOptions = options;
 }
 
+/********************************************//**
+ * Call Sumw2() method on all plots
+ ***********************************************/
 template <class PlotIndex,class PlotType>
 void ICPlotCollection<PlotIndex,PlotType>::sumw2(){
 
@@ -149,6 +179,10 @@ void ICPlotCollection<PlotIndex,PlotType>::sumw2(){
   }
 }
 
+/********************************************//**
+ * Scale all plots by a factor
+ * @param factor factor to multiply all plots
+ ***********************************************/
 template <class PlotIndex,class PlotType>
 void ICPlotCollection<PlotIndex,PlotType>::scale(double factor){
 
@@ -158,23 +192,30 @@ void ICPlotCollection<PlotIndex,PlotType>::scale(double factor){
   }
 }
 
-#include <iostream>
 
-//___________________________________________________________
+
+/********************************************//**
+ * Scale plots according to an input map of factors
+ * @param factors maps of factors indexed by keys to indicate to which plot they should be applied
+ ***********************************************/
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::scale(map<PlotIndex,double> weights){
+void ICPlotCollection<PlotIndex,PlotType>::scale(map<PlotIndex,double> factors){
   
   // Looping over plots
-  for(typename map<PlotIndex,double>::iterator i=weights.begin(); i!=weights.end(); i++){
+  for(typename map<PlotIndex,double>::iterator i=factors.begin(); i!=factors.end(); i++){
 
-    // Protection for when weights have elements not present in this map
+    // Protection for when factors have elements not present in this map
     if(this->find(i->first) != this->end()){
       (*this)[i->first]->Scale(i->second);
     }
   }  
 }
 
-//___________________________________________________________
+/********************************************//**
+ * Scale all contained plots to one by using plots built in Integral() function.
+ * 
+ * NOTE: The Integral() function does not take into account under and overflow bins.  
+ ***********************************************/
 template <class PlotIndex,class PlotType>
 void ICPlotCollection<PlotIndex,PlotType>::scaleTo1(){
 
@@ -184,7 +225,10 @@ void ICPlotCollection<PlotIndex,PlotType>::scaleTo1(){
   }
 }
 
-//___________________________________________________________
+/********************************************//**
+* Rebin all contained plots according to an input map of factors
+* @param factor factor to be used to rebin plots
+***********************************************/
 template <class PlotIndex,class PlotType>
 void ICPlotCollection<PlotIndex,PlotType>::rebin(int factor){
   // Looping over plots
@@ -193,7 +237,12 @@ void ICPlotCollection<PlotIndex,PlotType>::rebin(int factor){
   }
 }
 
-//___________________________________________________________
+/********************************************//**
+* Create and return new plots by adding a set of contained plots
+* @param name name for the output plots
+* @param selection vector with the identifiers of the plots to be added and returned 
+* @return plot resulting from adding all plots found on this contained matching the identifiers on the selection
+***********************************************/
 template <class PlotIndex,class PlotType>
 PlotType* ICPlotCollection<PlotIndex,PlotType>::getMerged(string name, vector<PlotIndex> selection){
   
@@ -223,17 +272,32 @@ PlotType* ICPlotCollection<PlotIndex,PlotType>::getMerged(string name, vector<Pl
   return out;
 }
 
-//___________________________________________________________
+/********************************************//**
+* Draw a subset of plots in this contained into an input TCanvas.
+* 
+* This method will take in a TCanvas pointer and draw in it histograms from
+* this container following the order and with the attributes present in the
+* input variable histograms.
+* 
+* Vertical axis user range will automatically be set to 125% of the maximum
+* value of any selected plot. This is to avoid plots being plotted out of bounds.
+* 
+* If defined legends will be draw on the top right corner.
+* 
+* @param canv input TCanvas where plots will be draw
+* @param histograms vector of pairs of (index,draw histograms) to be used on drawing.    
+* @return plot resulting from adding all plots found on this contained matching the identifiers on the selection
+***********************************************/
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::draw(TCanvas *canv, std::vector< std::pair<PlotIndex,Option_t*> > attributes){
+void ICPlotCollection<PlotIndex,PlotType>::draw(TCanvas *canv, std::vector< std::pair<PlotIndex,Option_t*> > histograms){
 
   double minValue=0;
   double maxValue=0;
   TLegend *l;
 
   // Loping over all the histograms to be drawn
-  for(unsigned i=0; i<attributes.size(); i++){
-    PlotType *plot = (*this)[attributes[i].first];
+  for(unsigned i=0; i<histograms.size(); i++){
+    PlotType *plot = (*this)[histograms[i].first];
 
     if(i==0){
       minValue=plot->GetBinContent(plot->GetMinimumBin());
@@ -257,11 +321,11 @@ void ICPlotCollection<PlotIndex,PlotType>::draw(TCanvas *canv, std::vector< std:
    
     l = new TLegend(0.7,0.75,0.9,0.85);
     
-    for(unsigned i=0; i<attributes.size(); i++){
-      (*this)[attributes[i].first]->Draw(attributes[i].second);
+    for(unsigned i=0; i<histograms.size(); i++){
+      (*this)[histograms[i].first]->Draw(histograms[i].second);
       
       if(m_drawLegend){
-        l->AddEntry((*this)[attributes[i].first],m_legendText[attributes[i].first].c_str(),m_legendOptions[attributes[i].first].c_str());
+        l->AddEntry((*this)[histograms[i].first],m_legendText[histograms[i].first].c_str(),m_legendOptions[histograms[i].first].c_str());
       }
     }
     
