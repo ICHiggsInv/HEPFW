@@ -94,6 +94,9 @@ clean:
 	@rm -f $(BINS)
 	@$(foreach bin,$(BINS),rm -f ../bin/$(notdir $(subst .exe,,$(bin)));)
 
+docs:
+	@$(shell doxygen Doxyfile;)
+
 test:
 	@echo "PKGS : "$(PKGS)
 	@echo "SKGS : "$(SPKG)
