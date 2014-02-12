@@ -4,6 +4,11 @@
 
 using namespace std;
 
+/********************************************//**
+ * Constructor for this class
+ * @param nRow number of rows for this tabular.
+ * @param nCol number of columns for this tabular.
+ ***********************************************/
 ICLatexTabular::ICLatexTabular(int nRow,int nCol){
   
   init();
