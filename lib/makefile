@@ -93,6 +93,8 @@ clean:
 	@echo "-----> Cleaning Binaries"
 	@rm -f $(BINS)
 	@$(foreach bin,$(BINS),rm -f ../bin/$(notdir $(subst .exe,,$(bin)));)
+	@echo "-----> Cleaning Documentation"
+	@rm -fr ../html
 
 docs:
 	@$(shell doxygen Doxyfile;)
