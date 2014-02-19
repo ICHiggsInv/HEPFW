@@ -41,7 +41,7 @@ int main(int argc, char *argv[]){
   string  outputFileType = "png";  
   
   cout << "*================================================*" << endl;
-  cout << "|                  icRootToImg                   |" << endl;
+  cout << "|                  icTFileToImg                  |" << endl;
   cout << "|                                                |" << endl;  
   cout << "| Program to export all histograms and canvas to |" << endl;
   cout << "| image file automatically.                      |" << endl;
