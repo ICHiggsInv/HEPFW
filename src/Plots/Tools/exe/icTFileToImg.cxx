@@ -34,6 +34,8 @@
 
 using namespace std;
 
+
+
 int main(int argc, char *argv[]){
 
   TString inputFile = "";
@@ -58,9 +60,22 @@ int main(int argc, char *argv[]){
         outputDir = argv[i+1]; i++;
       }
       else if(string(argv[i])=="-t" || string(argv[i])=="--outputFileType"){
-        outputDir = argv[i+1]; i++;
+        outputFileType = argv[i+1]; i++;
+      }
+      else{
+      
+        cout << "Correct usage is: " << argv[0] << " [-o|--option] [value] "<< endl; 
+        cout << "Possible option:" << endl;
+        cout << "-i --inputFile      * Input file to be processed" << endl;
+        cout << "-o --outputDir      * Output directory to which to output plots found" << endl;
+        cout << "-t --outputFileType * Output file type for all images to be produced. All ROOT supported file types are supported (pdf, png, jpg, etc)." << endl;
+      
+        return 1;
       }
     }
+  }else{
+    cout << "Correct usage is: " << argv[0] << " [-o|--option] [value] "<< endl; 
+    return 1;
   }
   
   vector<TDirectoryFile*>  dirs;
