@@ -221,7 +221,8 @@ void ICPlotCollection<PlotIndex,PlotType>::scaleTo1(){
 
   // Looping over plots
   for(typename map<PlotIndex,PlotType*>::iterator i=this->begin(); i!=this->end(); i++){
-    i->second->Scale(1/i->second->Integral());
+    double fullIntegral = i->second->Integral(0,i->second->GetNbinsX()+1);
+    i->second->Scale(1/fullIntegral);
   }
 }
 
@@ -289,48 +290,63 @@ PlotType* ICPlotCollection<PlotIndex,PlotType>::getMerged(string name, vector<Pl
 * @return plot resulting from adding all plots found on this contained matching the identifiers on the selection
 ***********************************************/
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::draw(TCanvas *canv, std::vector< std::pair<PlotIndex,Option_t*> > histograms){
+void ICPlotCollection<PlotIndex,PlotType>::draw(TCanvas *canv, vector< pair<PlotIndex,Option_t*> > histograms){
 
   double minValue=0;
   double maxValue=0;
-  TLegend *l;
 
+  TLegend *l;
+  if(m_drawLegend){
+    l = new TLegend(0.7,0.75,0.9,0.85);
+  }
+    
+  // Selecting input canvas for drawing
+  canv->cd();
+    
   // Loping over all the histograms to be drawn
   for(unsigned i=0; i<histograms.size(); i++){
-    PlotType *plot = (*this)[histograms[i].first];
+    
+    pair<PlotIndex,Option_t*> *opt = &(histograms[i]);
+    
+    // Protection for when 'histograms' have elements not present in this map
+    if(this->find(opt->first) != this->end()){
+    
+      PlotType *plot = (*this)[opt->first];
 
-    if(i==0){
-      minValue=plot->GetBinContent(plot->GetMinimumBin());
-      maxValue=plot->GetBinContent(plot->GetMaximumBin());
+      // Determinining maximum of the plot
+      if(i==0){
+        minValue = plot->GetBinContent(plot->GetMinimumBin());
+        maxValue = plot->GetBinContent(plot->GetMaximumBin());
+      }
+      else{
+        double tMin = plot->GetBinContent(plot->GetMinimumBin());
+        double tMax = plot->GetBinContent(plot->GetMaximumBin());
+        if(tMin<minValue){minValue = tMin;}
+        if(tMax>maxValue){maxValue = tMax;}
+      }
+      
+      // Drawing plot
+      plot->Draw(opt->second);
+   
+      // Adding entry to legend
+      // TODO: Add check that legend exists
+      if(m_drawLegend && m_legendText.size()==m_legendOptions.size()){
+        l->AddEntry(plot,m_legendText[opt->first].c_str(),m_legendOptions[opt->first].c_str());
+      }
     }
     else{
-      double tMin = plot->GetBinContent(plot->GetMinimumBin());
-      double tMax = plot->GetBinContent(plot->GetMaximumBin());
-      if(tMin<minValue){minValue = tMin;}
-      if(tMax>maxValue){maxValue = tMax;}
+      cout << "ERROR: Attempt to draw Plot with unexisting identifier: " << opt->first << endl;
     }
   }
 
   // Updating the vertical
   setYaxisRangeUser(0,maxValue*1.25);
 
-  // Selecting input canvas for drawing
-  canv->cd();
-
-  if(m_drawLegend && m_legendText.size()==m_legendOptions.size()){
-   
-    l = new TLegend(0.7,0.75,0.9,0.85);
-    
-    for(unsigned i=0; i<histograms.size(); i++){
-      (*this)[histograms[i].first]->Draw(histograms[i].second);
-      
-      if(m_drawLegend){
-        l->AddEntry((*this)[histograms[i].first],m_legendText[histograms[i].first].c_str(),m_legendOptions[histograms[i].first].c_str());
-      }
-    }
-    
-    l->Draw();    
-  }
+  if(m_drawLegend){l->Draw();}
+  
+  delete l;
+  
+  
 }
 
 //The explicit instantiating part
