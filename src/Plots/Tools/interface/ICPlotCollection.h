@@ -29,7 +29,7 @@ public:
   // Marker
   void setMarkerColor(std::map<PlotIndex,int> attributes);
   void setMarkerStyle(std::map<PlotIndex,int> attributes);
-  void setMarkerSize(std::map<PlotIndex,int> attributes);  
+  void setMarkerSize (std::map<PlotIndex,int> attributes);  
 
   void setLegend     (std::map<PlotIndex,std::string> legend,std::map<PlotIndex,std::string> legendAttributes);
   

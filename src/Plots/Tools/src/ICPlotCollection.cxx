@@ -219,6 +219,8 @@ void ICPlotCollection<PlotIndex,PlotType>::scale(map<PlotIndex,double> factors){
 template <class PlotIndex,class PlotType>
 void ICPlotCollection<PlotIndex,PlotType>::scaleTo1(){
 
+  setYaxisTitle("Scaled to 1");
+  
   // Looping over plots
   for(typename map<PlotIndex,PlotType*>::iterator i=this->begin(); i!=this->end(); i++){
     double fullIntegral = i->second->Integral(0,i->second->GetNbinsX()+1);
@@ -330,22 +332,19 @@ void ICPlotCollection<PlotIndex,PlotType>::draw(TCanvas *canv, vector< pair<Plot
    
       // Adding entry to legend
       // TODO: Add check that legend exists
-      if(m_drawLegend && m_legendText.size()==m_legendOptions.size()){
+      if(m_drawLegend){
         l->AddEntry(plot,m_legendText[opt->first].c_str(),m_legendOptions[opt->first].c_str());
       }
     }
     else{
-      cout << "ERROR: Attempt to draw Plot with unexisting identifier: " << opt->first << endl;
+      cout << "ERROR: Attempt to draw Plot with non existent identifier: " << opt->first << endl;
     }
   }
 
   // Updating the vertical
   setYaxisRangeUser(0,maxValue*1.25);
 
-  if(m_drawLegend){l->Draw();}
-  
-  delete l;
-  
+  if(m_drawLegend){l->Draw();}  
   
 }
 
