@@ -1,12 +1,10 @@
 #include "Plots/Style/interface/ICStyle.h"
 
-#include "TStyle.h"
-
 ICStyle::ICStyle(){}
 
 void ICStyle::setTDRStyle(){
   
-  TStyle *tdrStyle = new TStyle("tdrStyle","Style for P-TDR");
+  tdrStyle = new TStyle("tdrStyle","Style for P-TDR");
   
   // For the canvas:
   tdrStyle->SetCanvasBorderMode(0);
