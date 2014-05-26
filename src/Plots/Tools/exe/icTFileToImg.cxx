@@ -221,27 +221,27 @@ int main(int argc, char *argv[]){
     
     else if(iClass=="TH2C"){
       TH2C* h = (TH2C*) iHist;
-      h->Draw();
+      h->Draw("colz");
     }
     else if(iClass=="TH2S"){
       TH2S* h = (TH2S*) iHist;
-      h->Draw();
+      h->Draw("colz");
     }
     else if(iClass=="TH2I"){
       TH2I* h = (TH2I*) iHist;
-      h->Draw();
+      h->Draw("colz");
     }
     else if(iClass=="TH2F"){
       TH2F* h = (TH2F*) iHist;
-      h->Draw();
+      h->Draw("colz");
     }
     else if(iClass=="TH2D"){
       TH2D* h = (TH2D*) iHist;
-      h->Draw();
+      h->Draw("colz");
     }
     else if(iClass=="TProfile2D"){
       TProfile2D* h = (TProfile2D*) iHist;
-      h->Draw();
+      h->Draw("colz");
     }
     
     else if(iClass=="TH3C"){
