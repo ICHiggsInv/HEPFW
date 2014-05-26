@@ -6,6 +6,11 @@
 // C++ Included
 #include <string>
 
+/***********************************************/
+/** \brief LaTeX Caption 
+ * 
+ * LaTeX caption
+ ***********************************************/
 class ICLatexCaption : public ICLatexObject {
 public:
 
@@ -20,7 +25,7 @@ public:
   
 private:
 
-  std::string m_caption;
+  std::string m_caption; ///< Holds the caption text
   
 };
 

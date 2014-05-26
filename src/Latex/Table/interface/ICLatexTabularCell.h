@@ -7,6 +7,13 @@
 #include <string>
 #include <vector>
 
+/***********************************************/
+/** \brief LaTeX Tabular Cell
+ * 
+ * This class is an abstraction of a LaTeX tabular cell.
+ * It allow easy manipulation of its contents and their
+ * printing.
+ ***********************************************/
 class ICLatexTabularCell {
 public:
 

@@ -8,6 +8,12 @@
 #include <string>
 #include <vector>
 
+/***********************************************/
+/** \brief LaTeX Tabular
+ * 
+ * This class allows creation and manipulation of a LaTeX tabular from C++
+ * code. 
+ ***********************************************/
 class ICLatexTabular : public ICLatexEnvironment {
 public:
 

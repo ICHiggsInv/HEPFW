@@ -11,6 +11,9 @@
 
 using namespace std;
 
+/***********************************************/
+/** Example of usage of IC LaTeX table code
+ ***********************************************/
 int main(int argc, char *argv[]){
 
   ICLatexTable table0;  

@@ -6,6 +6,12 @@
 // C++ Included
 #include <string>
 
+/***********************************************/
+/** \brief LaTeX Table
+ * 
+ * This class allows creation and manipulation of a LaTeX table from C++
+ * code. 
+ ***********************************************/
 class ICLatexTable : public ICLatexEnvironment{
 public:
   

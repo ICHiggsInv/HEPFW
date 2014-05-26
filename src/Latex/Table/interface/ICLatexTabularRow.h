@@ -7,6 +7,12 @@
 #include <string>
 #include <vector>
 
+/***********************************************/
+/** \brief LaTeX Tabular Row
+ * 
+ * This class is an abstraction of a LaTeX tabular row of cells.
+ * It allow easy manipulation of its contents.
+ ***********************************************/
 class ICLatexTabularRow : public std::vector<ICLatexTabularCell> {
 public:
 

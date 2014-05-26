@@ -12,6 +12,9 @@
 
 using namespace std;
 
+/***********************************************/
+/** Default constructor
+ ***********************************************/
 ICLatexTabularCell::ICLatexTabularCell(){
   m_data = NULL;
 }
