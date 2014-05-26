@@ -2,6 +2,9 @@
 
 using namespace std;
 
+/***********************************************/
+/** Default constructor
+ ***********************************************/
 ICLatexTable::ICLatexTable(){
   
   init();
