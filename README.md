@@ -73,7 +73,7 @@ You can use ICTools as the basis for your project compilation. ICTools source co
 
 When you run make on the whole ICTools package any sources found following this structure will be compiled correctly taking into account dependencies.
 
-NOTE: If you which to include headers from ICTools you can use the path "package/subpackage/interface/class.h" since the project makefile is aware if this include base by default. 
+NOTE: If you wish to include headers from ICTools you can use the path "package/subpackage/interface/class.h" since the project makefile is aware if this include base by default. 
 
 ## Developing ICTools ##
 
