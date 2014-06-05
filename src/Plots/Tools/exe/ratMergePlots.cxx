@@ -1,8 +1,8 @@
 // TODO: Description
 
-// ICTools includes
-#include "Parameters/Parser/interface/ICParameterSet.h"
-#include "Parameters/Parser/interface/ICParameterParser.h"
+// RATools includes
+#include "Parameters/Parser/interface/ParameterSet.h"
+#include "Parameters/Parser/interface/ParameterParser.h"
 
 // ROOT includes
 #include "TFile.h"
@@ -14,7 +14,7 @@
 
 using namespace std;
 
-map<string,double> calcSampleWeights (ICParameterSet global,vector<string> samples,ICParameterSet xsecs,ICParameterSet events){
+map<string,double> calcSampleWeights (rat::ParameterSet global,vector<string> samples,rat::ParameterSet xsecs,rat::ParameterSet events){
   
   map<string,double> out;
 
@@ -90,21 +90,18 @@ int main(int argc, char *argv[]){
     fIn[sampleName] = new TFile(argv[i],"RECREATE");
   }
   
-  
-  
-  
   map<string,double> sampleWeights;
   
   if(hasCfg){
     cout<<"Processing parameters..."<<endl;
-    ICParameterParser myPar(cfgFile);
+    rat::ParameterParser myPar(cfgFile);
     cout << "Number of PSet         : " << myPar.getNPSet() << endl;
     cout << "Is PSet:Global  Defined: " << myPar.isPSetSet("Global") << endl;
     cout << "Is PSet:XSecs   Defined: " << myPar.isPSetSet("XSecs") << endl;
     cout << "Is PSet:Events  Defined: " << myPar.isPSetSet("Events") << endl;
     cout << "Is PSet:Merge   Defined: " << myPar.isPSetSet("Merge") << endl;
     
-    ICParameterSet pSetGlobal,pSetEvents,pSetMerge;
+    rat::ParameterSet pSetGlobal,pSetEvents,pSetMerge;
     if(myPar.isPSetSet("Global")){pSetGlobal  = myPar.getByName("Global");}
     if(myPar.isPSetSet("Merge")) {pSetMerge   = myPar.getByName("Merge");}
     
@@ -112,7 +109,7 @@ int main(int argc, char *argv[]){
       
       cout << "Calculating weights..." << endl;
       
-      ICParameterSet pSetXSecs,pSetEvents;
+      rat::ParameterSet pSetXSecs,pSetEvents;
       if(myPar.isPSetSet("XSecs")){pSetXSecs = myPar.getByName("XSecs");}
       else{return 0;}
       if(myPar.isPSetSet("Events")) {pSetEvents  = myPar.getByName("Events");}
