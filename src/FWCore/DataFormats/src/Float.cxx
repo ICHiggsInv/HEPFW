@@ -1,12 +1,12 @@
-#include "FWCore/DataFormats/interface/ICFloat.h"
+#include "FWCore/DataFormats/interface/Float.h"
 
-ICFloat::ICFloat(){
-  m_varType = kFloat;  
+rat::Float::Float(){
+  m_varType = rat::kFloat;  
 }
 
-ICFloat::ICFloat(float input){
-  m_varType = kFloat;
+rat::Float::Float(float input){
+  m_varType = rat::kFloat;
   m_var     = input;
 }
 
-float ICFloat::get(){return m_var;}
+float rat::Float::get(){return m_var;}

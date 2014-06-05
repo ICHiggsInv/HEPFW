@@ -1,7 +1,7 @@
 #ifndef HISTOGRAMS_ANALYSIS_HISTOGRAMDATATOSIMCOMPARE
 #define HISTOGRAMS_ANALYSIS_HISTOGRAMDATATOSIMCOMPARE
 
-#include "Histograms/DataFormats/interface/Histogram1D.h"
+// #include "Histograms/DataFormats/interface/Histogram1D.h"
 // #include "Histograms/DataFormats/interface/HistogramFwd.h"
 
 #include "TCanvas.h"
@@ -12,7 +12,7 @@
 #include <map>
 #include <string>
 
-namespace at{
+namespace rat{
   
   /***********************************************/
   /** \brief Data to simulation compare of histograms

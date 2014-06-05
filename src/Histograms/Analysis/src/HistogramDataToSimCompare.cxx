@@ -4,19 +4,19 @@
 
 using namespace std;
 
-at::HistogramDataToSimCompare::HistogramDataToSimCompare(){
+rat::HistogramDataToSimCompare::HistogramDataToSimCompare(){
 
   init();
   m_name     = "";
 }
 
-at::HistogramDataToSimCompare::HistogramDataToSimCompare(std::string name){
+rat::HistogramDataToSimCompare::HistogramDataToSimCompare(std::string name){
   
   init();
   m_name     = name;
 }
 
-void at::HistogramDataToSimCompare::init(){
+void rat::HistogramDataToSimCompare::init(){
   
   // Initialising pointers 
   m_data     = 0; 
@@ -32,7 +32,7 @@ void at::HistogramDataToSimCompare::init(){
   m_doBlindData             = false;
 }
 
-at::HistogramDataToSimCompare::~HistogramDataToSimCompare(){
+rat::HistogramDataToSimCompare::~HistogramDataToSimCompare(){
   
   // Cleaning memory of internal member if defined
   if(m_legend!=0)  {delete m_legend;}  
@@ -42,38 +42,38 @@ at::HistogramDataToSimCompare::~HistogramDataToSimCompare(){
   for(unsigned i=0; i<m_histOwned.size(); i++){delete m_histOwned[i];}
 }
 
-void at::HistogramDataToSimCompare::addSimHistogram(TH1D *histogram, string name, bool passOwnership){
+void rat::HistogramDataToSimCompare::addSimHistogram(TH1D *histogram, string name, bool passOwnership){
 
   m_histograms[name] = histogram;
   if(passOwnership){m_histOwned.push_back(histogram);}
 }
 
-void at::HistogramDataToSimCompare::addDataHistogram(TH1D *histogram,bool passOwnership){
+void rat::HistogramDataToSimCompare::addDataHistogram(TH1D *histogram,bool passOwnership){
   
   m_data = histogram;
   if(passOwnership){m_histOwned.push_back(m_data);}
 
 }
 
-void at::HistogramDataToSimCompare::setAutoRangeYaxis(bool value,bool forceZero){
+void rat::HistogramDataToSimCompare::setAutoRangeYaxis(bool value,bool forceZero){
   m_autoRangeYaxis          = value;
   m_autoRangeYaxisforceZero = forceZero;
 }
 
-void at::HistogramDataToSimCompare::setAutoOrderSimHistograms(bool value){m_autoOrderSimHistograms=value;}
+void rat::HistogramDataToSimCompare::setAutoOrderSimHistograms(bool value){m_autoOrderSimHistograms=value;}
 
-void at::HistogramDataToSimCompare::setDoRatioPlot(bool value){m_doRatioPlot=value;}
+void rat::HistogramDataToSimCompare::setDoRatioPlot(bool value){m_doRatioPlot=value;}
 
-void at::HistogramDataToSimCompare::setLogy(bool value){m_doLogy=value;}    
+void rat::HistogramDataToSimCompare::setLogy(bool value){m_doLogy=value;}    
 
-void at::HistogramDataToSimCompare::setBlindData(double low,double high){
+void rat::HistogramDataToSimCompare::setBlindData(double low,double high){
   
   m_doBlindData   = true;
   m_BlindDataLow  = low; 
   m_BlindDataHigh = high;
 }
 
-void at::HistogramDataToSimCompare::doBlindData(){
+void rat::HistogramDataToSimCompare::doBlindData(){
   
   if(m_data){
     
@@ -90,7 +90,7 @@ void at::HistogramDataToSimCompare::doBlindData(){
   }
 }
 
-TCanvas* at::HistogramDataToSimCompare::draw(){
+TCanvas* rat::HistogramDataToSimCompare::draw(){
   
   TCanvas *c = new TCanvas();
 
@@ -177,7 +177,7 @@ TCanvas* at::HistogramDataToSimCompare::draw(){
   
 }
 
-pair<double,double> at::HistogramDataToSimCompare::getAutoRangeYaxis(){
+pair<double,double> rat::HistogramDataToSimCompare::getAutoRangeYaxis(){
 
   pair<double,double> range;
   double hMinNoZero = 0;

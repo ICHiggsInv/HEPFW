@@ -1,31 +1,35 @@
-#ifndef LATEX_TABLES_ICLATEXTABULARROW
-#define LATEX_TABLES_ICLATEXTABULARROW
+#ifndef LATEX_TABLES_LATEXTABULARROW
+#define LATEX_TABLES_LATEXTABULARROW
 
-#include "Latex/Table/interface/ICLatexTabularCell.h"
+#include "Latex/Table/interface/LatexTabularCell.h"
 
 // C++ Included
 #include <string>
 #include <vector>
 
-/***********************************************/
-/** \brief LaTeX Tabular Row
- * 
- * This class is an abstraction of a LaTeX tabular row of cells.
- * It allow easy manipulation of its contents.
- ***********************************************/
-class ICLatexTabularRow : public std::vector<ICLatexTabularCell> {
-public:
-
-  ICLatexTabularRow(unsigned nCell);
+namespace rat{
   
-  //void addCellAfter (index int);
-  //void addCellBefore(index int);
+  /***********************************************/
+  /** \brief LaTeX Tabular Row
+   * 
+   * This class is an abstraction of a LaTeX tabular row of cells.
+   * It allow easy manipulation of its contents.
+   ***********************************************/
+  class LatexTabularRow : public std::vector<LatexTabularCell> {
+  public:
+    
+    LatexTabularRow(unsigned nCell);
+    
+    //void addCellAfter (index int);
+    //void addCellBefore(index int);
+    
+    std::string toString();
+    
+  private:
+    
+    
+  };
   
-  std::string toString();
-  
-private:
-
-
-};
+}
 
 #endif

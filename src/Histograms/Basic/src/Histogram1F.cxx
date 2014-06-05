@@ -1,5 +1,5 @@
-#include "Histograms/DataFormats/interface/Histogram1F.h" 
+#include "Histograms/Basic/interface/Histogram1F.h" 
 
-at::Histogram1F::Histogram1F(){}
+rat::Histogram1F::Histogram1F(){}
 
-at::Histogram1F::~Histogram1F(){}
+rat::Histogram1F::~Histogram1F(){}

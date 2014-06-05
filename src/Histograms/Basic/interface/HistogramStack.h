@@ -1,8 +1,13 @@
 #ifndef HISTOGRAMS_DATAFORMATS_HISTOGRAMSTACK
 #define HISTOGRAMS_DATAFORMATS_HISTOGRAMSTACK
 
-namespace at{
+namespace rat{
   
+  /***********************************************/
+  /** \brief HistogramStack
+   * 
+   * HistogramStack
+   ***********************************************/
   class HistogramStack : public THStack {
   public:
     

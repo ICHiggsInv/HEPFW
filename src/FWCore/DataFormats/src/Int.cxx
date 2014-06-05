@@ -1,12 +1,12 @@
-#include "FWCore/DataFormats/interface/ICInt.h"
+#include "FWCore/DataFormats/interface/Int.h"
 
-ICInt::ICInt(){
-  m_varType = kInt;  
+rat::Int::Int(){
+  m_varType = rat::kInt;  
 }
 
-ICInt::ICInt(int input){
-  m_varType = kInt;
+rat::Int::Int(int input){
+  m_varType = rat::kInt;
   m_var     = input;
 }
 
-int ICInt::get(){return m_var;}
+int rat::Int::get(){return m_var;}

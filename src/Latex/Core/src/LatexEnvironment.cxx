@@ -1,8 +1,8 @@
-#include "Latex/Core/interface/ICLatexEnvironment.h"
+#include "Latex/Core/interface/LatexEnvironment.h"
 
 using namespace std;
 
-ICLatexEnvironment::ICLatexEnvironment(){
+rat::LatexEnvironment::LatexEnvironment(){
   
   m_name      = "";
   m_position  = "";
@@ -10,9 +10,9 @@ ICLatexEnvironment::ICLatexEnvironment(){
   
 }
 
-ICLatexEnvironment::~ICLatexEnvironment(){}
-    
-string ICLatexEnvironment::toString(){
+rat::LatexEnvironment::~LatexEnvironment(){}
+
+string rat::LatexEnvironment::toString(){
   
   string out;
   out  = this->toStringEnvBegin();
@@ -23,8 +23,7 @@ string ICLatexEnvironment::toString(){
   
 }
 
-
-string ICLatexEnvironment::toStringEnvBegin(){
+string rat::LatexEnvironment::toStringEnvBegin(){
   
   string out;
   out = "\\begin{"+m_name+"}";
@@ -40,7 +39,7 @@ string ICLatexEnvironment::toStringEnvBegin(){
   
 }
 
-string ICLatexEnvironment::toStringEnvInner(){
+string rat::LatexEnvironment::toStringEnvInner(){
 
   string out;
   for(unsigned i=0; i<innerObjects.size(); i++){
@@ -50,7 +49,7 @@ string ICLatexEnvironment::toStringEnvInner(){
 
 }
 
-string ICLatexEnvironment::toStringEnvEnd(){
+string rat::LatexEnvironment::toStringEnvEnd(){
   
   string out;
   out = "\\end{"+m_name+"}\n";
@@ -58,6 +57,6 @@ string ICLatexEnvironment::toStringEnvEnd(){
   
 }
 
-void ICLatexEnvironment::setCentering(bool centering){m_centering=centering;}
+void rat::LatexEnvironment::setCentering(bool centering){m_centering=centering;}
 
-void ICLatexEnvironment::setPosition(std::string option){m_position=option;}
+void rat::LatexEnvironment::setPosition(std::string option){m_position=option;}

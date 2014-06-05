@@ -1,5 +1,5 @@
-#ifndef PLOTS_TOOLS_ICPLOTFWD
-#define PLOTS_TOOLS_ICPLOTFWD
+#ifndef PLOTS_TOOLS_PLOTFWD
+#define PLOTS_TOOLS_PLOTFWD
 
 // IC Framework included
 #include "Plots/Tools/interface/ICPlotCollection.h"
@@ -15,16 +15,16 @@
 #include <string>
 #include <utility>
 
-typedef ICPlotCollection<int,TH1I> MapInt_ICH1I;
-typedef ICPlotCollection<int,TH1F> MapInt_ICH1F;
-typedef ICPlotCollection<int,TH1D> MapInt_ICH1D;
-typedef ICPlotCollection<int,TH2F> MapInt_ICH2F;
-typedef ICPlotCollection<int,TH2D> MapInt_ICH2D;
+typedef rat::PlotCollection<int,TH1I> rat::MapInt_ICH1I;
+typedef rat::PlotCollection<int,TH1F> rat::MapInt_ICH1F;
+typedef rat::PlotCollection<int,TH1D> rat::MapInt_ICH1D;
+typedef rat::PlotCollection<int,TH2F> rat::MapInt_ICH2F;
+typedef rat::PlotCollection<int,TH2D> rat::MapInt_ICH2D;
 
-typedef ICPlotCollection<std::string,TH1I> MapString_ICH1I;
-typedef ICPlotCollection<std::string,TH1F> MapString_ICH1F;
-typedef ICPlotCollection<std::string,TH1D> MapString_ICH1D;
-typedef ICPlotCollection<std::string,TH2F> MapString_ICH2F;
-typedef ICPlotCollection<std::string,TH2D> MapString_ICH2D;
+typedef rat::PlotCollection<std::string,TH1I> rat::MapString_ICH1I;
+typedef rat::PlotCollection<std::string,TH1F> rat::MapString_ICH1F;
+typedef rat::PlotCollection<std::string,TH1D> rat::MapString_ICH1D;
+typedef rat::PlotCollection<std::string,TH2F> rat::MapString_ICH2F;
+typedef rat::PlotCollection<std::string,TH2D> rat::MapString_ICH2D;
 
 #endif

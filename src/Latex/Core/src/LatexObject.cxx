@@ -1,4 +1,4 @@
-#include "Latex/Core/interface/ICLatexObject.h"
+#include "Latex/Core/interface/LatexObject.h"
 
 #include <TString.h>
 
@@ -7,15 +7,15 @@
 
 using namespace std;
 
-void ICLatexObject::print(){
+void rat::LatexObject::print(){
   cout << this->toString() << endl;
 }
 
-std::string ICLatexObject::toString(){
+std::string rat::LatexObject::toString(){
   return getRequiredPackagesString();
 }
 
-void ICLatexObject::saveAs(string fileName){
+void rat::LatexObject::saveAs(string fileName){
   
   FILE * pFile;
   pFile = fopen (fileName.c_str(),"w");
@@ -23,11 +23,11 @@ void ICLatexObject::saveAs(string fileName){
   
 }
 
-void ICLatexObject::addRequiredPackage(string packageName){
+void rat::LatexObject::addRequiredPackage(string packageName){
   m_requiredPackages.insert(packageName);
 }
 
-string ICLatexObject::getRequiredPackagesString(){
+string rat::LatexObject::getRequiredPackagesString(){
   
   string out="";
   
@@ -38,7 +38,7 @@ string ICLatexObject::getRequiredPackagesString(){
   return out;
 }
 
-set<string> ICLatexObject::getRequiredPackages(){
+set<string> rat::LatexObject::getRequiredPackages(){
   return m_requiredPackages;
 }
   

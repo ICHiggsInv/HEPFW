@@ -1,23 +1,32 @@
-#ifndef FWCORE_DATAFORMATS_ICUNSIGNED
-#define FWCORE_DATAFORMATS_ICUNSIGNED
+#ifndef FWCORE_DATAFORMATS_UNSIGNED
+#define FWCORE_DATAFORMATS_UNSIGNED
 
-#include "FWCore/DataFormats/interface/ICDataType.h"
+#include "FWCore/DataFormats/interface/DataType.h"
 
 // C++ Included
 #include <string>
 
-class ICUnsigned : public ICDataType {
-public:
-
-  ICUnsigned();
-  ICUnsigned(unsigned input);
+namespace rat{
   
-  unsigned get();
+  /***********************************************/
+  /** \brief Unsigned
+   * 
+   * Unsigned
+   ***********************************************/ 
+  class Unsigned : public rat::DataType {
+  public:
+    
+    Unsigned();
+    Unsigned(unsigned input);
+    
+    unsigned get();
+    
+  protected:
+    
+    unsigned m_var;
+    
+  };
   
-protected:
-
-  unsigned m_var;
-  
-};
+}
 
 #endif

@@ -1,23 +1,30 @@
-#ifndef LATEX_ALIGNMENT_ICLATEXCENTER
-#define LATEX_ALIGNMENT_ICLATEXCENTER
+#ifndef LATEX_ALIGNMENT_LATEXCENTER
+#define LATEX_ALIGNMENT_LATEXCENTER
 
-#include "Latex/Core/interface/ICLatexEnvironment.h"
+#include "Latex/Core/interface/LatexEnvironment.h"
 
 // C++ Included
 #include <string>
 
-class ICLatexCenter : public ICLatexEnvironment{
-public:
+namespace rat{
   
-  ICLatexCenter();
-  //ICLatexTable(TH2* histogram);
+  /***********************************************/
+  /** \brief 
+   * 
+   * 
+   ***********************************************/
+  class LatexCenter : public LatexEnvironment{
+  public:
+    
+    LatexCenter();
+    ~LatexCenter(){};
+    
+  private:
+    
+    void init();
+    
+  };
   
-  ~ICLatexCenter(){};
-
-private:
-  
-  void init();
-  
-};
+}
 
 #endif

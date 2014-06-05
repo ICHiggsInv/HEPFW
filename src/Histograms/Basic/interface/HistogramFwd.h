@@ -6,13 +6,9 @@
 #include "Histograms/DataFormats/interface/Histogram2F.h"
 #include "Histograms/DataFormats/interface/Histogram2D.h"
 
-namespace at{
-
-typedef at::Histogram1F H1F
-typedef at::Histogram1D H1D;
-typedef at::Histogram2F H2F;
-typedef at::Histogram2D H2D;
+typedef rat::Histogram1F rat::H1F
+typedef rat::Histogram1D rat::H1D;
+typedef rat::Histogram2F rat::H2F;
+typedef rat::Histogram2D rat::H2D;
   
-}
-
 #endif

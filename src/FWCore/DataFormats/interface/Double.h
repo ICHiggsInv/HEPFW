@@ -1,23 +1,32 @@
-#ifndef FWCORE_DATAFORMATS_ICDOUBLE
-#define FWCORE_DATAFORMATS_ICDOUBLE
+#ifndef FWCORE_DATAFORMATS_DOUBLE
+#define FWCORE_DATAFORMATS_DOUBLE
 
-#include "FWCore/DataFormats/interface/ICDataType.h"
+#include "FWCore/DataFormats/interface/DataType.h"
 
 // C++ Included
 #include <string>
 
-class ICDouble : public ICDataType {
-public:
-
-  ICDouble();
-  ICDouble(double input);
+namespace rat{
   
-  double get();
+  /***********************************************/
+  /** \brief Double
+   * 
+   * Double
+   ***********************************************/ 
+  class Double : public rat::DataType {
+  public:
+    
+    Double();
+    Double(double input);
+    
+    double get();
+    
+  protected:
+    
+    double m_var;
+    
+  };
   
-protected:
-
-  double m_var;
-  
-};
+}
 
 #endif

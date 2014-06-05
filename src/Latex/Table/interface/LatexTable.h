@@ -1,40 +1,44 @@
-#ifndef LATEX_TABLES_ICLATEXTABLE
-#define LATEX_TABLES_ICLATEXTABLE
+#ifndef LATEX_TABLES_LATEXTABLE
+#define LATEX_TABLES_LATEXTABLE
 
-#include "Latex/Core/interface/ICLatexEnvironment.h"
+#include "Latex/Core/interface/LatexEnvironment.h"
 
 // C++ Included
 #include <string>
 
-/***********************************************/
-/** \brief LaTeX Table
- * 
- * This class allows creation and manipulation of a LaTeX table from C++
- * code. 
- ***********************************************/
-class ICLatexTable : public ICLatexEnvironment{
-public:
+namespace rat{
   
-  ICLatexTable();
-  //ICLatexTable(TH2* histogram);
+  /***********************************************/
+  /** \brief LaTeX Table
+   * 
+   * This class allows creation and manipulation of a LaTeX table from C++
+   * code. 
+   ***********************************************/
+  class LatexTable : public rat::LatexEnvironment{
+  public:
+    
+    LatexTable();
+    //LatexTable(TH2* histogram);
+    
+    ~LatexTable(){};
+    
+    // set/get methods
+    void setLabel(std::string label);
+    
+  private:
+    
+    // Private methods
+    void        init();
+    virtual std::string toStringEnvInner();
+    
+    // Private variables  
+    std::string m_label;
+    
+    //ICTabular*      m_tabular;
+    //ICLatexTableCaption* m_caption;
+    
+  };
   
-  ~ICLatexTable(){};
-  
-  // set/get methods
-  void setLabel(std::string label);
-
-private:
-
-  // Private methods
-  void        init();
-  virtual std::string toStringEnvInner();
-  
-  // Private variables  
-  std::string m_label;
-  
-  //ICTabular*      m_tabular;
-  //ICLatexTableCaption* m_caption;
-  
-};
+}
 
 #endif

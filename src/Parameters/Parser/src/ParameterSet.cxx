@@ -1,251 +1,251 @@
-#include "Parameters/Parser/interface/ICParameterSet.h"
+#include "Parameters/Parser/interface/ParameterSet.h"
 
 #include "TString.h"
 
 using namespace std;
 
-void ICParameterSet::insertBool    (string key,bool value)              {pBool_    [key]=value;}
-void ICParameterSet::insertInt     (string key,int value)               {pInt_     [key]=value;}
-void ICParameterSet::insertFloat   (string key,float value)             {pFloat_   [key]=value;}
-void ICParameterSet::insertDouble  (string key,double value)            {pDouble_  [key]=value;}
-void ICParameterSet::insertString  (string key,string value)            {pString_  [key]=value;}
-void ICParameterSet::insertVBool   (string key,vector<bool> value)      {pVBool_   [key]=value;}
-void ICParameterSet::insertVInt    (string key,vector<int> value)       {pVInt_    [key]=value;}
-void ICParameterSet::insertVFloat  (string key,vector<float> value)     {pVFloat_  [key]=value;}
-void ICParameterSet::insertVDouble (string key,vector<double> value)    {pVDouble_ [key]=value;}
-void ICParameterSet::insertVString (string key,vector<string> value)    {pVString_ [key]=value;}
-void ICParameterSet::insertMiBool  (string key,map<int,bool> value)     {pMiBool_  [key]=value;}
-void ICParameterSet::insertMiInt   (string key,map<int,int> value)      {pMiInt_   [key]=value;}
-void ICParameterSet::insertMiFloat (string key,map<int,float> value)    {pMiFloat_ [key]=value;}
-void ICParameterSet::insertMiDouble(string key,map<int,double> value)   {pMiDouble_[key]=value;}
-void ICParameterSet::insertMiString(string key,map<int,string> value)   {pMiString_[key]=value;}
-void ICParameterSet::insertMsBool  (string key,map<string,bool> value)  {pMsBool_  [key]=value;}
-void ICParameterSet::insertMsInt   (string key,map<string,int> value)   {pMsInt_   [key]=value;}
-void ICParameterSet::insertMsFloat (string key,map<string,float> value) {pMsFloat_ [key]=value;}
-void ICParameterSet::insertMsDouble(string key,map<string,double> value){pMsDouble_[key]=value;}
-void ICParameterSet::insertMsString(string key,map<string,string> value){pMsString_[key]=value;}
+void rat::ParameterSet::insertBool    (string key,bool value)              {pBool_    [key]=value;}
+void rat::ParameterSet::insertInt     (string key,int value)               {pInt_     [key]=value;}
+void rat::ParameterSet::insertFloat   (string key,float value)             {pFloat_   [key]=value;}
+void rat::ParameterSet::insertDouble  (string key,double value)            {pDouble_  [key]=value;}
+void rat::ParameterSet::insertString  (string key,string value)            {pString_  [key]=value;}
+void rat::ParameterSet::insertVBool   (string key,vector<bool> value)      {pVBool_   [key]=value;}
+void rat::ParameterSet::insertVInt    (string key,vector<int> value)       {pVInt_    [key]=value;}
+void rat::ParameterSet::insertVFloat  (string key,vector<float> value)     {pVFloat_  [key]=value;}
+void rat::ParameterSet::insertVDouble (string key,vector<double> value)    {pVDouble_ [key]=value;}
+void rat::ParameterSet::insertVString (string key,vector<string> value)    {pVString_ [key]=value;}
+void rat::ParameterSet::insertMiBool  (string key,map<int,bool> value)     {pMiBool_  [key]=value;}
+void rat::ParameterSet::insertMiInt   (string key,map<int,int> value)      {pMiInt_   [key]=value;}
+void rat::ParameterSet::insertMiFloat (string key,map<int,float> value)    {pMiFloat_ [key]=value;}
+void rat::ParameterSet::insertMiDouble(string key,map<int,double> value)   {pMiDouble_[key]=value;}
+void rat::ParameterSet::insertMiString(string key,map<int,string> value)   {pMiString_[key]=value;}
+void rat::ParameterSet::insertMsBool  (string key,map<string,bool> value)  {pMsBool_  [key]=value;}
+void rat::ParameterSet::insertMsInt   (string key,map<string,int> value)   {pMsInt_   [key]=value;}
+void rat::ParameterSet::insertMsFloat (string key,map<string,float> value) {pMsFloat_ [key]=value;}
+void rat::ParameterSet::insertMsDouble(string key,map<string,double> value){pMsDouble_[key]=value;}
+void rat::ParameterSet::insertMsString(string key,map<string,string> value){pMsString_[key]=value;}
 
-bool ICParameterSet::getBool(string key){
+bool rat::ParameterSet::getBool(string key){
   map<string,bool>::iterator p = pBool_.find(key);
   if(p!=pBool_.end()){return p->second;}
   else               {return false;} //TODO: need some handling
 }
 
-int ICParameterSet::getInt(string key){
+int rat::ParameterSet::getInt(string key){
   map<string,int>::iterator p = pInt_.find(key);
   if(p!=pInt_.end()){return p->second;}
   else              {return 0;} //TODO: need some handling
 }
 
-float ICParameterSet::getFloat   (string key){
+float rat::ParameterSet::getFloat   (string key){
   map<string,float>::iterator p = pFloat_.find(key);
   if(p!=pFloat_.end()){return p->second;}
   else                {return 0;} //TODO: need some handling
 }
 
-double ICParameterSet::getDouble  (string key){
+double rat::ParameterSet::getDouble  (string key){
   map<string,double>::iterator p = pDouble_.find(key);
   if(p!=pDouble_.end()){return p->second;}
   else                 {return 0;} //TODO: need some handling
 }
 
-string ICParameterSet::getString  (string key){
+string rat::ParameterSet::getString  (string key){
   map<string,string>::iterator p = pString_.find(key);
   if(p!=pString_.end()){return p->second;}
   else                 {return "";} //TODO: need some handling
 }
 
-vector<bool> ICParameterSet::getVBool(string key){
+vector<bool> rat::ParameterSet::getVBool(string key){
   map<string,vector<bool> >::iterator p = pVBool_.find(key);
   if(p!=pVBool_.end()){return p->second;}
   else                {return vector<bool>();} //TODO: need some handling
 }
 
-vector<int> ICParameterSet::getVInt(string key){
+vector<int> rat::ParameterSet::getVInt(string key){
   map<string,vector<int> >::iterator p = pVInt_.find(key);
   if(p!=pVInt_.end()){return p->second;}
   else               {return vector<int>();} //TODO: need some handling
 }
 
-vector<float> ICParameterSet::getVFloat(string key){
+vector<float> rat::ParameterSet::getVFloat(string key){
   map<string,vector<float> >::iterator p = pVFloat_.find(key);
   if(p!=pVFloat_.end()){return p->second;}
   else                 {return vector<float>();} //TODO: need some handling
 }
 
-vector<double> ICParameterSet::getVDouble(string key){
+vector<double> rat::ParameterSet::getVDouble(string key){
   map<string,vector<double> >::iterator p = pVDouble_.find(key);
   if(p!=pVDouble_.end()){return p->second;}
   else                  {return vector<double>();} //TODO: need some handling
 }
 
-vector<string> ICParameterSet::getVString(string key){
+vector<string> rat::ParameterSet::getVString(string key){
   map<string,vector<string> >::iterator p = pVString_.find(key);
   if(p!=pVString_.end()){return p->second;}
   else                  {return vector<string>();} //TODO: need some handling
 }
 
-map<int,bool> ICParameterSet::getMiBool  (string key){
+map<int,bool> rat::ParameterSet::getMiBool  (string key){
   map<string,map<int,bool> >::iterator p = pMiBool_.find(key);
   if(p!=pMiBool_.end()){return p->second;}
   else                 {return map<int,bool>();} //TODO: need some handling
 }
 
-map<int,int> ICParameterSet::getMiInt   (string key){
+map<int,int> rat::ParameterSet::getMiInt   (string key){
   map<string,map<int,int> >::iterator p = pMiInt_.find(key);
   if(p!=pMiInt_.end()){return p->second;}
   else                {return map<int,int>();} //TODO: need some handling
 }
 
-map<int,float> ICParameterSet::getMiFloat (string key){
+map<int,float> rat::ParameterSet::getMiFloat (string key){
   map<string,map<int,float> >::iterator p = pMiFloat_.find(key);
   if(p!=pMiFloat_.end()){return p->second;}
   else                  {return map<int,float>();} //TODO: need some handling
 }
 
-map<int,double> ICParameterSet::getMiDouble(string key){
+map<int,double> rat::ParameterSet::getMiDouble(string key){
   map<string,map<int,double> >::iterator p = pMiDouble_.find(key);
   if(p!=pMiDouble_.end()){return p->second;}
   else                   {return map<int,double>();} //TODO: need some handling
 }
 
-map<int,string> ICParameterSet::getMiString(string key){
+map<int,string> rat::ParameterSet::getMiString(string key){
   map<string,map<int,string> >::iterator p = pMiString_.find(key);
   if(p!=pMiString_.end()){return p->second;}
   else                   {return map<int,string>();} //TODO: need some handling
 }
 
-map<string,bool> ICParameterSet::getMsBool  (string key){
+map<string,bool> rat::ParameterSet::getMsBool  (string key){
   map<string,map<string,bool> >::iterator p = pMsBool_.find(key);
   if(p!=pMsBool_.end()){return p->second;}
   else                 {return map<string,bool>();} //TODO: need some handling
 }
 
-map<string,int> ICParameterSet::getMsInt   (string key){
+map<string,int> rat::ParameterSet::getMsInt   (string key){
   map<string,map<string,int> >::iterator p = pMsInt_.find(key);
   if(p!=pMsInt_.end()){return p->second;}
   else                {return map<string,int>();} //TODO: need some handling
 }
 
-map<string,float> ICParameterSet::getMsFloat (string key){
+map<string,float> rat::ParameterSet::getMsFloat (string key){
   map<string,map<string,float> >::iterator p = pMsFloat_.find(key);
   if(p!=pMsFloat_.end()){return p->second;}
   else                  {return map<string,float>();} //TODO: need some handling
 }
 
-map<string,double> ICParameterSet::getMsDouble(string key){
+map<string,double> rat::ParameterSet::getMsDouble(string key){
   map<string,map<string,double> >::iterator p = pMsDouble_.find(key);
   if(p!=pMsDouble_.end()){return p->second;}
   else                   {return map<string,double>();} //TODO: need some handling
 }
 
-map<string,string> ICParameterSet::getMsString(string key){
+map<string,string> rat::ParameterSet::getMsString(string key){
   map<string,map<string,string> >::iterator p = pMsString_.find(key);
   if(p!=pMsString_.end()){return p->second;}
   else                   {return map<string,string>();} //TODO: need some handling
 }
 
-bool ICParameterSet::isSetBool    (std::string key){
+bool rat::ParameterSet::isSetBool    (std::string key){
   if(pBool_.find(key)!=pBool_.end()){return true;}
   else{return false;}
 }
 
-bool ICParameterSet::isSetInt     (std::string key){
+bool rat::ParameterSet::isSetInt     (std::string key){
   if(pInt_.find(key)!=pInt_.end()){return true;}
   else{return false;}
 }
 
-bool ICParameterSet::isSetFloat   (std::string key){
+bool rat::ParameterSet::isSetFloat   (std::string key){
   if(pFloat_.find(key)!=pFloat_.end()){return true;}
   else{return false;}
 }
 
-bool ICParameterSet::isSetDouble  (std::string key){
+bool rat::ParameterSet::isSetDouble  (std::string key){
   if(pDouble_.find(key)!=pDouble_.end()){return true;}
   else{return false;}
 }
 
-bool ICParameterSet::isSetString  (std::string key){
+bool rat::ParameterSet::isSetString  (std::string key){
   if(pString_.find(key)!=pString_.end()){return true;}
   else{return false;}
 }
 
-bool ICParameterSet::isSetVBool   (std::string key){ 
+bool rat::ParameterSet::isSetVBool   (std::string key){ 
   if(pVBool_.find(key)!=pVBool_.end()){return true;}
   else{return false;}
 }
 
-bool ICParameterSet::isSetVInt    (std::string key){
+bool rat::ParameterSet::isSetVInt    (std::string key){
   if(pVInt_.find(key)!=pVInt_.end()){return true;}
   else{return false;}
 }
 
-bool ICParameterSet::isSetVFloat  (std::string key){
+bool rat::ParameterSet::isSetVFloat  (std::string key){
   if(pVFloat_.find(key)!=pVFloat_.end()){return true;}
   else{return false;}
 }
 
-bool ICParameterSet::isSetVDouble (std::string key){
+bool rat::ParameterSet::isSetVDouble (std::string key){
   if(pVDouble_.find(key)!=pVDouble_.end()){return true;}
   else{return false;}
 }
 
-bool ICParameterSet::isSetVString (std::string key){  
+bool rat::ParameterSet::isSetVString (std::string key){  
   if(pVString_.find(key)!=pVString_.end()){return true;}
   else{return false;}
 }
 
-bool ICParameterSet::isSetMiBool  (std::string key){  
+bool rat::ParameterSet::isSetMiBool  (std::string key){  
   if(pMsBool_.find(key)!=pMsBool_.end()){return true;}
   else{return false;}
 }
 
-bool ICParameterSet::isSetMiInt   (std::string key){
+bool rat::ParameterSet::isSetMiInt   (std::string key){
   if(pMsInt_.find(key)!=pMsInt_.end()){return true;}
   else{return false;}
 }
 
-bool ICParameterSet::isSetMiFloat (std::string key){
+bool rat::ParameterSet::isSetMiFloat (std::string key){
   if(pMsFloat_.find(key)!=pMsFloat_.end()){return true;}
   else{return false;}
 }
 
-bool ICParameterSet::isSetMiDouble(std::string key){  
+bool rat::ParameterSet::isSetMiDouble(std::string key){  
   if(pMsDouble_.find(key)!=pMsDouble_.end()){return true;}
   else{return false;}
 }
 
-bool ICParameterSet::isSetMiString(std::string key){
+bool rat::ParameterSet::isSetMiString(std::string key){
   if(pMsString_.find(key)!=pMsString_.end()){return true;}
   else{return false;}
 }
 
-bool ICParameterSet::isSetMsBool  (std::string key){
+bool rat::ParameterSet::isSetMsBool  (std::string key){
   if(pMiBool_.find(key)!=pMiBool_.end()){return true;}
   else{return false;}
 }
 
-bool ICParameterSet::isSetMsInt   (std::string key){
+bool rat::ParameterSet::isSetMsInt   (std::string key){
   if(pMiInt_.find(key)!=pMiInt_.end()){return true;}
   else{return false;}
 }
 
-bool ICParameterSet::isSetMsFloat (std::string key){
+bool rat::ParameterSet::isSetMsFloat (std::string key){
   if(pMiFloat_.find(key)!=pMiFloat_.end()){return true;}
   else{return false;}
 }
 
-bool ICParameterSet::isSetMsDouble(std::string key){
+bool rat::ParameterSet::isSetMsDouble(std::string key){
   if(pMiDouble_.find(key)!=pMiDouble_.end()){return true;}
   else{return false;}
 }
 
-bool ICParameterSet::isSetMsString(std::string key){
+bool rat::ParameterSet::isSetMsString(std::string key){
   if(pMiString_.find(key)!=pMiString_.end()){return true;}
   else{return false;}
 }
 
-string ICParameterSet::toString(){
+string rat::ParameterSet::toString(){
 
   string out = "Parameters List:\n\n";
 

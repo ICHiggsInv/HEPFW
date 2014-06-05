@@ -3,8 +3,13 @@
 
 #include "TH2D.h"
 
-namespace at{
+namespace rat{
 
+  /***********************************************/
+  /** \brief Histogram2D
+   * 
+   * Histogram2D
+   ***********************************************/
   class Histogram2D : public TH2D {
   public:
     

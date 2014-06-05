@@ -1,14 +1,14 @@
-#include "FWCore/DataFormats/interface/ICString.h"
+#include "FWCore/DataFormats/interface/String.h"
 
 using namespace std;
 
-ICString::ICString(){
-  m_varType = kString;  
+rat::String::String(){
+  m_varType = rat::kString;  
 }
 
-ICString::ICString(string input){
-  m_varType = kString;
+rat::String::String(string input){
+  m_varType = rat::kString;
   m_var     = input;
 }
 
-string ICString::get(){return m_var;}
+string rat::String::get(){return m_var;}

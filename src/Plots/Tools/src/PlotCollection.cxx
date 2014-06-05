@@ -1,4 +1,4 @@
-#include "Plots/Tools/interface/ICPlotCollection.h"
+#include "Plots/Tools/interface/PlotCollection.h"
 
 #include "TLegend.h"
 #include "TH1F.h"
@@ -14,7 +14,7 @@ using namespace std;
  * Defaults constructor for this class
  ***********************************************/
 template <class PlotIndex,class PlotType>
-ICPlotCollection<PlotIndex,PlotType>::ICPlotCollection(){
+rat::PlotCollection<PlotIndex,PlotType>::PlotCollection(){
 
   m_drawLegend=false;
 
@@ -27,7 +27,7 @@ ICPlotCollection<PlotIndex,PlotType>::ICPlotCollection(){
  * @param path maximum value to be visible on this axis
  ***********************************************/
 template <class PlotIndex,class PlotType>
-ICPlotCollection<PlotIndex,PlotType>::ICPlotCollection(map<PlotIndex,TFile*> samples,std::string path){
+rat::PlotCollection<PlotIndex,PlotType>::PlotCollection(map<PlotIndex,TFile*> samples,std::string path){
   
   m_drawLegend=false;
   
@@ -42,7 +42,7 @@ ICPlotCollection<PlotIndex,PlotType>::ICPlotCollection(map<PlotIndex,TFile*> sam
  * @param max maximum value to be visible on this axis 
  ***********************************************/
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::setXaxisRangeUser(double min,double max){
+void rat::PlotCollection<PlotIndex,PlotType>::setXaxisRangeUser(double min,double max){
 
   // Looping over plots
   for(typename map<PlotIndex,PlotType*>::iterator i=this->begin(); i!=this->end(); i++){
@@ -55,7 +55,7 @@ void ICPlotCollection<PlotIndex,PlotType>::setXaxisRangeUser(double min,double m
  * @param title title to be applied to x-axis of all plots
  ***********************************************/
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::setXaxisTitle(std::string title){
+void rat::PlotCollection<PlotIndex,PlotType>::setXaxisTitle(std::string title){
 
   // Looping over plots
   for(typename map<PlotIndex,PlotType*>::iterator i=this->begin(); i!=this->end(); i++){
@@ -69,7 +69,7 @@ void ICPlotCollection<PlotIndex,PlotType>::setXaxisTitle(std::string title){
  * @param max maximum value to be visible on this axis 
  ***********************************************/
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::setYaxisRangeUser(double min,double max){
+void rat::PlotCollection<PlotIndex,PlotType>::setYaxisRangeUser(double min,double max){
 
   // Looping over plots
   for(typename map<PlotIndex,PlotType*>::iterator i=this->begin(); i!=this->end(); i++){
@@ -82,7 +82,7 @@ void ICPlotCollection<PlotIndex,PlotType>::setYaxisRangeUser(double min,double m
  * @param title title to be applied to y-axis of all plots
  ***********************************************/
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::setYaxisTitle(std::string title){
+void rat::PlotCollection<PlotIndex,PlotType>::setYaxisTitle(std::string title){
 
   // Looping over plots
   for(typename map<PlotIndex,PlotType*>::iterator i=this->begin(); i!=this->end(); i++){
@@ -96,7 +96,7 @@ void ICPlotCollection<PlotIndex,PlotType>::setYaxisTitle(std::string title){
  * @param attributes map of colours to be applied to each plot 
  ***********************************************/
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::setFillColor  (std::map<PlotIndex,int> attributes){
+void rat::PlotCollection<PlotIndex,PlotType>::setFillColor(std::map<PlotIndex,int> attributes){
 
   for(typename std::map<PlotIndex,int>::iterator i=attributes.begin(); i!=attributes.end(); i++){
     if((*this)[i->first])
@@ -110,7 +110,7 @@ void ICPlotCollection<PlotIndex,PlotType>::setFillColor  (std::map<PlotIndex,int
 * @param attributes map of styles to be applied to each plot 
 ***********************************************/
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::setFillStyle  (std::map<PlotIndex,int> attributes){
+void rat::PlotCollection<PlotIndex,PlotType>::setFillStyle  (std::map<PlotIndex,int> attributes){
 
   for(typename std::map<PlotIndex,int>::iterator i=attributes.begin(); i!=attributes.end(); i++){
     (*this)[i->first]->SetFillStyle(i->second);
@@ -122,7 +122,7 @@ void ICPlotCollection<PlotIndex,PlotType>::setFillStyle  (std::map<PlotIndex,int
 * @param attributes map of colours to be applied to each plot markers 
 ***********************************************/
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::setMarkerColor(std::map<PlotIndex,int> attributes){
+void rat::PlotCollection<PlotIndex,PlotType>::setMarkerColor(std::map<PlotIndex,int> attributes){
 
   for(typename std::map<PlotIndex,int>::iterator i=attributes.begin(); i!=attributes.end(); i++){
     (*this)[i->first]->SetMarkerColor(i->second);
@@ -134,7 +134,7 @@ void ICPlotCollection<PlotIndex,PlotType>::setMarkerColor(std::map<PlotIndex,int
 * @param attributes map of styles to be applied to each plot markers 
 ***********************************************/
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::setMarkerStyle(std::map<PlotIndex,int> attributes){
+void rat::PlotCollection<PlotIndex,PlotType>::setMarkerStyle(std::map<PlotIndex,int> attributes){
 
   for(typename std::map<PlotIndex,int>::iterator i=attributes.begin(); i!=attributes.end(); i++){
     (*this)[i->first]->SetMarkerStyle(i->second);
@@ -146,7 +146,7 @@ void ICPlotCollection<PlotIndex,PlotType>::setMarkerStyle(std::map<PlotIndex,int
  * @param attributes map of sizes to be applied to each plot markers 
  ***********************************************/
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::setMarkerSize(std::map<PlotIndex,int> attributes){
+void rat::PlotCollection<PlotIndex,PlotType>::setMarkerSize(std::map<PlotIndex,int> attributes){
   
   for(typename std::map<PlotIndex,int>::iterator i=attributes.begin(); i!=attributes.end(); i++){
     (*this)[i->first]->SetMarkerSize(i->second);
@@ -159,7 +159,7 @@ void ICPlotCollection<PlotIndex,PlotType>::setMarkerSize(std::map<PlotIndex,int>
  * @param options options of each entry of the legend 
  ***********************************************/
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::setLegend(std::map<PlotIndex,std::string> legend,
+void rat::PlotCollection<PlotIndex,PlotType>::setLegend(std::map<PlotIndex,std::string> legend,
                                                      std::map<PlotIndex,std::string> options){
 
   m_drawLegend    = true;
@@ -171,7 +171,7 @@ void ICPlotCollection<PlotIndex,PlotType>::setLegend(std::map<PlotIndex,std::str
  * Call Sumw2() method on all plots
  ***********************************************/
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::sumw2(){
+void rat::PlotCollection<PlotIndex,PlotType>::sumw2(){
 
   // Looping over plots
   for(typename map<PlotIndex,PlotType*>::iterator i=this->begin(); i!=this->end(); i++){
@@ -184,7 +184,7 @@ void ICPlotCollection<PlotIndex,PlotType>::sumw2(){
  * @param factor factor to multiply all plots
  ***********************************************/
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::scale(double factor){
+void rat::PlotCollection<PlotIndex,PlotType>::scale(double factor){
 
   // Looping over plots
   for(typename map<PlotIndex,PlotType*>::iterator i=this->begin(); i!=this->end(); i++){
@@ -199,7 +199,7 @@ void ICPlotCollection<PlotIndex,PlotType>::scale(double factor){
  * @param factors maps of factors indexed by keys to indicate to which plot they should be applied
  ***********************************************/
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::scale(map<PlotIndex,double> factors){
+void rat::PlotCollection<PlotIndex,PlotType>::scale(map<PlotIndex,double> factors){
   
   // Looping over plots
   for(typename map<PlotIndex,double>::iterator i=factors.begin(); i!=factors.end(); i++){
@@ -214,10 +214,10 @@ void ICPlotCollection<PlotIndex,PlotType>::scale(map<PlotIndex,double> factors){
 /********************************************//**
  * Scale all contained plots to one by using plots built in Integral() function.
  * 
- * NOTE: The Integral() function does not take into account under and overflow bins.  
+ * NOTE: The integral does take into account under and overflow bins.  
  ***********************************************/
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::scaleTo1(){
+void rat::PlotCollection<PlotIndex,PlotType>::scaleTo1(){
 
   setYaxisTitle("Scaled to 1");
   
@@ -233,7 +233,7 @@ void ICPlotCollection<PlotIndex,PlotType>::scaleTo1(){
 * @param factor factor to be used to rebin plots
 ***********************************************/
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::rebin(int factor){
+void rat::PlotCollection<PlotIndex,PlotType>::rebin(int factor){
   // Looping over plots
   for(typename map<PlotIndex,PlotType*>::iterator i=this->begin(); i!=this->end(); i++){
     i->second->Rebin(factor);
@@ -247,7 +247,7 @@ void ICPlotCollection<PlotIndex,PlotType>::rebin(int factor){
 * @return plot resulting from adding all plots found on this contained matching the identifiers on the selection
 ***********************************************/
 template <class PlotIndex,class PlotType>
-PlotType* ICPlotCollection<PlotIndex,PlotType>::getMerged(string name, vector<PlotIndex> selection){
+PlotType* rat::PlotCollection<PlotIndex,PlotType>::getMerged(string name, vector<PlotIndex> selection){
   
   PlotType* out = NULL;  
   
@@ -292,7 +292,7 @@ PlotType* ICPlotCollection<PlotIndex,PlotType>::getMerged(string name, vector<Pl
 * @return plot resulting from adding all plots found on this contained matching the identifiers on the selection
 ***********************************************/
 template <class PlotIndex,class PlotType>
-void ICPlotCollection<PlotIndex,PlotType>::draw(TCanvas *canv, vector< pair<PlotIndex,Option_t*> > histograms){
+void rat::PlotCollection<PlotIndex,PlotType>::draw(TCanvas *canv, vector< pair<PlotIndex,Option_t*> > histograms){
 
   double minValue=0;
   double maxValue=0;
@@ -349,16 +349,16 @@ void ICPlotCollection<PlotIndex,PlotType>::draw(TCanvas *canv, vector< pair<Plot
 }
 
 //The explicit instantiating part
-template class ICPlotCollection<int,TH1I>;
-template class ICPlotCollection<int,TH1F>;
-template class ICPlotCollection<int,TH1D>;
-template class ICPlotCollection<int,TH2I>;
-template class ICPlotCollection<int,TH2F>;
-template class ICPlotCollection<int,TH2D>;
+template class rat::PlotCollection<int,TH1I>;
+template class rat::PlotCollection<int,TH1F>;
+template class rat::PlotCollection<int,TH1D>;
+template class rat::PlotCollection<int,TH2I>;
+template class rat::PlotCollection<int,TH2F>;
+template class rat::PlotCollection<int,TH2D>;
 
-template class ICPlotCollection<string,TH1I>;
-template class ICPlotCollection<string,TH1F>;
-template class ICPlotCollection<string,TH1D>;
-template class ICPlotCollection<string,TH2I>;
-template class ICPlotCollection<string,TH2F>;
-template class ICPlotCollection<string,TH2D>;
+template class rat::PlotCollection<string,TH1I>;
+template class rat::PlotCollection<string,TH1F>;
+template class rat::PlotCollection<string,TH1D>;
+template class rat::PlotCollection<string,TH2I>;
+template class rat::PlotCollection<string,TH2F>;
+template class rat::PlotCollection<string,TH2D>;

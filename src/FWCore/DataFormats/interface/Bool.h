@@ -1,23 +1,32 @@
-#ifndef FWCORE_DATAFORMATS_ICBOOL
-#define FWCORE_DATAFORMATS_ICBOOL
+#ifndef FWCORE_DATAFORMATS_BOOL
+#define FWCORE_DATAFORMATS_BOOL
 
-#include "FWCore/DataFormats/interface/ICDataType.h"
+#include "FWCore/DataFormats/interface/DataType.h"
 
 // C++ Included
 #include <string>
 
-class ICBool : public ICDataType {
-public:
+namespace rat{
+  
+  /***********************************************/
+  /** \brief Bool
+   * 
+   * Bool
+   ***********************************************/ 
+  class Bool : public rat::DataType {
+  public:
+    
+    Bool();
+    Bool(bool input);
+    
+    bool get();
+    
+  protected:
+    
+    bool m_var;
+    
+  };
 
-  ICBool();
-  ICBool(bool input);
-  
-  bool get();
-  
-protected:
-
-  bool m_var;
-  
-};
+}
 
 #endif

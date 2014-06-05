@@ -1,9 +1,9 @@
 // TODO: Description
 
 // ICTools includes
-#include "Latex/Table/interface/ICLatexTable.h"
-#include "Latex/Table/interface/ICLatexTabular.h"
-#include "Latex/Table/interface/ICLatexCaption.h"
+#include "Latex/Table/interface/LatexTable.h"
+#include "Latex/Table/interface/LatexTabular.h"
+#include "Latex/Table/interface/LatexCaption.h"
 
 // Standard libraries includes
 #include <iostream>
@@ -16,12 +16,12 @@ using namespace std;
  ***********************************************/
 int main(int argc, char *argv[]){
 
-  ICLatexTable table0;  
+  rat::LatexTable table0;  
   table0.setCentering(true);
   table0.setPosition("htp");
   table0.setLabel   ("tableTest01");
 
-  ICLatexTabular tabular0(3,3);
+  rat::LatexTabular tabular0(3,3);
   
   tabular0.setColumnDecorationBefore(0,"|");
   tabular0.setColumnDecorationBefore(1,"||");
@@ -45,7 +45,7 @@ int main(int argc, char *argv[]){
 
   table0.innerObjects.push_back(&tabular0);
   
-  ICLatexCaption caption = ICLatexCaption("This is a table caption!");
+  rat::LatexCaption caption("This is a table caption!");
   
   table0.innerObjects.push_back(&caption);
   

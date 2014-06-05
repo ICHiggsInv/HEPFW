@@ -1,24 +1,24 @@
-#include "Latex/Table/interface/ICLatexTable.h"
+#include "Latex/Table/interface/LatexTable.h"
 
 using namespace std;
 
 /***********************************************/
 /** Default constructor
  ***********************************************/
-ICLatexTable::ICLatexTable(){
+rat::LatexTable::LatexTable(){
   
   init();
   
 }
 
-void ICLatexTable::init(){
+void rat::LatexTable::init(){
  
   m_name      = "table";
   m_label     = "";
   
 }
 
-string ICLatexTable::toStringEnvInner(){
+string rat::LatexTable::toStringEnvInner(){
   
   string out;
   if(m_label != ""){out += "\\label{"+m_label+"}\n";}
@@ -31,4 +31,4 @@ string ICLatexTable::toStringEnvInner(){
   
 }
 
-void ICLatexTable::setLabel(string label){m_label=label;}
+void rat::LatexTable::setLabel(string label){m_label=label;}

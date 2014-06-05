@@ -1,8 +1,8 @@
-#include "Plots/Style/interface/ICStyle.h"
+#include "Plots/Style/interface/Style.h"
 
-ICStyle::ICStyle(){}
+rat::Style::Style(){}
 
-void ICStyle::setTDRStyle(){
+void rat::Style::setTDRStyle(){
   
   tdrStyle = new TStyle("tdrStyle","Style for P-TDR");
   

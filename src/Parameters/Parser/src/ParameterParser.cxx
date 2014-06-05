@@ -1,33 +1,33 @@
-#include "Parameters/Parser/interface/ICParameterParser.h"
+#include "Parameters/Parser/interface/ParameterParser.h"
 
 #include "TString.h"
 
 using namespace std;
 using namespace boost;
 
-ICParameterParser::ICParameterParser(){}
+rat::ParameterParser::ParameterParser(){}
 
-ICParameterParser::ICParameterParser(string fileName){
+rat::ParameterParser::ParameterParser(string fileName){
 
   m_fileName=fileName;  
   parse();
 
 }
 
-bool ICParameterParser::isPSetSet(std::string psetName){
+bool rat::ParameterParser::isPSetSet(std::string psetName){
   if(m_pSets.find(psetName)!=m_pSets.end()){return true;}
   else{return false;}
 }
 
-ICParameterSet ICParameterParser::getByName(std::string psetName){
+rat::ParameterSet rat::ParameterParser::getByName(std::string psetName){
   return m_pSets[psetName];
 }
 
-int ICParameterParser::getNPSet(){
+int rat::ParameterParser::getNPSet(){
   return m_pSets.size();
 }
 
-vector<string> ICParameterParser::removeComments(vector<string> words){
+vector<string> rat::ParameterParser::removeComments(vector<string> words){
 
   vector<string> out;
   
@@ -41,7 +41,7 @@ vector<string> ICParameterParser::removeComments(vector<string> words){
   return out;
 }
 
-vector<string> ICParameterParser::removeEmpty(vector<string> words){
+vector<string> rat::ParameterParser::removeEmpty(vector<string> words){
 
   vector<string> out;
   
@@ -54,7 +54,7 @@ vector<string> ICParameterParser::removeEmpty(vector<string> words){
   return out;
 }
 
-void ICParameterParser::parse(){
+void rat::ParameterParser::parse(){
 /*
   ifstream infile;
   infile.open(m_fileName);

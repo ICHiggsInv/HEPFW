@@ -1,12 +1,12 @@
-#include "FWCore/DataFormats/interface/ICUnsigned.h"
+#include "FWCore/DataFormats/interface/Unsigned.h"
 
-ICUnsigned::ICUnsigned(){
-  m_varType = kUnsigned;  
+rat::Unsigned::Unsigned(){
+  m_varType = rat::kUnsigned;  
 }
 
-ICUnsigned::ICUnsigned(unsigned input){
-  m_varType = kUnsigned;
+rat::Unsigned::Unsigned(unsigned input){
+  m_varType = rat::kUnsigned;
   m_var     = input;
 }
 
-unsigned ICUnsigned::get(){return m_var;}
+unsigned rat::Unsigned::get(){return m_var;}

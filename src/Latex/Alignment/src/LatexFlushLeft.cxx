@@ -1,14 +1,14 @@
-#include "Latex/Alignment/interface/ICLatexFlushLeft.h"
+#include "Latex/Alignment/interface/LatexFlushLeft.h"
 
 using namespace std;
 
-ICLatexFlushLeft::ICLatexFlushLeft(){
+rat::LatexFlushLeft::LatexFlushLeft(){
   
   init();
   
 }
 
-void ICLatexFlushLeft::init(){
+void rat::LatexFlushLeft::init(){
  
   m_name = "flushleft";
   

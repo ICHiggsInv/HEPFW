@@ -3,8 +3,13 @@
 
 #include "TH1F.h"
 
-namespace at{
+namespace rat{
 
+  /***********************************************/
+  /** \brief Histogram1F
+   * 
+   * Histogram1F
+   ***********************************************/
   class Histogram1F : public TH1F {
   public:
     

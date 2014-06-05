@@ -1,7 +1,7 @@
-#include "FWCore/DataFormats/interface/ICDataType.h"
+#include "FWCore/DataFormats/interface/DataType.h"
 
 using namespace std;
 
-ICDataType::ICDataType(){}
+rat::DataType::DataType(){}
 
-VarType ICDataType::getType(){return m_varType;}
+rat::VarType rat::DataType::getType(){return m_varType;}

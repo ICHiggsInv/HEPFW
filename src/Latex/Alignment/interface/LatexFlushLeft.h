@@ -1,23 +1,30 @@
-#ifndef LATEX_ALIGNMENT_ICLATEXFLUSHLEFT
-#define LATEX_ALIGNMENT_ICLATEXFLUSHLEFT
+#ifndef LATEX_ALIGNMENT_LATEXFLUSHLEFT
+#define LATEX_ALIGNMENT_LATEXFLUSHLEFT
 
-#include "Latex/Core/interface/ICLatexEnvironment.h"
+#include "Latex/Core/interface/LatexEnvironment.h"
 
 // C++ Included
 #include <string>
 
-class ICLatexFlushLeft : public ICLatexEnvironment{
-public:
+namespace rat{
   
-  ICLatexFlushLeft();
-  //ICLatexTable(TH2* histogram);
+  /***********************************************/
+  /** \brief 
+   * 
+   * 
+   ***********************************************/
+  class LatexFlushLeft : public LatexEnvironment{
+  public:
+    
+    LatexFlushLeft();    
+    ~LatexFlushLeft(){};
+    
+  private:
+    
+    void init();
+    
+  };
   
-  ~ICLatexFlushLeft(){};
-
-private:
-  
-  void init();
-  
-};
+}
 
 #endif

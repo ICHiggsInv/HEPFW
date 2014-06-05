@@ -1,14 +1,14 @@
-#include "Latex/Alignment/interface/ICLatexFlushRight.h"
+#include "Latex/Alignment/interface/LatexFlushRight.h"
 
 using namespace std;
 
-ICLatexFlushRight::ICLatexFlushRight(){
+rat::LatexFlushRight::LatexFlushRight(){
   
   init();
   
 }
 
-void ICLatexFlushRight::init(){
+void rat::LatexFlushRight::init(){
  
   m_name = "flushright";
   

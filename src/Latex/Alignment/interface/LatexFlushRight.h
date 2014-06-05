@@ -1,23 +1,30 @@
-#ifndef LATEX_ALIGNMENT_ICLATEXFLUSHRIGHT
-#define LATEX_ALIGNMENT_ICLATEXFLUSHRIGHT
+#ifndef LATEX_ALIGNMENT_LATEXFLUSHRIGHT
+#define LATEX_ALIGNMENT_LATEXFLUSHRIGHT
 
-#include "Latex/Core/interface/ICLatexEnvironment.h"
+#include "Latex/Core/interface/LatexEnvironment.h"
 
 // C++ Included
 #include <string>
 
-class ICLatexFlushRight : public ICLatexEnvironment{
-public:
+namespace rat{
   
-  ICLatexFlushRight();
-  //ICLatexTable(TH2* histogram);
+  /***********************************************/
+  /** \brief 
+   * 
+   * 
+   ***********************************************/
+  class LatexFlushRight : public LatexEnvironment{
+  public:
+    
+    LatexFlushRight();
+    ~LatexFlushRight(){};
+    
+  private:
+    
+    void init();
+    
+  };
   
-  ~ICLatexFlushRight(){};
-
-private:
-  
-  void init();
-  
-};
+}
 
 #endif

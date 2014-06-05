@@ -1,16 +1,16 @@
-#include "Latex/Table/interface/ICLatexTabularRow.h"
+#include "Latex/Table/interface/LatexTabularRow.h"
 
 using namespace std;
 
 #include <iostream>
 
-ICLatexTabularRow::ICLatexTabularRow(unsigned nCell){
+rat::LatexTabularRow::LatexTabularRow(unsigned nCell){
   
-  for(unsigned i=0; i<nCell; i++){push_back(ICLatexTabularCell());}
+  for(unsigned i=0; i<nCell; i++){push_back(rat::LatexTabularCell());}
   
 }
 
-string ICLatexTabularRow::toString(){
+string rat::LatexTabularRow::toString(){
   
   string out="";
   

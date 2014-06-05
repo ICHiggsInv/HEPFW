@@ -1,20 +1,29 @@
-#ifndef PLOTS_STYLE_ICSTYLE
-#define PLOTS_STYLE_ICSTYLE
+#ifndef PLOTS_STYLE_STYLE
+#define PLOTS_STYLE_STYLE
 
 #include "TStyle.h"
 
-class ICStyle {
-
-public:
-
-  ICStyle();
-
-  void setTDRStyle();
-
-public:  
+namespace rat{
   
-  TStyle *tdrStyle;
+  /***********************************************/
+  /** \brief Style 
+   * 
+   * Style
+   ***********************************************/
+  class Style {
+    
+  public:
+    
+    Style();
+    
+    void setTDRStyle();
+    
+  public:  
+    
+    TStyle *tdrStyle;
+    
+  };
 
-};
+}
 
 #endif

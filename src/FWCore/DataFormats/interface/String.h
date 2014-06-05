@@ -1,23 +1,32 @@
-#ifndef FWCORE_DATAFORMATS_ICSTRING
-#define FWCORE_DATAFORMATS_ICSTRING
+#ifndef FWCORE_DATAFORMATS_STRING
+#define FWCORE_DATAFORMATS_STRING
 
-#include "FWCore/DataFormats/interface/ICDataType.h"
+#include "FWCore/DataFormats/interface/DataType.h"
 
 // C++ Included
 #include <string>
 
-class ICString : public ICDataType {
-public:
-
-  ICString();
-  ICString(std::string input);
+namespace rat{
   
-  std::string get();
+  /***********************************************/
+  /** \brief String
+   * 
+   * String
+   ***********************************************/ 
+  class String : public rat::DataType {
+  public:
+    
+    String();
+    String(std::string input);
+    
+    std::string get();
+    
+  protected:
+    
+    std::string m_var;
+    
+  };
   
-protected:
-
-  std::string m_var;
-  
-};
+}
 
 #endif

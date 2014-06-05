@@ -1,23 +1,32 @@
-#ifndef FWCORE_DATAFORMATS_ICFLOAT
-#define FWCORE_DATAFORMATS_ICFLOAT
+#ifndef FWCORE_DATAFORMATS_FLOAT
+#define FWCORE_DATAFORMATS_FLOAT
 
-#include "FWCore/DataFormats/interface/ICDataType.h"
+#include "FWCore/DataFormats/interface/DataType.h"
 
 // C++ Included
 #include <string>
 
-class ICFloat : public ICDataType {
-public:
-
-  ICFloat();
-  ICFloat(float input);
+namespace rat{
   
-  float get();
+  /***********************************************/
+  /** \brief Float
+   * 
+   * Float
+   ***********************************************/ 
+  class Float : public rat::DataType {
+  public:
+    
+    Float();
+    Float(float input);
+    
+    float get();
+    
+  protected:
+    
+    float m_var;
+    
+  };
   
-protected:
-
-  float m_var;
-  
-};
+}
 
 #endif

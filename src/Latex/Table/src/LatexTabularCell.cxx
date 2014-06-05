@@ -1,11 +1,11 @@
-#include "Latex/Table/interface/ICLatexTabularCell.h"
+#include "Latex/Table/interface/LatexTabularCell.h"
 
-#include "FWCore/DataFormats/interface/ICBool.h"
-#include "FWCore/DataFormats/interface/ICInt.h"
-#include "FWCore/DataFormats/interface/ICUnsigned.h"
-#include "FWCore/DataFormats/interface/ICFloat.h"
-#include "FWCore/DataFormats/interface/ICDouble.h"
-#include "FWCore/DataFormats/interface/ICString.h"
+#include "FWCore/DataFormats/interface/Bool.h"
+#include "FWCore/DataFormats/interface/Int.h"
+#include "FWCore/DataFormats/interface/Unsigned.h"
+#include "FWCore/DataFormats/interface/Float.h"
+#include "FWCore/DataFormats/interface/Double.h"
+#include "FWCore/DataFormats/interface/String.h"
 
 #include "TString.h"
 #include <iostream>
@@ -15,101 +15,101 @@ using namespace std;
 /***********************************************/
 /** Default constructor
  ***********************************************/
-ICLatexTabularCell::ICLatexTabularCell(){
+rat::LatexTabularCell::LatexTabularCell(){
   m_data = NULL;
 }
 
-ICLatexTabularCell::ICLatexTabularCell(bool     value){m_data = new ICBool    (value);}
-ICLatexTabularCell::ICLatexTabularCell(int      value){m_data = new ICInt     (value);}  
-ICLatexTabularCell::ICLatexTabularCell(unsigned value){m_data = new ICUnsigned(value);}
-ICLatexTabularCell::ICLatexTabularCell(float    value){m_data = new ICFloat   (value);}
-ICLatexTabularCell::ICLatexTabularCell(double   value){m_data = new ICDouble  (value);}
-ICLatexTabularCell::ICLatexTabularCell(string   value){m_data = new ICString  (value);}
+rat::LatexTabularCell::LatexTabularCell(bool     value){m_data = new rat::Bool    (value);}
+rat::LatexTabularCell::LatexTabularCell(int      value){m_data = new rat::Int     (value);}  
+rat::LatexTabularCell::LatexTabularCell(unsigned value){m_data = new rat::Unsigned(value);}
+rat::LatexTabularCell::LatexTabularCell(float    value){m_data = new rat::Float   (value);}
+rat::LatexTabularCell::LatexTabularCell(double   value){m_data = new rat::Double  (value);}
+rat::LatexTabularCell::LatexTabularCell(string   value){m_data = new rat::String  (value);}
 
-ICLatexTabularCell::~ICLatexTabularCell(){
+rat::LatexTabularCell::~LatexTabularCell(){
   if(m_data!=NULL){delete m_data;}
 }
 
-void ICLatexTabularCell::setCellContent(bool value){
+void rat::LatexTabularCell::setCellContent(bool value){
   if(m_data!=NULL){delete m_data;}
-  m_data = new ICBool(value);
+  m_data = new rat::Bool(value);
 }
 
-void ICLatexTabularCell::setCellContent(int value){
+void rat::LatexTabularCell::setCellContent(int value){
   if(m_data!=NULL){delete m_data;}
-  m_data = new ICInt(value);
+  m_data = new rat::Int(value);
 }
 
-void ICLatexTabularCell::setCellContent(unsigned value){
+void rat::LatexTabularCell::setCellContent(unsigned value){
   if(m_data!=NULL){delete m_data;}
-  m_data = new ICUnsigned(value);
+  m_data = new rat::Unsigned(value);
 }
 
-void ICLatexTabularCell::setCellContent(float value){
+void rat::LatexTabularCell::setCellContent(float value){
   if(m_data!=NULL){delete m_data;}
-  m_data = new ICFloat(value);
+  m_data = new rat::Float(value);
 }
 
-void ICLatexTabularCell::setCellContent(double value){
+void rat::LatexTabularCell::setCellContent(double value){
   if(m_data!=NULL){delete m_data;}
-  m_data = new ICDouble(value);
+  m_data = new rat::Double(value);
 }
 
-void ICLatexTabularCell::setCellContent(std::string value){
+void rat::LatexTabularCell::setCellContent(std::string value){
   if(m_data!=NULL){delete m_data;}
-  m_data = new ICString(value);
+  m_data = new rat::String(value);
 }
 
-void ICLatexTabularCell::setCellPrecision(std::string color){
+void rat::LatexTabularCell::setCellPrecision(std::string color){
   m_precision = color;  
 }
 
-std::string ICLatexTabularCell::getCellPrecision(){
+std::string rat::LatexTabularCell::getCellPrecision(){
   return m_precision;
 }
 
 
-void ICLatexTabularCell::setCellColor(std::string color){
+void rat::LatexTabularCell::setCellColor(std::string color){
   m_cellColor = color;  
 }
 
-std::string ICLatexTabularCell::getCellColor(){
+std::string rat::LatexTabularCell::getCellColor(){
   return m_cellColor;
 }
 
-string ICLatexTabularCell::toString(){
+string rat::LatexTabularCell::toString(){
 
   string out="";
 
   if(m_data==NULL){return out;}
   
   if(m_data->getType() == kBool){
-    ICBool* p = (ICBool*) m_data;
+    rat::Bool* p = (rat::Bool*) m_data;
     if(p->get()){out = "1";}
     else        {out = "0";}
   }
   else if(m_data->getType() == kInt){
-    ICInt* p = (ICInt*) m_data;
+    rat::Int* p = (rat::Int*) m_data;
     string printString = Form("%%%si",m_precision.c_str());
     out = Form(printString.c_str(),p->get());
   }
   else if(m_data->getType() == kUnsigned){
-    ICUnsigned* p = (ICUnsigned*) m_data;
+    rat::Unsigned* p = (rat::Unsigned*) m_data;
     string printString = Form("%%%si",m_precision.c_str());
     out = Form(printString.c_str(),p->get());
   }
   else if(m_data->getType() == kFloat){
-    ICFloat* p = (ICFloat*) m_data;
+    rat::Float* p = (rat::Float*) m_data;
     string printString = Form("%%%sf",m_precision.c_str());
     out = Form(printString.c_str(),p->get());
   }
   else if(m_data->getType() == kDouble){
-    ICDouble* p = (ICDouble*) m_data;
+    rat::Double* p = (rat::Double*) m_data;
     string printString = Form("%%%sf",m_precision.c_str());
     out = Form(printString.c_str(),p->get());
   }  
   else if(m_data->getType() == kString){
-    ICString* p = (ICString*) m_data;
+    rat::String* p = (rat::String*) m_data;
     out = p->get();
   }
   

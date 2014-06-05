@@ -1,12 +1,12 @@
-#include "FWCore/DataFormats/interface/ICDouble.h"
+#include "FWCore/DataFormats/interface/Double.h"
 
-ICDouble::ICDouble(){
-  m_varType = kDouble;  
+rat::Double::Double(){
+  m_varType = rat::kDouble;  
 }
 
-ICDouble::ICDouble(double input){
-  m_varType = kDouble;
+rat::Double::Double(double input){
+  m_varType = rat::kDouble;
   m_var     = input;
 }
 
-double ICDouble::get(){return m_var;}
+double rat::Double::get(){return m_var;}

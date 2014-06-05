@@ -1,7 +1,7 @@
-#ifndef ICTOOLS_PARAMETERS_ICPARAMETERPARSER
-#define ICTOOLS_PARAMETERS_ICPARAMETERPARSER
+#ifndef ICTOOLS_PARAMETERS_PARAMETERPARSER
+#define ICTOOLS_PARAMETERS_PARAMETERPARSER
 
-#include "Parameters/Parser/interface/ICParameterSet.h"
+#include "Parameters/Parser/interface/ParameterSet.h"
 
 // C++ Included
 #include <boost/algorithm/string.hpp>
@@ -14,25 +14,34 @@
 #include <map>
 #include <sys/stat.h>
 
-class ICParameterParser {
-public:
-  ICParameterParser();
-  ICParameterParser(std::string fileName);
-
-  bool           isPSetSet(std::string psetName);
-  ICParameterSet getByName(std::string psetName);
-  int            getNPSet();  
+namespace rat{
   
-private:  
-  std::vector<std::string> removeComments(std::vector<std::string> words);
-  std::vector<std::string> removeEmpty   (std::vector<std::string> words);
-  void                     parse();
-
-private:
-
-  std::string m_fileName;
-  std::map<std::string,ICParameterSet> m_pSets;
+  /***********************************************/
+  /** \brief ParameterParser
+   * 
+   * ParameterParser
+   ***********************************************/
+  class ParameterParser {
+  public:
+    ParameterParser();
+    ParameterParser(std::string fileName);
+    
+    bool         isPSetSet(std::string psetName);
+    ParameterSet getByName(std::string psetName);
+    int          getNPSet();  
+    
+  private:  
+    std::vector<std::string> removeComments(std::vector<std::string> words);
+    std::vector<std::string> removeEmpty   (std::vector<std::string> words);
+    void                     parse();
+    
+  private:
+    
+    std::string                          m_fileName;
+    std::map<std::string,rat::ParameterSet> m_pSets;
+    
+  };
   
-};
+}
 
 #endif

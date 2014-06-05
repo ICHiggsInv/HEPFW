@@ -1,23 +1,32 @@
-#ifndef FWCORE_DATAFORMATS_ICINT
-#define FWCORE_DATAFORMATS_ICINT
+#ifndef FWCORE_DATAFORMATS_INT
+#define FWCORE_DATAFORMATS_INT
 
-#include "FWCore/DataFormats/interface/ICDataType.h"
+#include "FWCore/DataFormats/interface/DataType.h"
 
 // C++ Included
 #include <string>
 
-class ICInt : public ICDataType {
-public:
-
-  ICInt();
-  ICInt(int input);
+namespace rat{
   
-  int get();
+  /***********************************************/
+  /** \brief Int
+   * 
+   * Int
+   ***********************************************/ 
+  class Int : public rat::DataType {
+  public:
+    
+    Int();
+    Int(int input);
+    
+    int get();
+    
+  protected:
+    
+    int m_var;
+    
+  };
   
-protected:
-
-  int m_var;
-  
-};
+}
 
 #endif

@@ -1,14 +1,14 @@
-#include "Latex/Alignment/interface/ICLatexCenter.h"
+#include "Latex/Alignment/interface/LatexCenter.h"
 
 using namespace std;
 
-ICLatexCenter::ICLatexCenter(){
+rat::LatexCenter::LatexCenter(){
   
   init();
   
 }
 
-void ICLatexCenter::init(){
+void rat::LatexCenter::init(){
  
   m_name = "center";
   

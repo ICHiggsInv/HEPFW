@@ -1,12 +1,12 @@
-#include "FWCore/DataFormats/interface/ICBool.h"
+#include "FWCore/DataFormats/interface/Bool.h"
 
-ICBool::ICBool(){
-  m_varType = kBool;  
+rat::Bool::Bool(){
+  m_varType = rat::kBool;  
 }
 
-ICBool::ICBool(bool input){
-  m_varType = kBool;
+rat::Bool::Bool(bool input){
+  m_varType = rat::kBool;
   m_var     = input;
 }
 
-bool ICBool::get(){return m_var;}
+bool rat::Bool::get(){return m_var;}
