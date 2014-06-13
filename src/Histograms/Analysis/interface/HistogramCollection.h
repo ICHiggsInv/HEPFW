@@ -300,7 +300,7 @@ namespace rat{
       double minValue=0;
       double maxValue=0;
       
-      TLegend *l;
+      TLegend *l = 0;
       if(m_drawLegend){
         l = new TLegend(0.7,0.75,0.9,0.85);
       }
