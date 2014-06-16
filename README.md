@@ -1,4 +1,4 @@
-# ICTools #
+# ROOT Analysis Tools (RAT) #
 
 This a set of tools developed by me (J.Pela) to use on my physics analysis. But there is no reason they cannot be used for other purposes.
 
@@ -31,8 +31,8 @@ source <path to ROOT>/bin/thisroot.sh
 NOTE: For this example using ICTools v0.2. There may be actually a more recent version online:
 
 ```
-wget https://github.com/joaopela/ICTools/archive/v0.2.tar.gz
-tar -xvf v0.2.tar.gz
+wget https://github.com/joaopela/ICTools/archive/RAT_v1.0.tar.gz
+tar -xvf RAT_v1.0.tar.gz
 cd ICTools-0.2/lib/
 make all
 ```
@@ -67,7 +67,7 @@ For linking:
 ictools-config --libs
 ```
 
-## Code Development using ICTools ##
+## Code Development using RAT ##
 
 You can use ICTools as the basis for your project compilation. ICTools source code is located inside ICTools/src and it follows a package/subpackage structure. Inside each subpackage source files should be located inside the "src" directory, headers should be inside "interface" and sources intended to become executable should be inside directory "exe"
 
@@ -75,6 +75,6 @@ When you run make on the whole ICTools package any sources found following this 
 
 NOTE: If you wish to include headers from ICTools you can use the path "package/subpackage/interface/class.h" since the project makefile is aware if this include base by default. 
 
-## Developing ICTools ##
+## Developing RAT ##
 
 Are you interested in adding code to ICTools, send me an email explaining what you want to contribute to, so we can coordinate. And after that just send me your pull request via github.com :D
