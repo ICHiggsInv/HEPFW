@@ -4,8 +4,10 @@ import os
 import sys
 import math
 import subprocess
-from optparse import OptionParser
+import argparse
 import time
+import collections
+import tempfile
 
 #_________________________________________________________
 class job:
@@ -18,18 +20,30 @@ class job:
   host        = "" 
 
 #_________________________________________________________
-def runCrabStatus(dirName,logFile):
+def runCrabStatus(dirName,crabSilent,logFile):
 
-  print "Running CRAB status..."
+  print "#### [ratAutoCrab.py:] Running CRAB status..."
 
   outJobs = []
-  
   startJobs=False
 
-  proc = subprocess.Popen(["crab","-status","-c",dirName], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-  for line in proc.stdout:
-    sys.stdout.write(line)
-    logFile.write(line)
+  outF = tempfile.TemporaryFile() 
+  errF = tempfile.TemporaryFile() 
+
+  proc = subprocess.Popen(["crab","-status","-c",dirName], stdout=outF, stderr=errF)  
+  proc.wait() # wait for the process to terminate otherwise the output is garbled
+  
+  outF.seek(0) # rewind to the beginning of the file
+  fileContent = outF.read()
+  
+  outF.close()
+  errF.close()
+  
+  if not crabSilent: print fileContent
+  logFile.write(fileContent)  
+  out=fileContent.split('\n')
+  
+  for line in out:
   
     if startJobs:
     
@@ -56,87 +70,166 @@ def runCrabStatus(dirName,logFile):
       startJobs=True
   proc.wait()
 
-  for j in outJobs:
-    print "job id:",j.number," end:",j.end," status:",j.status," action:",j.action
+  #for j in outJobs:
+    #print "job id:",j.number," end:",j.end," status:",j.status," action:",j.action
 
   return outJobs
 
 #_________________________________________________________
-def runCrabGet(dirName,logFile):
+def runCrabGet(dirName,crabSilent,logFile):
 
-  print "Running CRAB get..."
-
-  proc = subprocess.Popen(["crab","-get","-c",dirName], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-  for line in proc.stdout:
-    sys.stdout.write(line)
-    logFile.write(line)
-  proc.wait()
+  print "#### [ratAutoCrab.py:] Running CRAB get..."
   
+  outF = tempfile.TemporaryFile() 
+  errF = tempfile.TemporaryFile() 
 
+  proc = subprocess.Popen(["crab","-get","-c",dirName], stdout=outF, stderr=errF)
+  proc.wait() # wait for the process to terminate otherwise the output is garbled
+  
+  outF.seek(0) # rewind to the beginning of the file
+  fileContent = outF.read()
+  
+  outF.close()
+  errF.close()
+  
+  if not crabSilent: print fileContent
+  logFile.write(fileContent)  
+  
 #_________________________________________________________
-def runCrabResubmit(dirName,jobs,logFile):
+def runCrabResubmit(dirName,jobs,crabSilent,logFile):
 
-  print "Running CRAB resubmit..."
+  print "#### [ratAutoCrab.py:] Running CRAB resubmit..."
   
-  proc = subprocess.Popen(["crab","-resubmit",",".join(vJobsResubmit),"-c",dirName], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-  for line in proc.stdout:
-    sys.stdout.write(line)
-    logFile.write(line)
-  proc.wait()
+  outF = tempfile.TemporaryFile() 
+  errF = tempfile.TemporaryFile() 
+
+  proc = subprocess.Popen(["crab","-resubmit",",".join(jobs),"-c",dirName], stdout=outF, stderr=errF)
+  proc.wait() # wait for the process to terminate otherwise the output is garbled
+  
+  outF.seek(0) # rewind to the beginning of the file
+  fileContent = outF.read()
+  
+  outF.close()
+  errF.close()
+  
+  if not crabSilent: print fileContent
+  logFile.write(fileContent)  
   
 #_________________________________________________________
 def needCrabGet(iJobs):
   
-  print "Checking if we need to do CRAB get..."
+  print "#### [ratAutoCrab.py:] Checking if we need to do CRAB get..."
   
   out = False
   
   for j in iJobs:    
     if j.status=='Done' and j.action=='Terminated':
-      print "Found one jobs that needs retrieving!"
+      print "#### [ratAutoCrab.py:] Found jobs that need retrieving!"
       out = True
       break
 
   return out
 
 #_________________________________________________________
-def getJobsResubmit(iJobs):
+def getJobsResubmit(iJobs,logs):
   
-  print "Checking if we need to do CRAB get..."
-  
+  print "#### [ratAutoCrab.py:] Checking if we need to resubmit jobs..."
+
   out = []
   
+  jobsStatus = collections.defaultdict(int)
+  
   for j in iJobs:    
-    if j.status=='Aborted' and j.action=='Aborted':
-      print "Found Aborted job!"
+    if j.status=='Retrieved' and j.action=='Cleared' and j.exeExitCode=='0' and j.jobExitCode=='0':
+      jobsStatus[0]+=1
+      logs.write("Found job "+j.number+" with code 0: Done\n")
+    elif  j.status=='Submitted' and j.action=='SubSuccess':
+      jobsStatus['Submitted']+=1 
+      logs.write("Found job "+j.number+" submitted!\n")
+    elif  j.status=='Running' and j.action=='SubSuccess':
+      jobsStatus['Running']+=1 
+      logs.write("Found job "+j.number+" running!\n") 
+
+    elif j.status=='Aborted' and j.action=='Aborted':
+      jobsStatus['Aborted']+=1 
+      logs.write("Found job "+j.number+" aborted!\n")
       out.append(j.number)
-      break
+
+    elif j.status=='Retrieved' and j.action=='Cleared' and j.jobExitCode=='50664':
+      jobsStatus[50664]+=1
+      logs.write("Found job "+j.number+" with code 50664: Application terminated by wrapper because using too much Wall Clock time\n")
+      out.append(j.number)                        
+    elif j.status=='Retrieved' and j.action=='Cleared' and (j.exeExitCode=='50669' or j.jobExitCode=='50669'):
+      jobsStatus[50669]+=1
+      logs.write("Found job "+j.number+" with code 50669: Application terminated by wrapper for not defined reason\n")
+      out.append(j.number)
+    elif j.status=='Retrieved' and j.action=='Cleared' and j.jobExitCode=='8021':
+      jobsStatus[8021]+=1
+      logs.write("Found job "+j.number+" with code 8021: FileReadError (May be a site error)\n")
+      out.append(j.number)    
+    elif j.status=='Retrieved' and j.action=='Cleared' and j.jobExitCode=='8028':
+      jobsStatus[8028]+=1
+      logs.write("Found job "+j.number+" with code 8028: FileOpenError with fallback!\n")
+      out.append(j.number)         
+    else:
+      logs.write("Found job "+j.number+" with unknown code\n")
+      jobsStatus['Unknown']+=1
+
+  print "#### [ratAutoCrab.py:] Job summary:"
+  logs.write("Job summary:\n")
+  for k in jobsStatus.keys():
+    txt = "=> Status: "+str(k)+" - "+str(jobsStatus[k])+" jobs"
+    logs.write(txt+"\n")
+    print "#### [ratAutoCrab.py:]",txt
 
   return out
 
 #_________________________________________________________
-target = sys.argv[1]
+def processJobs(dirName,currentTime,crabSilent):
 
-print "*** Parameters ***"
-print "Input directory         : ", target
+  print ""  
+  print ""
+  print "#### [ratAutoCrab.py:] *** Parameters ***"
+  print "#### [ratAutoCrab.py:] CRAB Input directory : ", dirName
+  print "#### [ratAutoCrab.py:] ******************"
+  
+  # Opening log file
+  logCrab     = open('ratAutoCrab_'+dirName+'_'+currentTime+'.log', 'w')
+  logSummmary = open('ratAutoCrab_'+dirName+'_'+currentTime+"_summary"+'.log', 'w')
+  
+  vJobs = runCrabStatus(dirName,crabSilent,logCrab)
 
-# Opening log file
-log = open('ratAutoCrab_'+target+'_'+time.strftime("%Y%m%d_%H%M%S")+'.log', 'w')
+  while needCrabGet(vJobs):
+    runCrabGet(dirName,crabSilent,logCrab)
+    vJobs = runCrabStatus(dirName,crabSilent,logCrab)
 
-vJobs = runCrabStatus(target,log)
+  vJobsResubmit = getJobsResubmit(vJobs,logSummmary)
 
-while needCrabGet(vJobs):
-  runCrabGet(target,log)
-  vJobs = runCrabStatus(target,log)
+  if len(vJobsResubmit)>0:
+    print "#### [ratAutoCrab.py:] Found",len(vJobsResubmit),"jobs to be resubmitted..."
+    runCrabResubmit(dirName,vJobsResubmit,crabSilent,logCrab)
+    print "#### [ratAutoCrab.py:] Done!"
+  else:
+    print "#### [ratAutoCrab.py:] Nothing needs to be resubmitted."
 
-vJobsResubmit = getJobsResubmit(vJobs)
 
-if len(vJobsResubmit)>0:
-  print "Found",len(vJobsResubmit),"jobs to be resubmitted..."
-  runCrabResubmit(target,vJobsResubmit,log)
-  print "Done!"
-else:
-  print "No operation to be done..,"
+#_________________________________________________________
+# Main code
+#_________________________________________________________
+
+parser = argparse.ArgumentParser(description='Automatically deal of CRAB jobs maintenance: check for finished jobs, retrieve outputs and resubmit failed jobs.')
+parser.add_argument('dirs', metavar='DIR', type=str, nargs='+',help='Target CRAB directories')
+parser.add_argument("-s", "--crabSilent", help="Suppress CRAB output",action="store_true")
+args = parser.parse_args()
+
+currentTime = time.strftime("%Y%m%d_%H%M%S")
+
+for arg in args.dirs:
+  processJobs(arg,currentTime,args.crabSilent)
+
+
+
+
 
 
     
