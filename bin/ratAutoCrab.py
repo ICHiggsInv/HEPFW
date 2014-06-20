@@ -5,6 +5,7 @@ import sys
 import math
 import subprocess
 from optparse import OptionParser
+import time
 
 #_________________________________________________________
 class job:
@@ -17,38 +18,29 @@ class job:
   host        = "" 
 
 #_________________________________________________________
-def runCrabStatus(dirName):
+def runCrabStatus(dirName,logFile):
 
   print "Running CRAB status..."
 
   outJobs = []
-
-  logfile = open('logfile', 'w')
-  proc = subprocess.Popen(["crab","-status","-c",dirName], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-  for line in proc.stdout:
-    sys.stdout.write(line)
-    logfile.write(line)
-  proc.wait()
-
-  stdout, stderr = proc.communicate()
-
-  stdout=stdout.split('\n')
-  stderr=stderr.split('\n')
-
+  
   startJobs=False
 
-  for i in stdout:
-
+  proc = subprocess.Popen(["crab","-status","-c",dirName], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+  for line in proc.stdout:
+    sys.stdout.write(line)
+    logFile.write(line)
+  
     if startJobs:
     
-      if i.find("-----") is not -1:
+      if line.find("-----") is not -1:
         continue
     
-      if i is "":
+      if line.rstrip() is '':
         startJobs=False
         continue
     
-      data=i.split()
+      data=line.split()
     
       x = job()
       x.number      = data[0]
@@ -60,8 +52,9 @@ def runCrabStatus(dirName):
       if len(data)>6: x.host        = data[6]
       outJobs.append(x)
   
-    if i.find("ID") is not -1:
+    if line.find("ID") is not -1:
       startJobs=True
+  proc.wait()
 
   for j in outJobs:
     print "job id:",j.number," end:",j.end," status:",j.status," action:",j.action
@@ -69,20 +62,27 @@ def runCrabStatus(dirName):
   return outJobs
 
 #_________________________________________________________
-def runCrabGet(dirName):
+def runCrabGet(dirName,logFile):
 
   print "Running CRAB get..."
 
-  cmd = subprocess.Popen(["crab","-get","-c",dirName], stdout=subprocess.PIPE, stderr=subprocess.PIPE,shell=False)
-  stdout, stderr = cmd.communicate()
+  proc = subprocess.Popen(["crab","-get","-c",dirName], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+  for line in proc.stdout:
+    sys.stdout.write(line)
+    logFile.write(line)
+  proc.wait()
+  
 
 #_________________________________________________________
-def runCrabResubmit(dirName,jobs):
+def runCrabResubmit(dirName,jobs,logFile):
 
   print "Running CRAB resubmit..."
-
-  cmd = subprocess.Popen(["crab","-resubmit",",".join(vJobsResubmit),"-c",dirName], stdout=subprocess.PIPE, stderr=subprocess.PIPE,shell=False)
-  stdout, stderr = cmd.communicate()
+  
+  proc = subprocess.Popen(["crab","-resubmit",",".join(vJobsResubmit),"-c",dirName], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+  for line in proc.stdout:
+    sys.stdout.write(line)
+    logFile.write(line)
+  proc.wait()
   
 #_________________________________________________________
 def needCrabGet(iJobs):
@@ -93,7 +93,7 @@ def needCrabGet(iJobs):
   
   for j in iJobs:    
     if j.status=='Done' and j.action=='Terminated':
-      print "Found one!"
+      print "Found one jobs that needs retrieving!"
       out = True
       break
 
@@ -120,17 +120,20 @@ target = sys.argv[1]
 print "*** Parameters ***"
 print "Input directory         : ", target
 
-vJobs = runCrabStatus(target)
+# Opening log file
+log = open('ratAutoCrab_'+target+'_'+time.strftime("%Y%m%d_%H%M%S")+'.log', 'w')
+
+vJobs = runCrabStatus(target,log)
 
 while needCrabGet(vJobs):
-  runCrabGet(target)
-  vJobs = runCrabStatus(target)
+  runCrabGet(target,log)
+  vJobs = runCrabStatus(target,log)
 
 vJobsResubmit = getJobsResubmit(vJobs)
 
 if len(vJobsResubmit)>0:
   print "Found",len(vJobsResubmit),"jobs to be resubmitted..."
-  runCrabResubmit(target,vJobsResubmit)
+  runCrabResubmit(target,vJobsResubmit,log)
   print "Done!"
 else:
   print "No operation to be done..,"
