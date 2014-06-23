@@ -20,7 +20,7 @@ class job:
   host        = "" 
 
 #_________________________________________________________
-def runCrabStatus(dirName,crabSilent,logFile):
+def runCrabStatus(dirName,verbose,logFile):
 
   print "#### [ratAutoCrab.py:] Running CRAB status..."
 
@@ -39,7 +39,7 @@ def runCrabStatus(dirName,crabSilent,logFile):
   outF.close()
   errF.close()
   
-  if not crabSilent: print fileContent
+  if verbose: print fileContent
   logFile.write(fileContent)  
   out=fileContent.split('\n')
   
@@ -76,7 +76,7 @@ def runCrabStatus(dirName,crabSilent,logFile):
   return outJobs
 
 #_________________________________________________________
-def runCrabGet(dirName,crabSilent,logFile):
+def runCrabGet(dirName,verbose,logFile):
 
   print "#### [ratAutoCrab.py:] Running CRAB get..."
   
@@ -92,11 +92,11 @@ def runCrabGet(dirName,crabSilent,logFile):
   outF.close()
   errF.close()
   
-  if not crabSilent: print fileContent
+  if verbose: print fileContent
   logFile.write(fileContent)  
   
 #_________________________________________________________
-def runCrabKill(dirName,jobs,crabSilent,logFile):
+def runCrabKill(dirName,jobs,verbose,logFile):
 
   print "#### [ratAutoCrab.py:] Running CRAB kill..."
   
@@ -112,11 +112,11 @@ def runCrabKill(dirName,jobs,crabSilent,logFile):
   outF.close()
   errF.close()
   
-  if not crabSilent: print fileContent
+  if verbose: print fileContent
   logFile.write(fileContent)  
   
 #_________________________________________________________
-def runCrabResubmit(dirName,jobs,crabSilent,logFile):
+def runCrabResubmit(dirName,jobs,verbose,logFile):
 
   print "#### [ratAutoCrab.py:] Running CRAB resubmit..."
   
@@ -132,7 +132,7 @@ def runCrabResubmit(dirName,jobs,crabSilent,logFile):
   outF.close()
   errF.close()
   
-  if not crabSilent: print fileContent
+  if verbose: print fileContent
   logFile.write(fileContent)
   
 #_________________________________________________________
@@ -205,6 +205,10 @@ def getJobsResubmit(iJobs,logs):
       jobsStatus[50669]+=1
       logs.write("Found job "+j.number+" with code 50669: Application terminated by wrapper for not defined reason\n")
       out.append(j.number)
+    elif j.status=='Retrieved' and j.action=='Cleared' and (j.exeExitCode=='50700' or j.jobExitCode=='50700'):
+      jobsStatus[50700]+=1
+      logs.write("Found job "+j.number+" with code 50700: Job Wrapper did not produce any usable output file\n")
+      out.append(j.number)
     elif j.status=='Retrieved' and j.action=='Cleared' and j.jobExitCode=='8021':
       jobsStatus[8021]+=1
       logs.write("Found job "+j.number+" with code 8021: FileReadError (May be a site error)\n")
@@ -231,7 +235,7 @@ def getJobsResubmit(iJobs,logs):
   return out
 
 #_________________________________________________________
-def processJobs(dirName,currentTime,crabSilent):
+def processJobs(dirName,currentTime,verbose):
 
   print ""  
   print ""
@@ -243,21 +247,21 @@ def processJobs(dirName,currentTime,crabSilent):
   logCrab     = open('ratAutoCrab_'+dirName+'_'+currentTime+'.log', 'w')
   logSummmary = open('ratAutoCrab_'+dirName+'_'+currentTime+"_summary"+'.log', 'w')
   
-  vJobs = runCrabStatus(dirName,crabSilent,logCrab)
+  vJobs = runCrabStatus(dirName,verbose,logCrab)
 
   while needCrabGet(vJobs):
-    runCrabGet(dirName,crabSilent,logCrab)
-    vJobs = runCrabStatus(dirName,crabSilent,logCrab)
+    runCrabGet(dirName,verbose,logCrab)
+    vJobs = runCrabStatus(dirName,verbose,logCrab)
     
   vJobsKill     = getJobsKill    (vJobs,logSummmary)
   vJobsResubmit = getJobsResubmit(vJobs,logSummmary)
 
   if len(vJobsKill)>0:
     print "#### [ratAutoCrab.py:] Found",len(vJobsResubmit),"jobs to be killed..."
-    runCrabKill(dirName,vJobsKill,crabSilent,logCrab)
+    runCrabKill(dirName,vJobsKill,verbose,logCrab)
   if len(vJobsResubmit)>0:
     print "#### [ratAutoCrab.py:] Found",len(vJobsResubmit),"jobs to be resubmitted..."
-    runCrabResubmit(dirName,vJobsResubmit,crabSilent,logCrab)
+    runCrabResubmit(dirName,vJobsResubmit,verbose,logCrab)
     print "#### [ratAutoCrab.py:] Done!"
   else:
     print "#### [ratAutoCrab.py:] Nothing needs to be resubmitted."
@@ -269,13 +273,13 @@ def processJobs(dirName,currentTime,crabSilent):
 
 parser = argparse.ArgumentParser(description='Automatically deal of CRAB jobs maintenance: check for finished jobs, retrieve outputs and resubmit failed jobs.')
 parser.add_argument('dirs', metavar='DIR', type=str, nargs='+',help='Target CRAB directories')
-parser.add_argument("-s", "--crabSilent", help="Suppress CRAB output",action="store_true")
+parser.add_argument("-v", "--verbose", help="Show CRAB output.",action="store_true")
 args = parser.parse_args()
 
 currentTime = time.strftime("%Y%m%d_%H%M%S")
 
 for arg in args.dirs:
-  processJobs(arg,currentTime,args.crabSilent)
+  processJobs(arg,currentTime,args.verbose)
 
 
 
