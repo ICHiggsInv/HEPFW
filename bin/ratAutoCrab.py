@@ -187,6 +187,9 @@ def getJobsResubmit(iJobs,logs):
     elif  j.status=='Running' and j.action=='SubSuccess':
       jobsStatus['Running']+=1 
       logs.write("Found job "+j.number+" running!\n") 
+    elif  j.status=='Created' and j.action=='Created':
+      jobsStatus['Created']+=1 
+      logs.write("Found job "+j.number+" created!\n") 
 
     elif j.status=='Aborted' and j.action=='Aborted':
       jobsStatus['Aborted']+=1 
