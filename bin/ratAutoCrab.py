@@ -96,6 +96,26 @@ def runCrabGet(dirName,crabSilent,logFile):
   logFile.write(fileContent)  
   
 #_________________________________________________________
+def runCrabKill(dirName,jobs,crabSilent,logFile):
+
+  print "#### [ratAutoCrab.py:] Running CRAB kill..."
+  
+  outF = tempfile.TemporaryFile() 
+  errF = tempfile.TemporaryFile() 
+
+  proc = subprocess.Popen(["crab","-kill",",".join(jobs),"-c",dirName], stdout=outF, stderr=errF)
+  proc.wait() # wait for the process to terminate otherwise the output is garbled
+  
+  outF.seek(0) # rewind to the beginning of the file
+  fileContent = outF.read()
+  
+  outF.close()
+  errF.close()
+  
+  if not crabSilent: print fileContent
+  logFile.write(fileContent)  
+  
+#_________________________________________________________
 def runCrabResubmit(dirName,jobs,crabSilent,logFile):
 
   print "#### [ratAutoCrab.py:] Running CRAB resubmit..."
@@ -113,7 +133,7 @@ def runCrabResubmit(dirName,jobs,crabSilent,logFile):
   errF.close()
   
   if not crabSilent: print fileContent
-  logFile.write(fileContent)  
+  logFile.write(fileContent)
   
 #_________________________________________________________
 def needCrabGet(iJobs):
@@ -127,6 +147,24 @@ def needCrabGet(iJobs):
       print "#### [ratAutoCrab.py:] Found jobs that need retrieving!"
       out = True
       break
+
+  return out
+
+#_________________________________________________________
+def getJobsKill(iJobs,logs):
+  
+  print "#### [ratAutoCrab.py:] Checking if we need to kill jobs..."
+
+  out = []
+
+  jobsStatus = collections.defaultdict(int)
+
+  for j in iJobs:    
+    if j.status=='Cancelled' and j.action=='SubSuccess':
+      jobsStatus['Cancelled']+=1
+      logs.write("Found job "+j.number+" cancelled!\n")
+      print "#### [ratAutoCrab.py:] Found a cancelled job!"
+      out.append(j.number)
 
   return out
 
@@ -154,6 +192,10 @@ def getJobsResubmit(iJobs,logs):
       jobsStatus['Aborted']+=1 
       logs.write("Found job "+j.number+" aborted!\n")
       out.append(j.number)
+    elif j.status=='Cancelled' and j.action=='KillSuccess':
+      jobsStatus['Cancelled']+=1 
+      logs.write("Found job "+j.number+" cancelled!\n")
+      out.append(j.number)
 
     elif j.status=='Retrieved' and j.action=='Cleared' and j.jobExitCode=='50664':
       jobsStatus[50664]+=1
@@ -166,7 +208,11 @@ def getJobsResubmit(iJobs,logs):
     elif j.status=='Retrieved' and j.action=='Cleared' and j.jobExitCode=='8021':
       jobsStatus[8021]+=1
       logs.write("Found job "+j.number+" with code 8021: FileReadError (May be a site error)\n")
-      out.append(j.number)    
+      out.append(j.number)
+    elif j.status=='Retrieved' and j.action=='Cleared' and j.jobExitCode=='8022':
+      jobsStatus[8022]+=1
+      logs.write("Found job "+j.number+" with code 8022: FatalRootError\n")
+      out.append(j.number)
     elif j.status=='Retrieved' and j.action=='Cleared' and j.jobExitCode=='8028':
       jobsStatus[8028]+=1
       logs.write("Found job "+j.number+" with code 8028: FileOpenError with fallback!\n")
@@ -202,9 +248,13 @@ def processJobs(dirName,currentTime,crabSilent):
   while needCrabGet(vJobs):
     runCrabGet(dirName,crabSilent,logCrab)
     vJobs = runCrabStatus(dirName,crabSilent,logCrab)
-
+    
+  vJobsKill     = getJobsKill    (vJobs,logSummmary)
   vJobsResubmit = getJobsResubmit(vJobs,logSummmary)
 
+  if len(vJobsKill)>0:
+    print "#### [ratAutoCrab.py:] Found",len(vJobsResubmit),"jobs to be killed..."
+    runCrabKill(dirName,vJobsKill,crabSilent,logCrab)
   if len(vJobsResubmit)>0:
     print "#### [ratAutoCrab.py:] Found",len(vJobsResubmit),"jobs to be resubmitted..."
     runCrabResubmit(dirName,vJobsResubmit,crabSilent,logCrab)
