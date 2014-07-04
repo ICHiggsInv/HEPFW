@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import os
+import io
 import sys
 import math
 import subprocess
@@ -8,21 +9,44 @@ import argparse
 import time
 import collections
 import tempfile
+import json
 
 #_________________________________________________________
 class CRABTask:
+  
+  crabDir   = ""
+  hasInfo   = False
   directory = ""
   nJobs     = 0
   status    = "Undefined"
-  infoFile  = False
-
+  
+  variables = dict()
+  
   def __init__(self, iDirectory):
-    self.directory = iDirectory
-    
-    if (os.path.isfile(iDirectory+"autoCrab.info")):
-      print "No AutoCrab info file found!"
+    print "In the constructor of CRABTask"
+    self.crabDir = iDirectory
+    if (os.path.isfile(iDirectory+"/autoCrab.info")):
+      print "Found autoCrab.info"
+      hasInfo=True
+
+      with io.open(iDirectory+"/autoCrab.info", 'r', encoding='utf-8') as inFile:
+        self.variables = json.load(inFile) 
+        print repr(self.variables)
+        
     else:
-      print "Found AutoCrab info file found!"
+      print "Did not found autoCrab.info"
+      self.variables['nJobs'] = 0
+
+  def __enter__(self):
+    return self
+
+  def __del__(self):
+    print "In the destructor of CRABTask"
+    
+    with io.open(self.crabDir+"/autoCrab.info", 'w', encoding='utf-8') as outFile:
+      outFile.write(unicode(json.dumps(self.variables, ensure_ascii=False)))
+    
+    #print repr(json.dumps(self.variables))
 
 #_________________________________________________________
 class job:
@@ -37,7 +61,7 @@ class job:
 
 
 #_________________________________________________________
-def runCrabStatus(dirName,verbose,logFile):
+def runCrabStatus(dirName,task,verbose,logFile):
 
   print "#### [ratAutoCrab.py:] Running CRAB status..."
 
@@ -87,8 +111,7 @@ def runCrabStatus(dirName,verbose,logFile):
       startJobs=True
   proc.wait()
 
-  #for j in outJobs:
-    #print "job id:",j.number," end:",j.end," status:",j.status," action:",j.action
+  task.variables['nJobs'] = len(outJobs)
 
   return outJobs
 
@@ -473,15 +496,15 @@ def processJobs(dirName,currentTime,verbose):
   logCrab     = open('ratAutoCrab_'+dirName+'_'+currentTime+'.log', 'w')
   logSummmary = open('ratAutoCrab_'+dirName+'_'+currentTime+"_summary"+'.log', 'w')
 
-  #task = CRABTask(dirName)
+  task = CRABTask(dirName)
 
   #getAutoCrabStatus()
   
-  vJobs = runCrabStatus(dirName,verbose,logCrab)
+  vJobs = runCrabStatus(dirName,task,verbose,logCrab)
 
   while needCrabGet(vJobs):
     runCrabGet(dirName,verbose,logCrab)
-    vJobs = runCrabStatus(dirName,verbose,logCrab)
+    vJobs = runCrabStatus(dirName,task,verbose,logCrab)
     
   vJobsKill     = getJobsKill    (vJobs,logSummmary)
   vJobsResubmit = getJobsResubmit(vJobs,logSummmary)
