@@ -19,16 +19,16 @@ rat::LatexTabularCell::LatexTabularCell(){
   m_data = NULL;
 }
 
+rat::LatexTabularCell::~LatexTabularCell(){
+  if(m_data!=NULL){delete m_data;}
+}
+
 rat::LatexTabularCell::LatexTabularCell(bool     value){m_data = new rat::Bool    (value);}
 rat::LatexTabularCell::LatexTabularCell(int      value){m_data = new rat::Int     (value);}  
 rat::LatexTabularCell::LatexTabularCell(unsigned value){m_data = new rat::Unsigned(value);}
 rat::LatexTabularCell::LatexTabularCell(float    value){m_data = new rat::Float   (value);}
 rat::LatexTabularCell::LatexTabularCell(double   value){m_data = new rat::Double  (value);}
 rat::LatexTabularCell::LatexTabularCell(string   value){m_data = new rat::String  (value);}
-
-rat::LatexTabularCell::~LatexTabularCell(){
-  if(m_data!=NULL){delete m_data;}
-}
 
 void rat::LatexTabularCell::setCellContent(bool value){
   if(m_data!=NULL){delete m_data;}
