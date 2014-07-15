@@ -241,6 +241,14 @@ def getJobsResubmit(iJobs,logs):
       logs.write("Found job "+j.number+" cancelled!\n")
       out.append(j.number)
 
+    elif j.status=='Retrieved' and j.action=='Cleared' and j.jobExitCode=='8001':
+      jobsStatus[8001]+=1
+      logs.write("Found job "+j.number+" with code 8001: "+getCrabErrorMessage(8001)+"\n")
+      out.append(j.number)
+    elif j.status=='Retrieved' and j.action=='Cleared' and j.jobExitCode=='8002':
+      jobsStatus[8002]+=1
+      logs.write("Found job "+j.number+" with code 8002: "+getCrabErrorMessage(8002)+"\n")
+      out.append(j.number)
     elif j.status=='Retrieved' and j.action=='Cleared' and j.jobExitCode=='8021':
       jobsStatus[8021]+=1
       logs.write("Found job "+j.number+" with code 8021: "+getCrabErrorMessage(8021)+"\n")
@@ -265,6 +273,11 @@ def getJobsResubmit(iJobs,logs):
       jobsStatus[50700]+=1
       logs.write("Found job "+j.number+" with code 50700: "+getCrabErrorMessage(50700)+"\n")
       out.append(j.number)
+    elif j.status=='Retrieved' and j.action=='Cleared' and (j.exeExitCode=='50800' or j.jobExitCode=='50800'):
+      jobsStatus[50800]+=1
+      logs.write("#### WARNING #### Found job "+j.number+" with code 50800: "+getCrabErrorMessage(50800)+"\n")
+      out.append(j.number)
+    
     else:
       logs.write("Found job "+j.number+" with unknown code\n")
       jobsStatus['Unknown']+=1
