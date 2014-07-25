@@ -68,7 +68,6 @@ namespace rat{
       
       // Looping over plots
       for(typename std::map<PlotIndex,PlotType*>::iterator i=this->begin(); i!=this->end(); i++){
-        std::cout << "Element=" << i->first << " title=" << i->second->GetTitle() << std::endl;
         i->second->GetXaxis()->SetRangeUser(min,max);
       }
     }
@@ -227,7 +226,7 @@ namespace rat{
     ***********************************************/
     void scaleTo1(){
       
-      setYaxisTitle("Scaled to 1");
+      this->setYaxisTitle("Scaled to 1");
       
       // Looping over plots
       for(typename std::map<PlotIndex,PlotType*>::iterator i=this->begin(); i!=this->end(); i++){
@@ -286,7 +285,7 @@ namespace rat{
           }
           
         }else{
-          std::cout << "Could not find plots with identifier: " << selection[i] << std::endl;
+          std::cout << "WARNING: Could not find plots with identifier: " << selection[i] << std::endl;
         }
       }
       
