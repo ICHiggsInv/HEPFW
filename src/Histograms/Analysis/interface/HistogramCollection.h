@@ -10,6 +10,8 @@
 #include "TH2F.h"
 #include "TH2D.h"
 
+#include <string>
+#include <stdio.h>
 #include <iostream>
 #include <map>
 
@@ -35,13 +37,25 @@ namespace rat{
     * Constructor that will take a map of files and a path to a plot,
     * open all files and retrive the plot stored at that path. 
     * @param samples minimum value to be visible on this axis 
-    * @param path maximum value to be visible on this axis
+    * @param path    maximum value to be visible on this axis
     ***********************************************/
     HistogramCollection(std::map<PlotIndex,TFile*> samples,std::string path) : std::map<PlotIndex,PlotType*>(){
       m_drawLegend=false;
       
       for(typename std::map<PlotIndex,TFile*>::iterator i=samples.begin(); i!=samples.end(); i++){
-        (*this)[i->first] = (PlotType*) i->second->Get(path.c_str());
+
+        TFile* file = i->second;
+        
+        if( file->IsZombie()){
+          std::cout << "WARNING: File with handle '" << i->first << "' is in zombie state!" << std::endl;
+          continue;
+        }
+        if(!file->IsOpen()){
+          std::cout << "WARNING: File with handle '" << i->first << "' is not open!" << std::endl;
+          continue;
+        }
+        
+        (*this)[i->first] = (PlotType*) file->Get(path.c_str());
       } 
     }
     
@@ -54,6 +68,7 @@ namespace rat{
       
       // Looping over plots
       for(typename std::map<PlotIndex,PlotType*>::iterator i=this->begin(); i!=this->end(); i++){
+        std::cout << "Element=" << i->first << " title=" << i->second->GetTitle() << std::endl;
         i->second->GetXaxis()->SetRangeUser(min,max);
       }
     }
@@ -345,10 +360,31 @@ namespace rat{
       }
       
       // Updating the vertical
-      setYaxisRangeUser(0,maxValue*1.25);
+//       setYaxisRangeUser(0,maxValue*1.25);
       
       if(m_drawLegend){l->Draw();}  
     }
+    
+    /********************************************//**
+    * Rebin all contained plots according to an input map of factors
+    * @param factor factor to be used to rebin plots
+    ***********************************************/
+    std::string toString(){
+      
+      std::string out = "";
+      
+      // Looping over plots
+      for(typename std::map<PlotIndex,PlotType*>::iterator i=this->begin(); i!=this->end(); i++){
+        out += "Element=";
+        out += i->first;
+        out += " title=";
+        out += i->second->GetTitle();
+        out += "\n";
+      }
+      
+      return out;
+    }
+    
     
   private:
     
