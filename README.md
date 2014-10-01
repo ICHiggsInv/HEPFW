@@ -1,8 +1,11 @@
-# ROOT Analysis Tools (RAT) #
+# High Energy Physics FrameWork (HEPFW) #
 
 This a set of tools developed by me (J.Pela) to use on my physics analysis. But there is no reason they cannot be used for other purposes.
 
 It is built over CERN C++ based framework ROOT and you will need to have it installed and its sourced available to compile against.
+
+<!--
+NOTE: To be fixed
 
 ## Compilations Instructions ##
 
@@ -77,4 +80,4 @@ NOTE: If you wish to include headers from ICTools you can use the path "package/
 
 ## Developing RAT ##
 
-Are you interested in adding code to ICTools, send me an email explaining what you want to contribute to, so we can coordinate. And after that just send me your pull request via github.com :D
+Are you interested in adding code to ICTools, send me an email explaining what you want to contribute to, so we can coordinate. And after that just send me your pull request via github.com :D-->
