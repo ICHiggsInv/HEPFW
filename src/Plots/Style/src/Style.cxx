@@ -1,8 +1,8 @@
 #include "Plots/Style/interface/Style.h"
 
-rat::Style::Style(){}
+hepfw::Style::Style(){}
 
-void rat::Style::setTDRStyle(){
+void hepfw::Style::setTDRStyle(){
   
   tdrStyle = new TStyle("tdrStyle","Style for P-TDR");
   

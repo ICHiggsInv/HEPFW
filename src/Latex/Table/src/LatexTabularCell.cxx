@@ -15,101 +15,101 @@ using namespace std;
 /***********************************************/
 /** Default constructor
  ***********************************************/
-rat::LatexTabularCell::LatexTabularCell(){
+hepfw::LatexTabularCell::LatexTabularCell(){
   m_data = NULL;
 }
 
-rat::LatexTabularCell::~LatexTabularCell(){
+hepfw::LatexTabularCell::~LatexTabularCell(){
   if(m_data!=NULL){delete m_data;}
 }
 
-rat::LatexTabularCell::LatexTabularCell(bool     value){m_data = new rat::Bool    (value);}
-rat::LatexTabularCell::LatexTabularCell(int      value){m_data = new rat::Int     (value);}  
-rat::LatexTabularCell::LatexTabularCell(unsigned value){m_data = new rat::Unsigned(value);}
-rat::LatexTabularCell::LatexTabularCell(float    value){m_data = new rat::Float   (value);}
-rat::LatexTabularCell::LatexTabularCell(double   value){m_data = new rat::Double  (value);}
-rat::LatexTabularCell::LatexTabularCell(string   value){m_data = new rat::String  (value);}
+hepfw::LatexTabularCell::LatexTabularCell(bool     value){m_data = new hepfw::Bool    (value);}
+hepfw::LatexTabularCell::LatexTabularCell(int      value){m_data = new hepfw::Int     (value);}  
+hepfw::LatexTabularCell::LatexTabularCell(unsigned value){m_data = new hepfw::Unsigned(value);}
+hepfw::LatexTabularCell::LatexTabularCell(float    value){m_data = new hepfw::Float   (value);}
+hepfw::LatexTabularCell::LatexTabularCell(double   value){m_data = new hepfw::Double  (value);}
+hepfw::LatexTabularCell::LatexTabularCell(string   value){m_data = new hepfw::String  (value);}
 
-void rat::LatexTabularCell::setCellContent(bool value){
+void hepfw::LatexTabularCell::setCellContent(bool value){
   if(m_data!=NULL){delete m_data;}
-  m_data = new rat::Bool(value);
+  m_data = new hepfw::Bool(value);
 }
 
-void rat::LatexTabularCell::setCellContent(int value){
+void hepfw::LatexTabularCell::setCellContent(int value){
   if(m_data!=NULL){delete m_data;}
-  m_data = new rat::Int(value);
+  m_data = new hepfw::Int(value);
 }
 
-void rat::LatexTabularCell::setCellContent(unsigned value){
+void hepfw::LatexTabularCell::setCellContent(unsigned value){
   if(m_data!=NULL){delete m_data;}
-  m_data = new rat::Unsigned(value);
+  m_data = new hepfw::Unsigned(value);
 }
 
-void rat::LatexTabularCell::setCellContent(float value){
+void hepfw::LatexTabularCell::setCellContent(float value){
   if(m_data!=NULL){delete m_data;}
-  m_data = new rat::Float(value);
+  m_data = new hepfw::Float(value);
 }
 
-void rat::LatexTabularCell::setCellContent(double value){
+void hepfw::LatexTabularCell::setCellContent(double value){
   if(m_data!=NULL){delete m_data;}
-  m_data = new rat::Double(value);
+  m_data = new hepfw::Double(value);
 }
 
-void rat::LatexTabularCell::setCellContent(std::string value){
+void hepfw::LatexTabularCell::setCellContent(std::string value){
   if(m_data!=NULL){delete m_data;}
-  m_data = new rat::String(value);
+  m_data = new hepfw::String(value);
 }
 
-void rat::LatexTabularCell::setCellPrecision(std::string color){
+void hepfw::LatexTabularCell::setCellPrecision(std::string color){
   m_precision = color;  
 }
 
-std::string rat::LatexTabularCell::getCellPrecision(){
+std::string hepfw::LatexTabularCell::getCellPrecision(){
   return m_precision;
 }
 
 
-void rat::LatexTabularCell::setCellColor(std::string color){
+void hepfw::LatexTabularCell::setCellColor(std::string color){
   m_cellColor = color;  
 }
 
-std::string rat::LatexTabularCell::getCellColor(){
+std::string hepfw::LatexTabularCell::getCellColor(){
   return m_cellColor;
 }
 
-string rat::LatexTabularCell::toString(){
+string hepfw::LatexTabularCell::toString(){
 
   string out="";
 
   if(m_data==NULL){return out;}
   
   if(m_data->getType() == kBool){
-    rat::Bool* p = (rat::Bool*) m_data;
+    hepfw::Bool* p = (hepfw::Bool*) m_data;
     if(p->get()){out = "1";}
     else        {out = "0";}
   }
   else if(m_data->getType() == kInt){
-    rat::Int* p = (rat::Int*) m_data;
+    hepfw::Int* p = (hepfw::Int*) m_data;
     string printString = Form("%%%si",m_precision.c_str());
     out = Form(printString.c_str(),p->get());
   }
   else if(m_data->getType() == kUnsigned){
-    rat::Unsigned* p = (rat::Unsigned*) m_data;
+    hepfw::Unsigned* p = (hepfw::Unsigned*) m_data;
     string printString = Form("%%%si",m_precision.c_str());
     out = Form(printString.c_str(),p->get());
   }
   else if(m_data->getType() == kFloat){
-    rat::Float* p = (rat::Float*) m_data;
+    hepfw::Float* p = (hepfw::Float*) m_data;
     string printString = Form("%%%sf",m_precision.c_str());
     out = Form(printString.c_str(),p->get());
   }
   else if(m_data->getType() == kDouble){
-    rat::Double* p = (rat::Double*) m_data;
+    hepfw::Double* p = (hepfw::Double*) m_data;
     string printString = Form("%%%sf",m_precision.c_str());
     out = Form(printString.c_str(),p->get());
   }  
   else if(m_data->getType() == kString){
-    rat::String* p = (rat::String*) m_data;
+    hepfw::String* p = (hepfw::String*) m_data;
     out = p->get();
   }
   

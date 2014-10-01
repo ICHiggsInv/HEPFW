@@ -14,7 +14,7 @@
 #include <map>
 #include <sys/stat.h>
 
-namespace rat{
+namespace hepfw{
   
   /***********************************************/
   /** \brief ParameterParser
@@ -38,7 +38,7 @@ namespace rat{
   private:
     
     std::string                          m_fileName;
-    std::map<std::string,rat::ParameterSet> m_pSets;
+    std::map<std::string,hepfw::ParameterSet> m_pSets;
     
   };
   

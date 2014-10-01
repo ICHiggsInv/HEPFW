@@ -1,12 +1,12 @@
 #include "FWCore/DataFormats/interface/Float.h"
 
-rat::Float::Float(){
-  m_varType = rat::kFloat;  
+hepfw::Float::Float(){
+  m_varType = hepfw::kFloat;  
 }
 
-rat::Float::Float(float input){
-  m_varType = rat::kFloat;
+hepfw::Float::Float(float input){
+  m_varType = hepfw::kFloat;
   m_var     = input;
 }
 
-float rat::Float::get(){return m_var;}
+float hepfw::Float::get(){return m_var;}

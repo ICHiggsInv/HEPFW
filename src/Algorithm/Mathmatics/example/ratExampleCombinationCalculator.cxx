@@ -12,7 +12,7 @@ using namespace std;
 int main(int argc, char *argv[]){
 
   cout << "Now calculating all combinations of 3 out of 8 elements:" << endl;
-  rat::CombinationCalculator calc1(8,3);
+  hepfw::CombinationCalculator calc1(8,3);
   
   do {
     vector<bool> combination = calc1.getCombination();
@@ -31,7 +31,7 @@ int main(int argc, char *argv[]){
   initialValue[1] = 1;
   initialValue[3] = 1;
   
-  rat::CombinationCalculator calc2(initialValue);  
+  hepfw::CombinationCalculator calc2(initialValue);  
   do {
     vector<bool> combination = calc2.getCombination();
     

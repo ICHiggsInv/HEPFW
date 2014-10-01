@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-namespace rat{
+namespace hepfw{
   
   /***********************************************/
   /** \brief LaTeX Tabular
@@ -57,7 +57,7 @@ namespace rat{
     std::vector<std::string>  m_columnAlignment;
     std::vector<std::string>  m_columnDecoration;
     std::vector<std::string>  m_rowsDecoration;
-    std::vector<rat::LatexTabularRow> m_rows;
+    std::vector<hepfw::LatexTabularRow> m_rows;
     
     
   };

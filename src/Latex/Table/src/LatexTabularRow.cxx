@@ -4,13 +4,13 @@ using namespace std;
 
 #include <iostream>
 
-rat::LatexTabularRow::LatexTabularRow(unsigned nCell){
+hepfw::LatexTabularRow::LatexTabularRow(unsigned nCell){
   
-  for(unsigned i=0; i<nCell; i++){push_back(rat::LatexTabularCell());}
+  for(unsigned i=0; i<nCell; i++){push_back(hepfw::LatexTabularCell());}
   
 }
 
-string rat::LatexTabularRow::toString(){
+string hepfw::LatexTabularRow::toString(){
   
   string out="";
   

@@ -2,6 +2,6 @@
 
 using namespace std;
 
-rat::DataType::DataType(){}
+hepfw::DataType::DataType(){}
 
-rat::VarType rat::DataType::getType(){return m_varType;}
+hepfw::VarType hepfw::DataType::getType(){return m_varType;}

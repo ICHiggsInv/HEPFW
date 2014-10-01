@@ -6,14 +6,14 @@
 // C++ Included
 #include <string>
 
-namespace rat{
+namespace hepfw{
   
   /***********************************************/
   /** \brief Unsigned
    * 
    * Unsigned
    ***********************************************/ 
-  class Unsigned : public rat::DataType {
+  class Unsigned : public hepfw::DataType {
   public:
     
     Unsigned();

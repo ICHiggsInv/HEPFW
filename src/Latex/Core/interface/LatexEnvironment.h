@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-namespace rat{
+namespace hepfw{
   
   /***********************************************/
   /** \brief 

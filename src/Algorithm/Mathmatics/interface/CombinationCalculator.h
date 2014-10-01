@@ -6,7 +6,7 @@
 #include <vector>
 #include <algorithm>
 
-namespace rat{
+namespace hepfw{
   
   /**********************************************************************************/
   /** \brief A class to calculate all combination of a given set of elements

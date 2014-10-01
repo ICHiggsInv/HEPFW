@@ -6,7 +6,7 @@
 // C++ Included
 #include <string>
 
-namespace rat{
+namespace hepfw{
   
   /***********************************************/
   /** \brief LaTeX Table
@@ -14,7 +14,7 @@ namespace rat{
    * This class allows creation and manipulation of a LaTeX table from C++
    * code. 
    ***********************************************/
-  class LatexTable : public rat::LatexEnvironment{
+  class LatexTable : public hepfw::LatexEnvironment{
   public:
     
     LatexTable();

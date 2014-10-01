@@ -2,7 +2,7 @@
 
 using namespace std;
 
-rat::LatexEnvironment::LatexEnvironment(){
+hepfw::LatexEnvironment::LatexEnvironment(){
   
   m_name      = "";
   m_position  = "";
@@ -10,9 +10,9 @@ rat::LatexEnvironment::LatexEnvironment(){
   
 }
 
-rat::LatexEnvironment::~LatexEnvironment(){}
+hepfw::LatexEnvironment::~LatexEnvironment(){}
 
-string rat::LatexEnvironment::toString(){
+string hepfw::LatexEnvironment::toString(){
   
   string out;
   out  = this->toStringEnvBegin();
@@ -23,7 +23,7 @@ string rat::LatexEnvironment::toString(){
   
 }
 
-string rat::LatexEnvironment::toStringEnvBegin(){
+string hepfw::LatexEnvironment::toStringEnvBegin(){
   
   string out;
   out = "\\begin{"+m_name+"}";
@@ -39,7 +39,7 @@ string rat::LatexEnvironment::toStringEnvBegin(){
   
 }
 
-string rat::LatexEnvironment::toStringEnvInner(){
+string hepfw::LatexEnvironment::toStringEnvInner(){
 
   string out;
   for(unsigned i=0; i<innerObjects.size(); i++){
@@ -49,7 +49,7 @@ string rat::LatexEnvironment::toStringEnvInner(){
 
 }
 
-string rat::LatexEnvironment::toStringEnvEnd(){
+string hepfw::LatexEnvironment::toStringEnvEnd(){
   
   string out;
   out = "\\end{"+m_name+"}\n";
@@ -57,6 +57,6 @@ string rat::LatexEnvironment::toStringEnvEnd(){
   
 }
 
-void rat::LatexEnvironment::setCentering(bool centering){m_centering=centering;}
+void hepfw::LatexEnvironment::setCentering(bool centering){m_centering=centering;}
 
-void rat::LatexEnvironment::setPosition(std::string option){m_position=option;}
+void hepfw::LatexEnvironment::setPosition(std::string option){m_position=option;}

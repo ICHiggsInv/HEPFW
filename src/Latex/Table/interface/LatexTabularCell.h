@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-namespace rat{
+namespace hepfw{
   
   /***********************************************/
   /** \brief LaTeX Tabular Cell
@@ -48,7 +48,7 @@ namespace rat{
     
   private:
     
-    rat::DataType* m_data;
+    hepfw::DataType* m_data;
     std::string m_precision;
     std::string m_cellColor;
     

@@ -12,7 +12,7 @@
 #include <map>
 #include <string>
 
-namespace rat{
+namespace hepfw{
   
   /***********************************************/
   /** \brief Data to simulation compare of histograms

@@ -5,20 +5,20 @@ using namespace std;
 /***********************************************/
 /** Default constructor
  ***********************************************/
-rat::LatexTable::LatexTable(){
+hepfw::LatexTable::LatexTable(){
   
   init();
   
 }
 
-void rat::LatexTable::init(){
+void hepfw::LatexTable::init(){
  
   m_name      = "table";
   m_label     = "";
   
 }
 
-string rat::LatexTable::toStringEnvInner(){
+string hepfw::LatexTable::toStringEnvInner(){
   
   string out;
   if(m_label != ""){out += "\\label{"+m_label+"}\n";}
@@ -31,4 +31,4 @@ string rat::LatexTable::toStringEnvInner(){
   
 }
 
-void rat::LatexTable::setLabel(string label){m_label=label;}
+void hepfw::LatexTable::setLabel(string label){m_label=label;}

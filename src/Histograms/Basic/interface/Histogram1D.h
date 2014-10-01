@@ -3,7 +3,7 @@
 
 #include "TH1D.h"
 
-namespace rat{
+namespace hepfw{
 
   /***********************************************/
   /** \brief Histogram1D 

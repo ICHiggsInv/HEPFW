@@ -3,7 +3,7 @@
 
 #include "TStyle.h"
 
-namespace rat{
+namespace hepfw{
   
   /***********************************************/
   /** \brief Style 

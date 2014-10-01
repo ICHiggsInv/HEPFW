@@ -2,13 +2,13 @@
 
 using namespace std;
 
-rat::LatexFlushRight::LatexFlushRight(){
+hepfw::LatexFlushRight::LatexFlushRight(){
   
   init();
   
 }
 
-void rat::LatexFlushRight::init(){
+void hepfw::LatexFlushRight::init(){
  
   m_name = "flushright";
   

@@ -5,7 +5,7 @@ using namespace std;
 /**********************************************************************************/
 /** Default contructor
  **********************************************************************************/
-rat::CombinationCalculator::CombinationCalculator(){
+hepfw::CombinationCalculator::CombinationCalculator(){
   m_nElements=0;
   m_nSelected=0;
 }
@@ -16,7 +16,7 @@ rat::CombinationCalculator::CombinationCalculator(){
  * @param nElements number of elements on the set
  * @param nSelected number of selected elements on each combination
  **********************************************************************************/
-rat::CombinationCalculator::CombinationCalculator(unsigned nElements,unsigned nSelected){
+hepfw::CombinationCalculator::CombinationCalculator(unsigned nElements,unsigned nSelected){
  
   m_nElements = nElements;
   m_nSelected = nSelected;
@@ -30,7 +30,7 @@ rat::CombinationCalculator::CombinationCalculator(unsigned nElements,unsigned nS
 /** Constructor that takes as input an initial combination
  * @param initialCombination initial combination where the iteration will start 
  **********************************************************************************/
-rat::CombinationCalculator::CombinationCalculator(std::vector<bool> initialCombination){
+hepfw::CombinationCalculator::CombinationCalculator(std::vector<bool> initialCombination){
   m_currentCombination = initialCombination;
   //TODO: set m_nSelected and m_nElements
 }
@@ -41,7 +41,7 @@ rat::CombinationCalculator::CombinationCalculator(std::vector<bool> initialCombi
  * NOTE: The current combination will be reset when this method is called
  * @param nElements number of elements in the set
  **********************************************************************************/
-void rat::CombinationCalculator::setNElements(unsigned nElements){
+void hepfw::CombinationCalculator::setNElements(unsigned nElements){
   
   m_nElements = nElements;
   
@@ -56,7 +56,7 @@ void rat::CombinationCalculator::setNElements(unsigned nElements){
  * NOTE: The current combination will be reset when this method is called
  * @param nSelected number of elements selected on each combination
  **********************************************************************************/
-void rat::CombinationCalculator::setNSelected(unsigned nSelected){
+void hepfw::CombinationCalculator::setNSelected(unsigned nSelected){
   
   m_nSelected = nSelected;
   
@@ -69,7 +69,7 @@ void rat::CombinationCalculator::setNSelected(unsigned nSelected){
 /** Get number of elements on the set.
  * @return number of elements on the set
  **********************************************************************************/
-unsigned rat::CombinationCalculator::getNElements(){
+unsigned hepfw::CombinationCalculator::getNElements(){
   return m_nElements;
 }
 
@@ -77,7 +77,7 @@ unsigned rat::CombinationCalculator::getNElements(){
 /** Get number of elements selected on each combination
  * @return number of elements selected on each combination
  **********************************************************************************/
-unsigned rat::CombinationCalculator::getNSelected(){
+unsigned hepfw::CombinationCalculator::getNSelected(){
   return m_nSelected;
 }
 
@@ -85,7 +85,7 @@ unsigned rat::CombinationCalculator::getNSelected(){
 /** Get current combination
  * @return current combination
  **********************************************************************************/
-std::vector<bool> rat::CombinationCalculator::getCombination(){
+std::vector<bool> hepfw::CombinationCalculator::getCombination(){
   return m_currentCombination;
 }
 
@@ -93,6 +93,6 @@ std::vector<bool> rat::CombinationCalculator::getCombination(){
 /** Iterate current combination to the next lexicographically greater combination
  * @return result of iteration, will be true except is this is the last combination.
  **********************************************************************************/
-bool rat::CombinationCalculator::nextCombination(){
+bool hepfw::CombinationCalculator::nextCombination(){
   return next_permutation(m_currentCombination.begin(), m_currentCombination.end());
 }

@@ -1,12 +1,12 @@
 #include "FWCore/DataFormats/interface/Double.h"
 
-rat::Double::Double(){
-  m_varType = rat::kDouble;  
+hepfw::Double::Double(){
+  m_varType = hepfw::kDouble;  
 }
 
-rat::Double::Double(double input){
-  m_varType = rat::kDouble;
+hepfw::Double::Double(double input){
+  m_varType = hepfw::kDouble;
   m_var     = input;
 }
 
-double rat::Double::get(){return m_var;}
+double hepfw::Double::get(){return m_var;}

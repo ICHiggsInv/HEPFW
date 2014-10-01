@@ -23,7 +23,7 @@ int main(int argc, char *argv[]){
   h1->FillRandom("landau",50000);
   h2->FillRandom("expo",  50000);  
 
-  rat::HistogramCollection<string,TH1D> hCol;  
+  hepfw::HistogramCollection<string,TH1D> hCol;  
   hCol.insert(pair<string,TH1D*>("h0",h0));
   hCol.insert(pair<string,TH1D*>("h1",h1));
   hCol.insert(pair<string,TH1D*>("h2",h2));

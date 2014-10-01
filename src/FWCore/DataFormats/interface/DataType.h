@@ -4,7 +4,7 @@
 // C++ Included
 #include <string>
 
-namespace rat{
+namespace hepfw{
   
   enum VarType{
     kBool,
