@@ -44,7 +44,7 @@ PKGS = $(subst ../src/,,$(wildcard ../src/*))
 SPKG = $(subst ../src/,,$(wildcard ../src/*/*))
 SRCS = $(wildcard ../src/*/*/src/*.cxx)
 HEAS = $(wildcard ../src/*/*/interface/*.h)
-LIBS = $(patsubst %,libIC%.so,$(PKGS))
+LIBS = $(patsubst %,libHEPFW%.so,$(PKGS))
 OBJS = $(subst ../src/,,$(subst $(SRC_EXT),$(OBJ_EXT),$(wildcard ../src/*/*/src/*.cxx)))
 BINS = $(subst ../src/,,$(subst $(SRC_EXT),$(EXE_EXT),$(wildcard ../src/*/*/exe/*.cxx)))
 
@@ -75,7 +75,7 @@ bin: $(BINS)
 
 %.so : $(OBJS)
 	@echo "----->Producing shared lib: " $@
-	@$(LD) $(LDFLAGS) -o $@ $(filter $(subst %,%/,$(subst libIC,,$*))%,$(OBJS)) 
+	@$(LD) $(LDFLAGS) -o $@ $(filter $(subst %,%/,$(subst libHEPFW,,$*))%,$(OBJS)) 
 
 %.exe : %.cxx  $(LIBS) 
 	@echo "----->Producing binary: " $@
