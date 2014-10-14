@@ -16,12 +16,12 @@ using namespace std;
  ***********************************************/
 int main(int argc, char *argv[]){
 
-  rat::LatexTable table0;  
+  hepfw::LatexTable table0;  
   table0.setCentering(true);
   table0.setPosition("htp");
   table0.setLabel   ("tableTest01");
 
-  rat::LatexTabular tabular0(3,3);
+  hepfw::LatexTabular tabular0(3,3);
   
   tabular0.setColumnDecorationBefore(0,"|");
   tabular0.setColumnDecorationBefore(1,"||");
@@ -45,7 +45,7 @@ int main(int argc, char *argv[]){
 
   table0.innerObjects.push_back(&tabular0);
   
-  rat::LatexCaption caption("This is a table caption!");
+  hepfw::LatexCaption caption("This is a table caption!");
   
   table0.innerObjects.push_back(&caption);
   

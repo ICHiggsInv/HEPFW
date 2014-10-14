@@ -1,7 +1,7 @@
 #ifndef HISTOGRAMS_DATAFORMATS_HISTOGRAMSTACK
 #define HISTOGRAMS_DATAFORMATS_HISTOGRAMSTACK
 
-namespace rat{
+namespace hepfw{
   
   /***********************************************/
   /** \brief HistogramStack

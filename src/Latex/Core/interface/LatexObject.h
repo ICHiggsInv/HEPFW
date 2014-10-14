@@ -5,7 +5,7 @@
 #include <string>
 #include <set>
 
-namespace rat{
+namespace hepfw{
   
   /***********************************************/
   /** \brief 

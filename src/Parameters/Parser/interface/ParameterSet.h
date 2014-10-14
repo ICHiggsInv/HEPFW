@@ -6,7 +6,7 @@
 #include <vector>
 #include <map>
 
-namespace rat{
+namespace hepfw{
   
   /***********************************************/
   /** \brief ParameterSet

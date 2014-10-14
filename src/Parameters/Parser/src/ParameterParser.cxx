@@ -5,29 +5,29 @@
 using namespace std;
 using namespace boost;
 
-rat::ParameterParser::ParameterParser(){}
+hepfw::ParameterParser::ParameterParser(){}
 
-rat::ParameterParser::ParameterParser(string fileName){
+hepfw::ParameterParser::ParameterParser(string fileName){
 
   m_fileName=fileName;  
   parse();
 
 }
 
-bool rat::ParameterParser::isPSetSet(std::string psetName){
+bool hepfw::ParameterParser::isPSetSet(std::string psetName){
   if(m_pSets.find(psetName)!=m_pSets.end()){return true;}
   else{return false;}
 }
 
-rat::ParameterSet rat::ParameterParser::getByName(std::string psetName){
+hepfw::ParameterSet hepfw::ParameterParser::getByName(std::string psetName){
   return m_pSets[psetName];
 }
 
-int rat::ParameterParser::getNPSet(){
+int hepfw::ParameterParser::getNPSet(){
   return m_pSets.size();
 }
 
-vector<string> rat::ParameterParser::removeComments(vector<string> words){
+vector<string> hepfw::ParameterParser::removeComments(vector<string> words){
 
   vector<string> out;
   
@@ -41,7 +41,7 @@ vector<string> rat::ParameterParser::removeComments(vector<string> words){
   return out;
 }
 
-vector<string> rat::ParameterParser::removeEmpty(vector<string> words){
+vector<string> hepfw::ParameterParser::removeEmpty(vector<string> words){
 
   vector<string> out;
   
@@ -54,7 +54,7 @@ vector<string> rat::ParameterParser::removeEmpty(vector<string> words){
   return out;
 }
 
-void rat::ParameterParser::parse(){
+void hepfw::ParameterParser::parse(){
 /*
   ifstream infile;
   infile.open(m_fileName);

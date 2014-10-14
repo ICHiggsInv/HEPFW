@@ -14,7 +14,7 @@
 
 using namespace std;
 
-map<string,double> calcSampleWeights (rat::ParameterSet global,vector<string> samples,rat::ParameterSet xsecs,rat::ParameterSet events){
+map<string,double> calcSampleWeights (hepfw::ParameterSet global,vector<string> samples,hepfw::ParameterSet xsecs,hepfw::ParameterSet events){
   
   map<string,double> out;
 
@@ -94,14 +94,14 @@ int main(int argc, char *argv[]){
   
   if(hasCfg){
     cout<<"Processing parameters..."<<endl;
-    rat::ParameterParser myPar(cfgFile);
+    hepfw::ParameterParser myPar(cfgFile);
     cout << "Number of PSet         : " << myPar.getNPSet() << endl;
     cout << "Is PSet:Global  Defined: " << myPar.isPSetSet("Global") << endl;
     cout << "Is PSet:XSecs   Defined: " << myPar.isPSetSet("XSecs") << endl;
     cout << "Is PSet:Events  Defined: " << myPar.isPSetSet("Events") << endl;
     cout << "Is PSet:Merge   Defined: " << myPar.isPSetSet("Merge") << endl;
     
-    rat::ParameterSet pSetGlobal,pSetEvents,pSetMerge;
+    hepfw::ParameterSet pSetGlobal,pSetEvents,pSetMerge;
     if(myPar.isPSetSet("Global")){pSetGlobal  = myPar.getByName("Global");}
     if(myPar.isPSetSet("Merge")) {pSetMerge   = myPar.getByName("Merge");}
     
@@ -109,7 +109,7 @@ int main(int argc, char *argv[]){
       
       cout << "Calculating weights..." << endl;
       
-      rat::ParameterSet pSetXSecs,pSetEvents;
+      hepfw::ParameterSet pSetXSecs,pSetEvents;
       if(myPar.isPSetSet("XSecs")){pSetXSecs = myPar.getByName("XSecs");}
       else{return 0;}
       if(myPar.isPSetSet("Events")) {pSetEvents  = myPar.getByName("Events");}

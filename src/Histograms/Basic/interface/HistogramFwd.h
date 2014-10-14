@@ -6,9 +6,9 @@
 #include "Histograms/DataFormats/interface/Histogram2F.h"
 #include "Histograms/DataFormats/interface/Histogram2D.h"
 
-typedef rat::Histogram1F rat::H1F
-typedef rat::Histogram1D rat::H1D;
-typedef rat::Histogram2F rat::H2F;
-typedef rat::Histogram2D rat::H2D;
+typedef hepfw::Histogram1F hepfw::H1F
+typedef hepfw::Histogram1D hepfw::H1D;
+typedef hepfw::Histogram2F hepfw::H2F;
+typedef hepfw::Histogram2D hepfw::H2D;
   
 #endif

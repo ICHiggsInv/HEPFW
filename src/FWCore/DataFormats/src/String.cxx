@@ -2,13 +2,13 @@
 
 using namespace std;
 
-rat::String::String(){
-  m_varType = rat::kString;  
+hepfw::String::String(){
+  m_varType = hepfw::kString;  
 }
 
-rat::String::String(string input){
-  m_varType = rat::kString;
+hepfw::String::String(string input){
+  m_varType = hepfw::kString;
   m_var     = input;
 }
 
-string rat::String::get(){return m_var;}
+string hepfw::String::get(){return m_var;}

@@ -3,7 +3,7 @@
 
 #include "TH2F.h"
 
-namespace rat{
+namespace hepfw{
 
   /***********************************************/
   /** \brief Histogram2F

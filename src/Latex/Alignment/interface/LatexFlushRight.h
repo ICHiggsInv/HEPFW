@@ -6,7 +6,7 @@
 // C++ Included
 #include <string>
 
-namespace rat{
+namespace hepfw{
   
   /***********************************************/
   /** \brief 

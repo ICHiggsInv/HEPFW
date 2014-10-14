@@ -6,14 +6,14 @@
 // C++ Included
 #include <string>
 
-namespace rat{
+namespace hepfw{
   
   /***********************************************/
   /** \brief String
    * 
    * String
    ***********************************************/ 
-  class String : public rat::DataType {
+  class String : public hepfw::DataType {
   public:
     
     String();

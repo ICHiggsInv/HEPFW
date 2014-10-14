@@ -73,6 +73,10 @@ int main(int argc, char *argv[]){
     }
   }else{
     cout << "Correct usage is: " << argv[0] << " [-o|--option] [value] "<< endl; 
+    cout << "Possible option:" << endl;
+    cout << "-i --inputFile      * Input file to be processed" << endl;
+    cout << "-o --outputDir      * Output directory to which to output plots found" << endl;
+    cout << "-t --outputFileType * Output file type for all images to be produced. All ROOT supported file types are supported (pdf, png, jpg, etc)." << endl;
     return 1;
   }
   

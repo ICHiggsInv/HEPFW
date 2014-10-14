@@ -9,14 +9,14 @@ using namespace std;
  * @param nRow number of rows for this tabular.
  * @param nCol number of columns for this tabular.
  ***********************************************/
-rat::LatexTabular::LatexTabular(int nRow,int nCol){
+hepfw::LatexTabular::LatexTabular(int nRow,int nCol){
   
   init();
   
   if(nRow<1 || nCol<1){cout << "ERROR: tabular size needs to be bigger than 1 in columns or rows!" << endl;}
   
   for(int a=0; a<nRow; a++){
-    m_rows           .push_back(rat::LatexTabularRow(nCol));
+    m_rows           .push_back(hepfw::LatexTabularRow(nCol));
     m_rowsDecoration .push_back("");
   }
   m_rowsDecoration.push_back("");
@@ -30,13 +30,13 @@ rat::LatexTabular::LatexTabular(int nRow,int nCol){
   
 }
 
-void rat::LatexTabular::init(){
+void hepfw::LatexTabular::init(){
   
   m_name = "tabular";
   
 }
 
-void rat::LatexTabular::setCellContent(int iRow,int iCol,bool value){
+void hepfw::LatexTabular::setCellContent(int iRow,int iCol,bool value){
   
   if(isCoordinateValid(iRow,iCol)){
     ((m_rows[iRow])[iCol]).setCellContent(value);
@@ -45,7 +45,7 @@ void rat::LatexTabular::setCellContent(int iRow,int iCol,bool value){
   }
 }
 
-void rat::LatexTabular::setCellContent(int iRow,int iCol,int value){
+void hepfw::LatexTabular::setCellContent(int iRow,int iCol,int value){
   
   if(isCoordinateValid(iRow,iCol)){
     ((m_rows[iRow])[iCol]).setCellContent(value);
@@ -54,7 +54,7 @@ void rat::LatexTabular::setCellContent(int iRow,int iCol,int value){
   }
 }
 
-void rat::LatexTabular::setCellContent(int iRow,int iCol,unsigned value){
+void hepfw::LatexTabular::setCellContent(int iRow,int iCol,unsigned value){
   
   if(isCoordinateValid(iRow,iCol)){
     ((m_rows[iRow])[iCol]).setCellContent(value);
@@ -63,7 +63,7 @@ void rat::LatexTabular::setCellContent(int iRow,int iCol,unsigned value){
   }
 }
 
-void rat::LatexTabular::setCellContent(int iRow,int iCol,float value){
+void hepfw::LatexTabular::setCellContent(int iRow,int iCol,float value){
   
   if(isCoordinateValid(iRow,iCol)){
     ((m_rows[iRow])[iCol]).setCellContent(value);
@@ -72,7 +72,7 @@ void rat::LatexTabular::setCellContent(int iRow,int iCol,float value){
   }
 }
 
-void rat::LatexTabular::setCellContent(int iRow,int iCol,double value){
+void hepfw::LatexTabular::setCellContent(int iRow,int iCol,double value){
   
   if(isCoordinateValid(iRow,iCol)){
     ((m_rows[iRow])[iCol]).setCellContent(value);
@@ -81,7 +81,7 @@ void rat::LatexTabular::setCellContent(int iRow,int iCol,double value){
   }
 }
 
-void rat::LatexTabular::setCellContent(int iRow,int iCol,const char* value){
+void hepfw::LatexTabular::setCellContent(int iRow,int iCol,const char* value){
 
   if(isCoordinateValid(iRow,iCol)){
     ((m_rows[iRow])[iCol]).setCellContent(string(value));
@@ -90,7 +90,7 @@ void rat::LatexTabular::setCellContent(int iRow,int iCol,const char* value){
   }  
 }
 
-void rat::LatexTabular::setCellContent(int iRow,int iCol,string value){
+void hepfw::LatexTabular::setCellContent(int iRow,int iCol,string value){
 
   if(isCoordinateValid(iRow,iCol)){
     ((m_rows[iRow])[iCol]).setCellContent(value);
@@ -99,7 +99,7 @@ void rat::LatexTabular::setCellContent(int iRow,int iCol,string value){
   }
 }
 
-void rat::LatexTabular::setCellPrecision(int iRow,int iCol,std::string value){
+void hepfw::LatexTabular::setCellPrecision(int iRow,int iCol,std::string value){
 
   if(isCoordinateValid(iRow,iCol)){
     ((m_rows[iRow])[iCol]).setCellPrecision(value);
@@ -108,7 +108,7 @@ void rat::LatexTabular::setCellPrecision(int iRow,int iCol,std::string value){
   }  
 }
 
-void rat::LatexTabular::setCellColor(int iRow,int iCol,string value){
+void hepfw::LatexTabular::setCellColor(int iRow,int iCol,string value){
   
   if(isCoordinateValid(iRow,iCol)){
     ((m_rows[iRow])[iCol]).setCellColor(value);
@@ -118,7 +118,7 @@ void rat::LatexTabular::setCellColor(int iRow,int iCol,string value){
   }
 }
 
-void rat::LatexTabular::setColumnDecorationBefore(int iCol,std::string value){
+void hepfw::LatexTabular::setColumnDecorationBefore(int iCol,std::string value){
   
   if(iCol<0 || iCol>=int(m_rows[0].size())){
     cout << "ERROR: Request column position is out of bounds." << endl;
@@ -127,7 +127,7 @@ void rat::LatexTabular::setColumnDecorationBefore(int iCol,std::string value){
   }
 }
 
-void rat::LatexTabular::setColumnDecorationAfter (int iCol,std::string value){
+void hepfw::LatexTabular::setColumnDecorationAfter (int iCol,std::string value){
   
   if(iCol<0 || iCol>=int(m_rows[0].size())){
     cout << "ERROR: Request column position is out of bounds." << endl;
@@ -136,7 +136,7 @@ void rat::LatexTabular::setColumnDecorationAfter (int iCol,std::string value){
   }
 }
 
-void rat::LatexTabular::setRowDecorationBefore(int iRow,std::string value){
+void hepfw::LatexTabular::setRowDecorationBefore(int iRow,std::string value){
   
   if(iRow<0 || iRow>=int(m_rows.size())){
     cout << "ERROR: Request row position is out of bounds." << endl;
@@ -145,7 +145,7 @@ void rat::LatexTabular::setRowDecorationBefore(int iRow,std::string value){
   }
 }
 
-void rat::LatexTabular::setRowDecorationAfter (int iRow,std::string value){
+void hepfw::LatexTabular::setRowDecorationAfter (int iRow,std::string value){
   
   if(iRow<0 || iRow>=int(m_rows.size())){  
     cout << "ERROR: Request row position is out of bounds." << endl;
@@ -154,7 +154,7 @@ void rat::LatexTabular::setRowDecorationAfter (int iRow,std::string value){
   }
 }
 
-void rat::LatexTabular::setTabularColumnDecoration(std::string value){
+void hepfw::LatexTabular::setTabularColumnDecoration(std::string value){
 
  setColumnDecorationBefore(0,value);
   for(int iCol=0; iCol<int(m_rows[0].size()); iCol++){
@@ -162,7 +162,7 @@ void rat::LatexTabular::setTabularColumnDecoration(std::string value){
   }  
 }
 
-void rat::LatexTabular::setTabularRowDecoration(std::string value){
+void hepfw::LatexTabular::setTabularRowDecoration(std::string value){
   
   setRowDecorationBefore(0,value);
   for(int iRow=0; iRow<int(m_rows.size()); iRow++){      
@@ -170,7 +170,7 @@ void rat::LatexTabular::setTabularRowDecoration(std::string value){
   }
 }
 
-void rat::LatexTabular::setTabularPrecision(std::string value){
+void hepfw::LatexTabular::setTabularPrecision(std::string value){
  
   for(int iRow=0; iRow<int(m_rows.size()); iRow++){      
     for(int iCol=0; iCol<int(m_rows[0].size()); iCol++){
@@ -179,7 +179,7 @@ void rat::LatexTabular::setTabularPrecision(std::string value){
   }
 }
 
-string rat::LatexTabular::toStringEnvBegin(){
+string hepfw::LatexTabular::toStringEnvBegin(){
 
   string out = getRequiredPackagesString();
   out += "\n";
@@ -212,7 +212,7 @@ string rat::LatexTabular::toStringEnvBegin(){
   
 }
 
-string rat::LatexTabular::toStringEnvInner(){
+string hepfw::LatexTabular::toStringEnvInner(){
 
   string out = "";  
 
@@ -230,7 +230,7 @@ string rat::LatexTabular::toStringEnvInner(){
   return out;  
 }
 
-bool rat::LatexTabular::isCoordinateValid(int iRow,int iCol){
+bool hepfw::LatexTabular::isCoordinateValid(int iRow,int iCol){
   
   bool out = true;
   

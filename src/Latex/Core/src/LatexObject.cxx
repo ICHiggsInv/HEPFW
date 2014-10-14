@@ -7,15 +7,15 @@
 
 using namespace std;
 
-void rat::LatexObject::print(){
+void hepfw::LatexObject::print(){
   cout << this->toString() << endl;
 }
 
-std::string rat::LatexObject::toString(){
+std::string hepfw::LatexObject::toString(){
   return getRequiredPackagesString();
 }
 
-void rat::LatexObject::saveAs(string fileName){
+void hepfw::LatexObject::saveAs(string fileName){
   
   FILE * pFile;
   pFile = fopen (fileName.c_str(),"w");
@@ -23,11 +23,11 @@ void rat::LatexObject::saveAs(string fileName){
   
 }
 
-void rat::LatexObject::addRequiredPackage(string packageName){
+void hepfw::LatexObject::addRequiredPackage(string packageName){
   m_requiredPackages.insert(packageName);
 }
 
-string rat::LatexObject::getRequiredPackagesString(){
+string hepfw::LatexObject::getRequiredPackagesString(){
   
   string out="";
   
@@ -38,7 +38,7 @@ string rat::LatexObject::getRequiredPackagesString(){
   return out;
 }
 
-set<string> rat::LatexObject::getRequiredPackages(){
+set<string> hepfw::LatexObject::getRequiredPackages(){
   return m_requiredPackages;
 }
   

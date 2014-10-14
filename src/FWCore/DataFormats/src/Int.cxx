@@ -1,12 +1,12 @@
 #include "FWCore/DataFormats/interface/Int.h"
 
-rat::Int::Int(){
-  m_varType = rat::kInt;  
+hepfw::Int::Int(){
+  m_varType = hepfw::kInt;  
 }
 
-rat::Int::Int(int input){
-  m_varType = rat::kInt;
+hepfw::Int::Int(int input){
+  m_varType = hepfw::kInt;
   m_var     = input;
 }
 
-int rat::Int::get(){return m_var;}
+int hepfw::Int::get(){return m_var;}

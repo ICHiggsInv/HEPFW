@@ -4,248 +4,248 @@
 
 using namespace std;
 
-void rat::ParameterSet::insertBool    (string key,bool value)              {pBool_    [key]=value;}
-void rat::ParameterSet::insertInt     (string key,int value)               {pInt_     [key]=value;}
-void rat::ParameterSet::insertFloat   (string key,float value)             {pFloat_   [key]=value;}
-void rat::ParameterSet::insertDouble  (string key,double value)            {pDouble_  [key]=value;}
-void rat::ParameterSet::insertString  (string key,string value)            {pString_  [key]=value;}
-void rat::ParameterSet::insertVBool   (string key,vector<bool> value)      {pVBool_   [key]=value;}
-void rat::ParameterSet::insertVInt    (string key,vector<int> value)       {pVInt_    [key]=value;}
-void rat::ParameterSet::insertVFloat  (string key,vector<float> value)     {pVFloat_  [key]=value;}
-void rat::ParameterSet::insertVDouble (string key,vector<double> value)    {pVDouble_ [key]=value;}
-void rat::ParameterSet::insertVString (string key,vector<string> value)    {pVString_ [key]=value;}
-void rat::ParameterSet::insertMiBool  (string key,map<int,bool> value)     {pMiBool_  [key]=value;}
-void rat::ParameterSet::insertMiInt   (string key,map<int,int> value)      {pMiInt_   [key]=value;}
-void rat::ParameterSet::insertMiFloat (string key,map<int,float> value)    {pMiFloat_ [key]=value;}
-void rat::ParameterSet::insertMiDouble(string key,map<int,double> value)   {pMiDouble_[key]=value;}
-void rat::ParameterSet::insertMiString(string key,map<int,string> value)   {pMiString_[key]=value;}
-void rat::ParameterSet::insertMsBool  (string key,map<string,bool> value)  {pMsBool_  [key]=value;}
-void rat::ParameterSet::insertMsInt   (string key,map<string,int> value)   {pMsInt_   [key]=value;}
-void rat::ParameterSet::insertMsFloat (string key,map<string,float> value) {pMsFloat_ [key]=value;}
-void rat::ParameterSet::insertMsDouble(string key,map<string,double> value){pMsDouble_[key]=value;}
-void rat::ParameterSet::insertMsString(string key,map<string,string> value){pMsString_[key]=value;}
+void hepfw::ParameterSet::insertBool    (string key,bool value)              {pBool_    [key]=value;}
+void hepfw::ParameterSet::insertInt     (string key,int value)               {pInt_     [key]=value;}
+void hepfw::ParameterSet::insertFloat   (string key,float value)             {pFloat_   [key]=value;}
+void hepfw::ParameterSet::insertDouble  (string key,double value)            {pDouble_  [key]=value;}
+void hepfw::ParameterSet::insertString  (string key,string value)            {pString_  [key]=value;}
+void hepfw::ParameterSet::insertVBool   (string key,vector<bool> value)      {pVBool_   [key]=value;}
+void hepfw::ParameterSet::insertVInt    (string key,vector<int> value)       {pVInt_    [key]=value;}
+void hepfw::ParameterSet::insertVFloat  (string key,vector<float> value)     {pVFloat_  [key]=value;}
+void hepfw::ParameterSet::insertVDouble (string key,vector<double> value)    {pVDouble_ [key]=value;}
+void hepfw::ParameterSet::insertVString (string key,vector<string> value)    {pVString_ [key]=value;}
+void hepfw::ParameterSet::insertMiBool  (string key,map<int,bool> value)     {pMiBool_  [key]=value;}
+void hepfw::ParameterSet::insertMiInt   (string key,map<int,int> value)      {pMiInt_   [key]=value;}
+void hepfw::ParameterSet::insertMiFloat (string key,map<int,float> value)    {pMiFloat_ [key]=value;}
+void hepfw::ParameterSet::insertMiDouble(string key,map<int,double> value)   {pMiDouble_[key]=value;}
+void hepfw::ParameterSet::insertMiString(string key,map<int,string> value)   {pMiString_[key]=value;}
+void hepfw::ParameterSet::insertMsBool  (string key,map<string,bool> value)  {pMsBool_  [key]=value;}
+void hepfw::ParameterSet::insertMsInt   (string key,map<string,int> value)   {pMsInt_   [key]=value;}
+void hepfw::ParameterSet::insertMsFloat (string key,map<string,float> value) {pMsFloat_ [key]=value;}
+void hepfw::ParameterSet::insertMsDouble(string key,map<string,double> value){pMsDouble_[key]=value;}
+void hepfw::ParameterSet::insertMsString(string key,map<string,string> value){pMsString_[key]=value;}
 
-bool rat::ParameterSet::getBool(string key){
+bool hepfw::ParameterSet::getBool(string key){
   map<string,bool>::iterator p = pBool_.find(key);
   if(p!=pBool_.end()){return p->second;}
   else               {return false;} //TODO: need some handling
 }
 
-int rat::ParameterSet::getInt(string key){
+int hepfw::ParameterSet::getInt(string key){
   map<string,int>::iterator p = pInt_.find(key);
   if(p!=pInt_.end()){return p->second;}
   else              {return 0;} //TODO: need some handling
 }
 
-float rat::ParameterSet::getFloat   (string key){
+float hepfw::ParameterSet::getFloat   (string key){
   map<string,float>::iterator p = pFloat_.find(key);
   if(p!=pFloat_.end()){return p->second;}
   else                {return 0;} //TODO: need some handling
 }
 
-double rat::ParameterSet::getDouble  (string key){
+double hepfw::ParameterSet::getDouble  (string key){
   map<string,double>::iterator p = pDouble_.find(key);
   if(p!=pDouble_.end()){return p->second;}
   else                 {return 0;} //TODO: need some handling
 }
 
-string rat::ParameterSet::getString  (string key){
+string hepfw::ParameterSet::getString  (string key){
   map<string,string>::iterator p = pString_.find(key);
   if(p!=pString_.end()){return p->second;}
   else                 {return "";} //TODO: need some handling
 }
 
-vector<bool> rat::ParameterSet::getVBool(string key){
+vector<bool> hepfw::ParameterSet::getVBool(string key){
   map<string,vector<bool> >::iterator p = pVBool_.find(key);
   if(p!=pVBool_.end()){return p->second;}
   else                {return vector<bool>();} //TODO: need some handling
 }
 
-vector<int> rat::ParameterSet::getVInt(string key){
+vector<int> hepfw::ParameterSet::getVInt(string key){
   map<string,vector<int> >::iterator p = pVInt_.find(key);
   if(p!=pVInt_.end()){return p->second;}
   else               {return vector<int>();} //TODO: need some handling
 }
 
-vector<float> rat::ParameterSet::getVFloat(string key){
+vector<float> hepfw::ParameterSet::getVFloat(string key){
   map<string,vector<float> >::iterator p = pVFloat_.find(key);
   if(p!=pVFloat_.end()){return p->second;}
   else                 {return vector<float>();} //TODO: need some handling
 }
 
-vector<double> rat::ParameterSet::getVDouble(string key){
+vector<double> hepfw::ParameterSet::getVDouble(string key){
   map<string,vector<double> >::iterator p = pVDouble_.find(key);
   if(p!=pVDouble_.end()){return p->second;}
   else                  {return vector<double>();} //TODO: need some handling
 }
 
-vector<string> rat::ParameterSet::getVString(string key){
+vector<string> hepfw::ParameterSet::getVString(string key){
   map<string,vector<string> >::iterator p = pVString_.find(key);
   if(p!=pVString_.end()){return p->second;}
   else                  {return vector<string>();} //TODO: need some handling
 }
 
-map<int,bool> rat::ParameterSet::getMiBool  (string key){
+map<int,bool> hepfw::ParameterSet::getMiBool  (string key){
   map<string,map<int,bool> >::iterator p = pMiBool_.find(key);
   if(p!=pMiBool_.end()){return p->second;}
   else                 {return map<int,bool>();} //TODO: need some handling
 }
 
-map<int,int> rat::ParameterSet::getMiInt   (string key){
+map<int,int> hepfw::ParameterSet::getMiInt   (string key){
   map<string,map<int,int> >::iterator p = pMiInt_.find(key);
   if(p!=pMiInt_.end()){return p->second;}
   else                {return map<int,int>();} //TODO: need some handling
 }
 
-map<int,float> rat::ParameterSet::getMiFloat (string key){
+map<int,float> hepfw::ParameterSet::getMiFloat (string key){
   map<string,map<int,float> >::iterator p = pMiFloat_.find(key);
   if(p!=pMiFloat_.end()){return p->second;}
   else                  {return map<int,float>();} //TODO: need some handling
 }
 
-map<int,double> rat::ParameterSet::getMiDouble(string key){
+map<int,double> hepfw::ParameterSet::getMiDouble(string key){
   map<string,map<int,double> >::iterator p = pMiDouble_.find(key);
   if(p!=pMiDouble_.end()){return p->second;}
   else                   {return map<int,double>();} //TODO: need some handling
 }
 
-map<int,string> rat::ParameterSet::getMiString(string key){
+map<int,string> hepfw::ParameterSet::getMiString(string key){
   map<string,map<int,string> >::iterator p = pMiString_.find(key);
   if(p!=pMiString_.end()){return p->second;}
   else                   {return map<int,string>();} //TODO: need some handling
 }
 
-map<string,bool> rat::ParameterSet::getMsBool  (string key){
+map<string,bool> hepfw::ParameterSet::getMsBool  (string key){
   map<string,map<string,bool> >::iterator p = pMsBool_.find(key);
   if(p!=pMsBool_.end()){return p->second;}
   else                 {return map<string,bool>();} //TODO: need some handling
 }
 
-map<string,int> rat::ParameterSet::getMsInt   (string key){
+map<string,int> hepfw::ParameterSet::getMsInt   (string key){
   map<string,map<string,int> >::iterator p = pMsInt_.find(key);
   if(p!=pMsInt_.end()){return p->second;}
   else                {return map<string,int>();} //TODO: need some handling
 }
 
-map<string,float> rat::ParameterSet::getMsFloat (string key){
+map<string,float> hepfw::ParameterSet::getMsFloat (string key){
   map<string,map<string,float> >::iterator p = pMsFloat_.find(key);
   if(p!=pMsFloat_.end()){return p->second;}
   else                  {return map<string,float>();} //TODO: need some handling
 }
 
-map<string,double> rat::ParameterSet::getMsDouble(string key){
+map<string,double> hepfw::ParameterSet::getMsDouble(string key){
   map<string,map<string,double> >::iterator p = pMsDouble_.find(key);
   if(p!=pMsDouble_.end()){return p->second;}
   else                   {return map<string,double>();} //TODO: need some handling
 }
 
-map<string,string> rat::ParameterSet::getMsString(string key){
+map<string,string> hepfw::ParameterSet::getMsString(string key){
   map<string,map<string,string> >::iterator p = pMsString_.find(key);
   if(p!=pMsString_.end()){return p->second;}
   else                   {return map<string,string>();} //TODO: need some handling
 }
 
-bool rat::ParameterSet::isSetBool    (std::string key){
+bool hepfw::ParameterSet::isSetBool    (std::string key){
   if(pBool_.find(key)!=pBool_.end()){return true;}
   else{return false;}
 }
 
-bool rat::ParameterSet::isSetInt     (std::string key){
+bool hepfw::ParameterSet::isSetInt     (std::string key){
   if(pInt_.find(key)!=pInt_.end()){return true;}
   else{return false;}
 }
 
-bool rat::ParameterSet::isSetFloat   (std::string key){
+bool hepfw::ParameterSet::isSetFloat   (std::string key){
   if(pFloat_.find(key)!=pFloat_.end()){return true;}
   else{return false;}
 }
 
-bool rat::ParameterSet::isSetDouble  (std::string key){
+bool hepfw::ParameterSet::isSetDouble  (std::string key){
   if(pDouble_.find(key)!=pDouble_.end()){return true;}
   else{return false;}
 }
 
-bool rat::ParameterSet::isSetString  (std::string key){
+bool hepfw::ParameterSet::isSetString  (std::string key){
   if(pString_.find(key)!=pString_.end()){return true;}
   else{return false;}
 }
 
-bool rat::ParameterSet::isSetVBool   (std::string key){ 
+bool hepfw::ParameterSet::isSetVBool   (std::string key){ 
   if(pVBool_.find(key)!=pVBool_.end()){return true;}
   else{return false;}
 }
 
-bool rat::ParameterSet::isSetVInt    (std::string key){
+bool hepfw::ParameterSet::isSetVInt    (std::string key){
   if(pVInt_.find(key)!=pVInt_.end()){return true;}
   else{return false;}
 }
 
-bool rat::ParameterSet::isSetVFloat  (std::string key){
+bool hepfw::ParameterSet::isSetVFloat  (std::string key){
   if(pVFloat_.find(key)!=pVFloat_.end()){return true;}
   else{return false;}
 }
 
-bool rat::ParameterSet::isSetVDouble (std::string key){
+bool hepfw::ParameterSet::isSetVDouble (std::string key){
   if(pVDouble_.find(key)!=pVDouble_.end()){return true;}
   else{return false;}
 }
 
-bool rat::ParameterSet::isSetVString (std::string key){  
+bool hepfw::ParameterSet::isSetVString (std::string key){  
   if(pVString_.find(key)!=pVString_.end()){return true;}
   else{return false;}
 }
 
-bool rat::ParameterSet::isSetMiBool  (std::string key){  
+bool hepfw::ParameterSet::isSetMiBool  (std::string key){  
   if(pMsBool_.find(key)!=pMsBool_.end()){return true;}
   else{return false;}
 }
 
-bool rat::ParameterSet::isSetMiInt   (std::string key){
+bool hepfw::ParameterSet::isSetMiInt   (std::string key){
   if(pMsInt_.find(key)!=pMsInt_.end()){return true;}
   else{return false;}
 }
 
-bool rat::ParameterSet::isSetMiFloat (std::string key){
+bool hepfw::ParameterSet::isSetMiFloat (std::string key){
   if(pMsFloat_.find(key)!=pMsFloat_.end()){return true;}
   else{return false;}
 }
 
-bool rat::ParameterSet::isSetMiDouble(std::string key){  
+bool hepfw::ParameterSet::isSetMiDouble(std::string key){  
   if(pMsDouble_.find(key)!=pMsDouble_.end()){return true;}
   else{return false;}
 }
 
-bool rat::ParameterSet::isSetMiString(std::string key){
+bool hepfw::ParameterSet::isSetMiString(std::string key){
   if(pMsString_.find(key)!=pMsString_.end()){return true;}
   else{return false;}
 }
 
-bool rat::ParameterSet::isSetMsBool  (std::string key){
+bool hepfw::ParameterSet::isSetMsBool  (std::string key){
   if(pMiBool_.find(key)!=pMiBool_.end()){return true;}
   else{return false;}
 }
 
-bool rat::ParameterSet::isSetMsInt   (std::string key){
+bool hepfw::ParameterSet::isSetMsInt   (std::string key){
   if(pMiInt_.find(key)!=pMiInt_.end()){return true;}
   else{return false;}
 }
 
-bool rat::ParameterSet::isSetMsFloat (std::string key){
+bool hepfw::ParameterSet::isSetMsFloat (std::string key){
   if(pMiFloat_.find(key)!=pMiFloat_.end()){return true;}
   else{return false;}
 }
 
-bool rat::ParameterSet::isSetMsDouble(std::string key){
+bool hepfw::ParameterSet::isSetMsDouble(std::string key){
   if(pMiDouble_.find(key)!=pMiDouble_.end()){return true;}
   else{return false;}
 }
 
-bool rat::ParameterSet::isSetMsString(std::string key){
+bool hepfw::ParameterSet::isSetMsString(std::string key){
   if(pMiString_.find(key)!=pMiString_.end()){return true;}
   else{return false;}
 }
 
-string rat::ParameterSet::toString(){
+string hepfw::ParameterSet::toString(){
 
   string out = "Parameters List:\n\n";
 

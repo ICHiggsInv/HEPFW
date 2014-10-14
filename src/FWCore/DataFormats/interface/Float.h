@@ -6,14 +6,14 @@
 // C++ Included
 #include <string>
 
-namespace rat{
+namespace hepfw{
   
   /***********************************************/
   /** \brief Float
    * 
    * Float
    ***********************************************/ 
-  class Float : public rat::DataType {
+  class Float : public hepfw::DataType {
   public:
     
     Float();

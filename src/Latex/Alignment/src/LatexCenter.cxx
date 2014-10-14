@@ -2,13 +2,13 @@
 
 using namespace std;
 
-rat::LatexCenter::LatexCenter(){
+hepfw::LatexCenter::LatexCenter(){
   
   init();
   
 }
 
-void rat::LatexCenter::init(){
+void hepfw::LatexCenter::init(){
  
   m_name = "center";
   
