@@ -27,6 +27,9 @@
 
 using namespace std;
 
+//#################################################################################
+//#################################################################################
+//#################################################################################
 TCanvas* doCanvas(TH1D* sig,TH1D* bkg,TH1D* notETM,const char* name,const char* path,ostringstream &iStream){
   
   //const int nMaxBunch50ns = 1380;
@@ -150,16 +153,67 @@ TCanvas* doCanvas(TH1D* sig,TH1D* bkg,TH1D* notETM,const char* name,const char* 
   
 }
 
-//####################################################################
-int main(){
+//#################################################################################
+//#################################################################################
+//#################################################################################
+TCanvas* doHLTCanvas(TH1D* sig,TH1D* bkg,const char* name){
+  
+  TCanvas *c0 = new TCanvas(Form("rates_%s",name));
+  
+  TPad *pad = new TPad("pad","",0,0,1,1);
+  pad->SetFillColor(0);
+  pad->SetGridx();
+  pad->SetTicky(false);
+  pad->Draw();
+  pad->cd();
+  
+  sig->GetYaxis()->SetTitleOffset(1.5);
+  sig->GetYaxis()->SetTitle("Signal Efficiency");
+  sig->Draw();
+  
+  ///////////
+  c0->cd();
+  TPad *overlay = new TPad("overlay","",0,0,1,1);
+  overlay->SetFillStyle(4000);
+  overlay->SetFillColor(0);
+  overlay->SetFrameFillStyle(4000);
+  overlay->Draw();
+  overlay->cd();
+  overlay->SetLogy();
+  overlay->SetGridy();
+  overlay->SetTicky(false);
+  
+  TH1D * rate = (TH1D*) bkg->Clone(Form("rate_%s",sig->GetTitle()));
+  rate->GetYaxis()->SetTitle("HLT Rate (Hz)");
+  rate->SetLineColor(kRed);
+  rate->GetYaxis()->SetAxisColor(kRed);
+  rate->GetYaxis()->SetTitleColor(kRed);
+  rate->GetYaxis()->SetLabelColor(kRed);
+  rate->GetYaxis()->SetTitleOffset(1.5);  
+  rate->Draw("Y+");
+  
+  TLegend *l = new TLegend(0.50,0.80,0.85,0.95);
+  l->SetBorderSize(1);
+  l->AddEntry(sig,"VBF Inv Eff");
+  l->AddEntry(rate,"QCD Rate");
+  l->Draw();
 
+  return c0;
+  
+}
+
+//#################################################################################
+//#################################################################################
+//#################################################################################
+void l1tAnalysis(){
+  
   hepfw::Style myStyle;
   myStyle.setTDRStyle();
   
-  art::File *fOut = new art::File("L1AlgoWPStudiesResults_PU40bx25_eff.root","RECREATE");
+  hepfw::File *fOut = new hepfw::File("L1AlgoWPStudiesResults_PU40bx25_eff.root","RECREATE");
   
-  art::File *fSig = new art::File("L1AlgoWPStudiesResults_L1TEmuStage1_VBFInv_PU40bx25.root");
-  art::File *fBkg = new art::File("L1AlgoWPStudiesResults_L1TEmuStage1_NeutrinoGun_PU40bx25.root");
+  hepfw::File *fSig = new hepfw::File("L1AlgoWPStudiesResults_L1TEmuStage1_VBFInv_PU40bx25.root");
+  hepfw::File *fBkg = new hepfw::File("L1AlgoWPStudiesResults_L1TEmuStage1_NeutrinoGun_PU40bx25.root");
   
   vector<TH1*> hSig = fSig->getHistograms();
   vector<TH1*> hBkg = fBkg->getHistograms();
@@ -169,7 +223,7 @@ int main(){
   
   TH1I* hBkgTotal = (TH1I*) fBkg->Get("Run_1/EventCount");
   double nBkgEvents = hBkgTotal->GetBinContent(1);
-
+  
   fOut->copyDirectoryStructure(fSig);
   fOut->Write();
   
@@ -179,11 +233,11 @@ int main(){
   for(unsigned s=0; s<hSig.size(); s++){
     
     TH1D *pSig = (TH1D*) hSig[s];
-
+    
     string sigTitle = pSig->GetName();
     string sigPath  = pSig->GetDirectory()->GetPath();
     sigPath  = sigPath.substr(sigPath.find(':')+2,sigPath.size()-1);
-
+    
     for(unsigned b=0; b<hBkg.size(); b++){
       
       TH1D *pBkg = (TH1D*) hBkg[b];
@@ -270,11 +324,6 @@ int main(){
     
   }
   
-  
-
-  
-  //string subPath = iDir->substr(iDir->find(':')+1,iDir->size()-1);
-  
   cout << "L1AlgoWPStudiesResults_VBFInv_PU40bx25.root      has " << hSig.size() << " histograms!" << endl;
   cout << "L1AlgoWPStudiesResults_NeutrinoGun_PU40bx25.root has " << hBkg.size() << " histograms!" << endl;
   
@@ -282,143 +331,173 @@ int main(){
   
   fOut->Write();
   
-//   TFile *fSig = new TFile("L1AlgoWPStudiesResults_VBFInv_PU40bx25.root");
-                           
-    
-//   TH1I* hSigTotal = (TH1I*) fSig->Get("Run_1/EventCount");
-//   TH1I* hBkgTotal = (TH1I*) fBkg->Get("Run_1/EventCount");
+}
 
-//   double nSigEvents = hSigTotal->GetBinContent(1);
-//   double nBkgEvents = hSigTotal->GetBinContent(1);
+//#################################################################################
+//#################################################################################
+//#################################################################################
+void hltAnalysis(){
   
-  //___________________________________________________________
+  hepfw::Style myStyle;
+  myStyle.setTDRStyle();
 
-  /*
-  //___________________________________________________________  
-  TH1D *DijetVBF30_DEta      = (TH1D*) f->Get("Run_1/DijetVBF30/dijet_deta");
-  TH1D *eff_DijetVBF30_DEta  = (TH1D*) DijetVBF30_DEta ->Clone("eff_DijetVBF30_DEta"); 
-  for(int i=0; i<=eff_DijetVBF30_DEta->GetNbinsX()+1; i++){
-    eff_DijetVBF30_DEta->SetBinContent(i,eff_DijetVBF30_DEta->Integral(i,eff_DijetVBF30_DEta->GetNbinsX()+1));
+  double targetLumi = 1.4e34;
+  
+  // Getting VBF Higgs invisible signal and neutrino gun
+  hepfw::File *fSig   = new hepfw::File("PU40bx25_VBFInv.root");
+  hepfw::File *fNugun = new hepfw::File("PU40bx25_NeutrinoGun.root");
+
+  // Getting QCD samples
+  map<string,hepfw::File*> fQCD;
+  fQCD["QCD_Pt-30to50"]     = new hepfw::File("PU40bx25_QCD_Pt-30to50.root");
+  fQCD["QCD_Pt-50to80"]     = new hepfw::File("PU40bx25_QCD_Pt-50to80.root");
+  fQCD["QCD_Pt-80to120"]    = new hepfw::File("PU40bx25_QCD_Pt-80to120.root");
+  fQCD["QCD_Pt-120to170"]   = new hepfw::File("PU40bx25_QCD_Pt-120to170.root");
+  fQCD["QCD_Pt-170to300"]   = new hepfw::File("PU40bx25_QCD_Pt-170to300.root");
+  fQCD["QCD_Pt-300to470"]   = new hepfw::File("PU40bx25_QCD_Pt-300to470.root");
+  fQCD["QCD_Pt-470to600"]   = new hepfw::File("PU40bx25_QCD_Pt-470to600.root");
+  fQCD["QCD_Pt-600to800"]   = new hepfw::File("PU40bx25_QCD_Pt-600to800.root");
+  fQCD["QCD_Pt-800to1000"]  = new hepfw::File("PU40bx25_QCD_Pt-800to1000.root");
+  fQCD["QCD_Pt-1000to1400"] = new hepfw::File("PU40bx25_QCD_Pt-1000to1400.root");
+  fQCD["QCD_Pt-1400to1800"] = new hepfw::File("PU40bx25_QCD_Pt-1400to1800.root");
+
+  // Creating output file and replicating directory structure
+  hepfw::File *fOut = new hepfw::File("PU40bx25_HLTAnalysis_eff.root","RECREATE");
+  fOut->copyDirectoryStructure(fSig);
+  fOut->Write();
+  
+  // Cross sections in [pb] as reported in mcm
+  map<string,double> xsec;
+  xsec["QCD_Pt-30to50"]     = 161500000;
+  xsec["QCD_Pt-50to80"]     =  22110000;
+  xsec["QCD_Pt-80to120"]    =   3000114.3;
+  xsec["QCD_Pt-120to170"]   =    493200;
+  xsec["QCD_Pt-170to300"]   =    120300;
+  xsec["QCD_Pt-300to470"]   =      7475;
+  xsec["QCD_Pt-470to600"]   =       587.1;
+  xsec["QCD_Pt-600to800"]   =       167;
+  xsec["QCD_Pt-800to1000"]  =       28.25;
+  xsec["QCD_Pt-1000to1400"] =        8.195;
+  xsec["QCD_Pt-1400to1800"] =        0.7346;
+  
+  vector<TH1*> hSig   = fSig  ->getHistograms();
+  vector<TH1*> hNuGun = fNugun->getHistograms();
+  
+  map<string,vector<TH1*> > hQCD;
+  for(auto i=fQCD.begin(); i!=fQCD.end(); i++){
+    hQCD[i->first] = i->second->getHistograms();
   }
-  eff_DijetVBF30_DEta->Scale(1/nEvents);
-  eff_DijetVBF30_DEta->SetDirectory(fOut);
-  TH1D *rate_DijetVBF30_DEta = (TH1D*) eff_DijetVBF30_DEta ->Clone("rate_DijetVBF30_DEta");
-  rate_DijetVBF30_DEta->GetYaxis()->SetTitle("L1T Rate (Hz)");
-  rate_DijetVBF30_DEta->Scale(ratePerBunch*nMaxBunch25ns);
-  rate_DijetVBF30_DEta->SetDirectory(fOut);
   
-  TCanvas c1;
-  rate_DijetVBF30_DEta->GetYaxis()->SetRangeUser(0,1.2e7);
-  rate_DijetVBF30_DEta->GetYaxis()->SetTitleOffset(1.5);
-  rate_DijetVBF30_DEta->GetYaxis()->SetLabelSize(0.02);
-  rate_DijetVBF30_DEta->Draw();
-  TLine line1 (3.0,0,3.0,1.2e7);
-  line1.SetLineColor(kRed);
-  line1.Draw();
-  c1.SaveAs("PU40bx50_rate_DijetVBF30_DEta.pdf");
-  rate_DijetVBF30_DEta->GetYaxis()->SetRangeUser(1,1.2e7);
-  c1.SetLogy(true);
-  c1.SaveAs("PU40bx50_rate_DijetVBF30_DEta_logScale.pdf");
+  TH1I* hSigTotal = (TH1I*) fSig->Get("EventCount");
+  double nSigEvents = hSigTotal->GetBinContent(1);
   
-  //___________________________________________________________
-  TH1D *DijetVBF30_DEta3p0_L1TETM = (TH1D*) f->Get("Run_1/DijetVBF30_DEta3p0/L1T_ETM");
-  TH1D *eff_DijetVBF30_DEta3p0_L1TETM  = (TH1D*) DijetVBF30_DEta3p0_L1TETM ->Clone("eff_DijetVBF30_DEta3p0_L1TETM"); 
-  for(int i=0; i<=eff_DijetVBF30_DEta3p0_L1TETM->GetNbinsX()+1; i++){
-    eff_DijetVBF30_DEta3p0_L1TETM->SetBinContent(i,eff_DijetVBF30_DEta3p0_L1TETM->Integral(i,eff_DijetVBF30_DEta3p0_L1TETM->GetNbinsX()+1));
+  TH1I* hNuGunTotal = (TH1I*) fNugun->Get("EventCount");
+  double nBkgEvents = hNuGunTotal->GetBinContent(1);
+  
+  map<string,double> nQCDEvents;
+  for(auto i=fQCD.begin(); i!=fQCD.end(); i++){
+    TH1I* hEv = (TH1I*) i->second->Get("EventCount");
+    nQCDEvents[i->first]= hEv->GetBinContent(1);
   }
-  eff_DijetVBF30_DEta3p0_L1TETM->Scale(1/nEvents);
-  eff_DijetVBF30_DEta3p0_L1TETM->SetDirectory(fOut);
-  TH1D *rate_DijetVBF30_DEta3p0_L1TETM = (TH1D*) eff_DijetVBF30_DEta3p0_L1TETM ->Clone("rate_DijetVBF30_DEta3p0_L1TETM"); 
-  rate_DijetVBF30_DEta3p0_L1TETM->GetYaxis()->SetTitle("L1T Rate (Hz)");
-  rate_DijetVBF30_DEta3p0_L1TETM->Scale(ratePerBunch*nMaxBunch25ns);
-  rate_DijetVBF30_DEta3p0_L1TETM->SetDirectory(fOut);
 
-  TCanvas c2;
-  rate_DijetVBF30_DEta3p0_L1TETM->GetXaxis()->SetRangeUser(0,100);
-  rate_DijetVBF30_DEta3p0_L1TETM->GetYaxis()->SetRangeUser(0,1.2e7);
-  rate_DijetVBF30_DEta3p0_L1TETM->GetYaxis()->SetTitleOffset(1.5);
-  rate_DijetVBF30_DEta3p0_L1TETM->GetYaxis()->SetLabelSize(0.02);
-  rate_DijetVBF30_DEta3p0_L1TETM->Draw();
-  TLine line2 (30,0,30,1.2e7);
-  line2.SetLineColor(kRed);
-  line2.Draw();
-  c2.SaveAs("PU40bx50_rate_DijetVBF30_DEta3p0_L1TETM.pdf");
-  rate_DijetVBF30_DEta3p0_L1TETM->GetYaxis()->SetRangeUser(1,1.2e7);
-  c2.SetLogy(true);
-  c2.SaveAs("PU40bx50_rate_DijetVBF30_DEta3p0_L1TETM_logScale.pdf");*/
+  //################################################################################
   
-  
-  /*
-    //
-    // Example showing how to superimpose a TGraph with a different range
-    // using a transparent pad.
-    //
-    c1 = new TCanvas("c1","gerrors2",200,10,700,500);
-    TPad *pad = new TPad("pad","",0,0,1,1);
-    pad->SetFillColor(42);
-    pad->SetGrid();
-    pad->Draw();
-    pad->cd();
+  // Looping over all histograms of the signal
+  for(unsigned s=0; s<hSig.size(); s++){
     
-    // draw a frame to define the range
-    TH1F *hr = pad->DrawFrame(-0.4,0,1.2,12);
-    hr->SetXTitle("X title");
-    hr->SetYTitle("Y title");
-    pad->GetFrame()->SetFillColor(21);
-    pad->GetFrame()->SetBorderSize(12);
+    TH1D *pSig    = (TH1D*) hSig[s];
+    TH1D *pSigEff = (TH1D*) pSig->Clone(Form("Sig_%s_eff",pSig->GetName()));
+    pSigEff->Scale(1/nSigEvents);
     
-    // create first graph
-    Int_t n1 = 10;
-    Double_t x1[]  = {-0.22, 0.05, 0.25, 0.35, 0.5, 0.61,0.7,0.85,0.89,0.95};
-    Double_t y1[]  = {1,2.9,5.6,7.4,9,9.6,8.7,6.3,4.5,1};
-    Double_t ex1[] = {.05,.1,.07,.07,.04,.05,.06,.07,.08,.05};
-    Double_t ey1[] = {.8,.7,.6,.5,.4,.4,.5,.6,.7,.8};
-    gr1 = new TGraphErrors(n1,x1,y1,ex1,ey1);
-    gr1->SetMarkerColor(kBlue);
-    gr1->SetMarkerStyle(21);
-    gr1->Draw("LP");
+    // Computing integral from each bin to infinity
+    for(int i=0; i<=pSigEff->GetNbinsX()+1; i++){pSigEff->SetBinContent(i,pSigEff->Integral(i,pSigEff->GetNbinsX()+1));}
     
-    // create second graph
-    Int_t n2 = 10;
-    Float_t x2[]  = {-0.28, 0.005, 0.19, 0.29, 0.45, 0.56,0.65,0.80,0.90,1.01};
-    Float_t y2[]  = {0.82,3.86,7,9,10,10.55,9.64,7.26,5.42,2};
-    Float_t ex2[] = {.04,.12,.08,.06,.05,.04,.07,.06,.08,.04};
-    Float_t ey2[] = {.6,.8,.7,.4,.3,.3,.4,.5,.6,.7};
-    for (Int_t i=0;i<n2;i++) {
-      y2[i] *= 100;
-      ey2[i] *= 100;
+    // Getting name and path (file name subtracted) of the histogram
+    string sigTitle = pSig->GetName();
+    string sigPath  = pSig->GetDirectory()->GetPath();
+    sigPath  = sigPath.substr(sigPath.find(':')+2,sigPath.size()-1);
+    
+    TH1D* totalBkg = 0;
+    
+    for(auto i=hQCD.begin(); i!=hQCD.end(); i++){
+      
+      vector<TH1*> thisPlots = i->second;
+
+      for(unsigned b=0; b<thisPlots.size(); b++){
+        
+        TH1D *pBkg = (TH1D*) thisPlots[b];
+
+        // Getting name and path (file name subtracted) of the histogram
+        string bkgTitle = pBkg->GetName();
+        string bkgPath  = pBkg->GetDirectory()->GetPath();
+        bkgPath = bkgPath.substr(bkgPath.find(':')+2,bkgPath.size()-1);
+        
+        if(sigTitle == bkgTitle && sigPath == bkgPath){
+          TH1D *pBkgEff   = (TH1D*) pBkg->Clone(Form("Bkg_%s_eff",pBkg->GetName()));
+          
+          // Computing integral from each bin to infinity
+          for(int i=0; i<=pBkgEff->GetNbinsX()+1; i++){pBkgEff->SetBinContent(i,pBkgEff->Integral(i,pBkgEff->GetNbinsX()+1));}
+          
+          // Normalising to 1 over total event processed
+          pBkgEff->Scale(1/nQCDEvents[i->first]);
+          
+          // Scaling by the total rate of the sample
+          pBkgEff->Scale(xsec[i->first]*(targetLumi*1e-36));
+          
+          if(totalBkg==0){
+            // First time adding plot
+            totalBkg = pBkgEff;
+          }else{
+            // Adding to an existing plot
+            totalBkg->Add(pBkgEff);
+          }
+          break;
+        }
+      }
     }
-    //create a transparent pad drawn on top of the main pad
-    c1->cd();
-    TPad *overlay = new TPad("overlay","",0,0,1,1);
-    overlay->SetFillStyle(4000);
-    overlay->SetFillColor(0);
-    overlay->SetFrameFillStyle(4000);
-    overlay->Draw();
-    overlay->cd();
-    gr2 = new TGraphErrors(n2,x2,y2,ex2,ey2);
-    gr2->SetMarkerColor(kRed);
-    gr2->SetMarkerStyle(20);
-    gr2->SetName("gr2");
-    Double_t xmin = pad->GetUxmin();
-    Double_t ymin = 0;
-    Double_t xmax = pad->GetUxmax();
-    Double_t ymax = 1200;
-    TH1F *hframe = overlay->DrawFrame(xmin,ymin,xmax,ymax);
-    hframe->GetXaxis()->SetLabelOffset(99);
-    hframe->GetYaxis()->SetLabelOffset(99);
-    gr2->Draw("LP");
     
+    TCanvas* c = doHLTCanvas(pSigEff,totalBkg,pSig->GetName());
     
-    //Draw an axis on the right side
-    TGaxis *axis = new TGaxis(xmax,ymin,xmax, ymax,ymin,ymax,510,"+L");
-    axis->SetLineColor(kRed);
-    axis->SetLabelColor(kRed);
-    axis->Draw();
-  */
-  
+    TDirectoryFile *d = (TDirectoryFile*) fOut->Get(sigPath.c_str());
+    d->WriteTObject(c);
+    
+    system(Form("mkdir -p %s",sigPath.c_str()));
+    c->SaveAs(Form("%s/%s.%s",sigPath.c_str(),pSig->GetName(),"png"));
+    
+    delete pSigEff;
+    delete totalBkg;
+    delete c;
+  }
+}
 
+//#################################################################################
+//#################################################################################
+//#################################################################################
+int main(int argc, char *argv[]){
+
+  // Caching command line parameters
+  bool doL1T = false;
+  bool doHLT = false;
   
-  return 0;  
+  bool incorrectCmd = false;
+  if(argc!=2){incorrectCmd=true;}
+  
+  if      (!strcmp(argv[1],"--l1t")){doL1T=true;}
+  else if (!strcmp(argv[1],"--hlt")){doHLT=true;}
+  else{incorrectCmd=true;}
+
+  if(incorrectCmd){
+    printf("Usage: %s [option]\n", argv[0]);
+    printf("Possible options:\n");
+    printf("--l1t : Do L1T Analysis\n");
+    printf("--hlt : Do HLT Analysis\n");
+    return 0;
+  }
+  
+  
+  if(doL1T){l1tAnalysis();}
+  if(doHLT){hltAnalysis();}
+
+  return 0;
   
 };
