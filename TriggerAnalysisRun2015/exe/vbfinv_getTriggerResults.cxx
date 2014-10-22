@@ -380,37 +380,36 @@ void hltAnalysis(){
   xsec["QCD_Pt-1000to1400"] =        8.195;
   xsec["QCD_Pt-1400to1800"] =        0.7346;
   
-  vector<TH1*> hSig   = fSig  ->getHistograms();
-  vector<TH1*> hNuGun = fNugun->getHistograms();
-  
-  map<string,vector<TH1*> > hQCD;
-  for(auto i=fQCD.begin(); i!=fQCD.end(); i++){
-    hQCD[i->first] = i->second->getHistograms();
-  }
-  
   TH1I* hSigTotal = (TH1I*) fSig->Get("EventCount");
   double nSigEvents = hSigTotal->GetBinContent(1);
   
-  TH1I* hNuGunTotal = (TH1I*) fNugun->Get("EventCount");
-  double nBkgEvents = hNuGunTotal->GetBinContent(1);
+  //   TH1I* hNuGunTotal = (TH1I*) fNugun->Get("EventCount");
+  //   double nBkgEvents = hNuGunTotal->GetBinContent(1);
+  
   
   map<string,double> nQCDEvents;
   for(auto i=fQCD.begin(); i!=fQCD.end(); i++){
     TH1I* hEv = (TH1I*) i->second->Get("EventCount");
     nQCDEvents[i->first]= hEv->GetBinContent(1);
+    printf("Sample: %40s event: %.0f\n",i->first.c_str(),hEv->GetBinContent(1));
   }
+  
+  vector<TH1*> hSig   = fSig  ->getHistograms();
+  vector<TH1*> hNuGun = fNugun->getHistograms();
+  
+  map<string,vector<TH1*> > hQCD;
+  for(auto i=fQCD.begin(); i!=fQCD.end(); i++){
+    cout << "Getting all histograms for: " << i->first << endl;
+    hQCD[i->first] = i->second->getHistograms();
+  }
+
 
   //################################################################################
   
   // Looping over all histograms of the signal
-  for(unsigned s=0; s<hSig.size(); s++){
+  for(unsigned iSig=0; iSig<hSig.size(); iSig++){
     
-    TH1D *pSig    = (TH1D*) hSig[s];
-    TH1D *pSigEff = (TH1D*) pSig->Clone(Form("Sig_%s_eff",pSig->GetName()));
-    pSigEff->Scale(1/nSigEvents);
-    
-    // Computing integral from each bin to infinity
-    for(int i=0; i<=pSigEff->GetNbinsX()+1; i++){pSigEff->SetBinContent(i,pSigEff->Integral(i,pSigEff->GetNbinsX()+1));}
+    TH1D *pSig = (TH1D*) hSig[iSig];
     
     // Getting name and path (file name subtracted) of the histogram
     string sigTitle = pSig->GetName();
@@ -419,30 +418,31 @@ void hltAnalysis(){
     
     TH1D* totalBkg = 0;
     
-    for(auto i=hQCD.begin(); i!=hQCD.end(); i++){
+    for(auto iSample=hQCD.begin(); iSample!=hQCD.end(); iSample++){
       
-      vector<TH1*> thisPlots = i->second;
-
-      for(unsigned b=0; b<thisPlots.size(); b++){
+      vector<TH1*> thisPlots = iSample->second;
+      
+      for(unsigned iPlot=0; iPlot<thisPlots.size(); iPlot++){
         
-        TH1D *pBkg = (TH1D*) thisPlots[b];
-
+        TH1 *pBkg = (TH1*) thisPlots[iPlot];
+        
         // Getting name and path (file name subtracted) of the histogram
         string bkgTitle = pBkg->GetName();
         string bkgPath  = pBkg->GetDirectory()->GetPath();
         bkgPath = bkgPath.substr(bkgPath.find(':')+2,bkgPath.size()-1);
         
         if(sigTitle == bkgTitle && sigPath == bkgPath){
-          TH1D *pBkgEff   = (TH1D*) pBkg->Clone(Form("Bkg_%s_eff",pBkg->GetName()));
+
+          TH1D *pBkgEff = (TH1D*) pBkg->Clone(Form("Bkg_%s_eff",pBkg->GetName()));
           
           // Computing integral from each bin to infinity
           for(int i=0; i<=pBkgEff->GetNbinsX()+1; i++){pBkgEff->SetBinContent(i,pBkgEff->Integral(i,pBkgEff->GetNbinsX()+1));}
           
           // Normalising to 1 over total event processed
-          pBkgEff->Scale(1/nQCDEvents[i->first]);
+          pBkgEff->Scale(1/nQCDEvents[iSample->first]);
           
           // Scaling by the total rate of the sample
-          pBkgEff->Scale(xsec[i->first]*(targetLumi*1e-36));
+          pBkgEff->Scale(xsec[iSample->first]*(targetLumi*1e-36));
           
           if(totalBkg==0){
             // First time adding plot
@@ -450,17 +450,27 @@ void hltAnalysis(){
           }else{
             // Adding to an existing plot
             totalBkg->Add(pBkgEff);
+            delete pBkgEff;
           }
           break;
         }
       }
     }
     
+    TH1D *pSigEff = (TH1D*) pSig->Clone(Form("Sig_%s_eff",pSig->GetName()));
+    
+    // Computing integral from each bin to infinity
+    for(int x=0; x<=pSigEff->GetNbinsX()+1; x++){pSigEff->SetBinContent(x,pSigEff->Integral(x,pSigEff->GetNbinsX()+1));}
+    pSigEff->Scale(1/nSigEvents);
+    
     TCanvas* c = doHLTCanvas(pSigEff,totalBkg,pSig->GetName());
     
-    TDirectoryFile *d = (TDirectoryFile*) fOut->Get(sigPath.c_str());
-    d->WriteTObject(c);
-    
+    if(sigPath==""){
+      fOut->WriteTObject(c);
+    }else{
+      TDirectoryFile *d = (TDirectoryFile*) fOut->Get(sigPath.c_str());
+      d->WriteTObject(c);
+    }
     system(Form("mkdir -p %s",sigPath.c_str()));
     c->SaveAs(Form("%s/%s.%s",sigPath.c_str(),pSig->GetName(),"png"));
     
@@ -481,11 +491,12 @@ int main(int argc, char *argv[]){
   
   bool incorrectCmd = false;
   if(argc!=2){incorrectCmd=true;}
+    else{
+    if      (!strcmp(argv[1],"--l1t")){doL1T=true;}
+    else if (!strcmp(argv[1],"--hlt")){doHLT=true;}
+    else{incorrectCmd=true;}
+  }
   
-  if      (!strcmp(argv[1],"--l1t")){doL1T=true;}
-  else if (!strcmp(argv[1],"--hlt")){doHLT=true;}
-  else{incorrectCmd=true;}
-
   if(incorrectCmd){
     printf("Usage: %s [option]\n", argv[0]);
     printf("Possible options:\n");
