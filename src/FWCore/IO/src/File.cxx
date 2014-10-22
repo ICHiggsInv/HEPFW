@@ -87,7 +87,7 @@ void hepfw::File::copyDirectoryStructure(TFile *file){
     subPath = subPath.substr(subPath.find(':')+2,subPath.size()-1);
     this->mkdir(subPath.c_str());
 
-    cout << "mkdir: " << subPath.c_str() << endl;
+    //cout << "mkdir: " << subPath.c_str() << endl;
     
     TIter iter(iList);
     while (TObject *obj = iter()){
