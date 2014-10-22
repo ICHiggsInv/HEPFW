@@ -6,11 +6,11 @@
 
 using namespace std;
 
-art::File::File() : TFile(){}
+hepfw::File::File() : TFile(){}
 
-art::File::File(const char* fname, Option_t* option,const char* ftitle,Int_t compress) : TFile(fname,option,ftitle,compress){}
+hepfw::File::File(const char* fname, Option_t* option,const char* ftitle,Int_t compress) : TFile(fname,option,ftitle,compress){}
 
-vector<TH1*> art::File::getHistograms(){
+vector<TH1*> hepfw::File::getHistograms(){
   
   vector<TH1*> out;
 
@@ -68,11 +68,11 @@ vector<TH1*> art::File::getHistograms(){
   
 }
 
-// void art::File::copyDirectoryStructure(art::File *file){
+// void hepfw::File::copyDirectoryStructure(hepfw::File *file){
 //   copyDirectoryStructure( (TFile*) file);
 // }
 
-void art::File::copyDirectoryStructure(TFile *file){
+void hepfw::File::copyDirectoryStructure(TFile *file){
 
   vector<TDirectoryFile*>  dirs;
 

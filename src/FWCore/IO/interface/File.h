@@ -7,12 +7,12 @@
 // C++ Included
 #include <vector>
 
-namespace art{
+namespace hepfw{
 
   /***********************************************/
   /** \brief File
    * 
-   * Class art::File directly inherits from ROOT TFile and expands its 
+   * Class hepfw::File directly inherits from ROOT TFile and expands its 
    * functionality
    ***********************************************/ 
   class File : public TFile {
