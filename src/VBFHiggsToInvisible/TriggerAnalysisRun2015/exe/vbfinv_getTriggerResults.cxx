@@ -394,6 +394,33 @@ void hltAnalysis(){
     printf("Sample: %40s event: %.0f\n",i->first.c_str(),hEv->GetBinContent(1));
   }
   
+  // Getting HLT counts
+  //################################################################################
+  TH1I* nSigHLTCount = (TH1I*) fSig->Get("HLTPathCount");
+  
+  map<string,TH1I*> nQCDHLTCount;
+  for(auto i=fQCD.begin(); i!=fQCD.end(); i++){
+    nQCDHLTCount[i->first] = (TH1I*) i->second->Get("HLTPathCount");
+  }
+  
+  printf("HLT results...\n");
+  for(int i=1; i<nSigHLTCount->GetNbinsX()+1; i++){
+    
+    string pathName = nSigHLTCount->GetXaxis()->GetBinLabel(i);
+    double sigEff   = nSigHLTCount->GetBinContent(i)/nSigEvents;
+    double qcdRate  = 0;
+    
+    for(auto it=nQCDHLTCount.begin(); it!=nQCDHLTCount.end(); it++){
+      double nEvents = nQCDEvents[it->first];
+      double nPass   = it->second->GetBinContent(i);
+      qcdRate +=(nPass/nEvents)*xsec[it->first]*(targetLumi*1e-36);
+      
+    }
+    printf("Path: %40s sigEff: %5.3f qcdRate: %5.3f\n",pathName.c_str(),sigEff,qcdRate);
+  }
+  
+  // Getting plots 
+  //################################################################################
   vector<TH1*> hSig   = fSig  ->getHistograms();
   vector<TH1*> hNuGun = fNugun->getHistograms();
   
@@ -403,10 +430,18 @@ void hltAnalysis(){
     hQCD[i->first] = i->second->getHistograms();
   }
 
-
+  // Streams for automatic search
   //################################################################################
+  ostringstream myStream1p5;
+  myStream1p5 << "Results for rate <= 1.5 Hz" << endl;
+  myStream1p5 << "| *Base Cut* | *Variable Cut* | *Variable Value* | *Rate* | *Sig Eff* |" << endl;
+  
+  ostringstream myStream5p0;
+  myStream5p0 << "Results for rate <= 5.0 Hz" << endl;
+  myStream5p0 << "| *Base Cut* | *Variable Cut* | *Variable Value* | *Rate* | *Sig Eff* |" << endl;
   
   // Looping over all histograms of the signal
+  //################################################################################
   for(unsigned iSig=0; iSig<hSig.size(); iSig++){
     
     TH1D *pSig = (TH1D*) hSig[iSig];
@@ -415,6 +450,15 @@ void hltAnalysis(){
     string sigTitle = pSig->GetName();
     string sigPath  = pSig->GetDirectory()->GetPath();
     sigPath  = sigPath.substr(sigPath.find(':')+2,sigPath.size()-1);
+    
+    // Not processing plots on file root. This are counters.
+    if(sigPath==""){continue;}
+    
+    TH1D *pSigEff = (TH1D*) pSig->Clone(Form("Sig_%s_eff",pSig->GetName()));
+    
+    // Computing integral from each bin to infinity
+    for(int x=0; x<=pSigEff->GetNbinsX()+1; x++){pSigEff->SetBinContent(x,pSigEff->Integral(x,pSigEff->GetNbinsX()+1));}
+    pSigEff->Scale(1/nSigEvents);
     
     TH1D* totalBkg = 0;
     
@@ -431,8 +475,11 @@ void hltAnalysis(){
         string bkgPath  = pBkg->GetDirectory()->GetPath();
         bkgPath = bkgPath.substr(bkgPath.find(':')+2,bkgPath.size()-1);
         
+        // Not processing plots on file root. This are counters.
+        if(bkgPath==""){continue;}
+        
         if(sigTitle == bkgTitle && sigPath == bkgPath){
-
+          
           TH1D *pBkgEff = (TH1D*) pBkg->Clone(Form("Bkg_%s_eff",pBkg->GetName()));
           
           // Computing integral from each bin to infinity
@@ -440,6 +487,18 @@ void hltAnalysis(){
           
           // Normalising to 1 over total event processed
           pBkgEff->Scale(1/nQCDEvents[iSample->first]);
+          
+//           if(bkgPath=="L1T_NoCuts/HLT_DijetVBF40-40_DEta3.5_MJJ500" && bkgTitle=="pf_met"){
+//             int    theBin = pBkgEff->FindBin(170);
+//             double theRate = pBkgEff->GetBinContent(theBin)*xsec[iSample->first]*(targetLumi*1e-36);
+//             printf("=> Sample: %40s XSec: %9f QCDEff: %9.7f rate: %9f\n",iSample->first.c_str(),xsec[iSample->first],pBkgEff->GetBinContent(theBin),theRate);
+//           }
+//           
+//           if(bkgPath=="L1T_NoCuts/HLT_DijetVBF40-40_DEta3.5_MJJ800" && bkgTitle=="pf_met"){
+//             int    theBin = pBkgEff->FindBin(170);
+//             double theRate = pBkgEff->GetBinContent(theBin)*xsec[iSample->first]*(targetLumi*1e-36);
+//             printf("=> Sample: %40s XSec: %9f QCDEff: %9.7f rate: %9f\n",iSample->first.c_str(),xsec[iSample->first],pBkgEff->GetBinContent(theBin),theRate);
+//           }
           
           // Scaling by the total rate of the sample
           pBkgEff->Scale(xsec[iSample->first]*(targetLumi*1e-36));
@@ -457,12 +516,37 @@ void hltAnalysis(){
       }
     }
     
-    TH1D *pSigEff = (TH1D*) pSig->Clone(Form("Sig_%s_eff",pSig->GetName()));
     
-    // Computing integral from each bin to infinity
-    for(int x=0; x<=pSigEff->GetNbinsX()+1; x++){pSigEff->SetBinContent(x,pSigEff->Integral(x,pSigEff->GetNbinsX()+1));}
-    pSigEff->Scale(1/nSigEvents);
+    if(sigTitle.find("pf_") != sigTitle.npos){
     
+      for(int i=0; i<=pSigEff->GetNbinsX()+1; i++){
+        if(pSigEff->GetBinContent(i)>=0.03 && totalBkg->GetBinContent(i)<=1.5){
+          
+          myStream1p5 << Form("| %50s | %20s | %7.0f | %5.2f | %6.4f |\n",sigPath.c_str(),sigTitle.c_str(),pSigEff->GetXaxis()->GetBinLowEdge(i),totalBkg->GetBinContent(i),pSigEff->GetBinContent(i));
+          break;
+        }
+      }
+      
+      for(int i=0; i<=pSigEff->GetNbinsX()+1; i++){
+        if(pSigEff->GetBinContent(i)>=0.03 && totalBkg->GetBinContent(i)<=5.0){
+          
+          myStream5p0 << Form("| %50s | %20s | %7.0f | %5.2f | %6.4f |\n",sigPath.c_str(),sigTitle.c_str(),pSigEff->GetXaxis()->GetBinLowEdge(i),totalBkg->GetBinContent(i),pSigEff->GetBinContent(i));
+          break;
+        }
+      }
+    }
+    
+    //if(sigPath=="L1T_NoCuts/HLT_DijetVBF40-40_DEta3.5_MJJ500" && sigTitle=="pf_met"){
+    //  cout << "=> " <<sigPath << " - " << sigTitle <<  "=> Signal eff: " << pSigEff->GetBinContent( pSigEff->FindBin(170) );
+    //  cout << " Total QCD Rate :" << totalBkg->GetBinContent( totalBkg->FindBin(170) ) << endl;
+    //}
+    //
+    //if(sigPath=="L1T_NoCuts/HLT_DijetVBF40-40_DEta3.5_MJJ800" && sigTitle=="pf_met"){
+    //  cout << "=> " <<sigPath << " - " << sigTitle << " Signal eff: " << pSigEff->GetBinContent( pSigEff->FindBin(170) );
+    //  cout << " Total QCD Rate :" << totalBkg->GetBinContent( totalBkg->FindBin(170) ) << endl;
+    //}
+    
+    if(totalBkg==0){cout << "No background found!!! Plots path: " << sigPath << " title: " << sigTitle << endl;}
     TCanvas* c = doHLTCanvas(pSigEff,totalBkg,pSig->GetName());
     
     if(sigPath==""){
@@ -471,13 +555,18 @@ void hltAnalysis(){
       TDirectoryFile *d = (TDirectoryFile*) fOut->Get(sigPath.c_str());
       d->WriteTObject(c);
     }
-    system(Form("mkdir -p %s",sigPath.c_str()));
-    c->SaveAs(Form("%s/%s.%s",sigPath.c_str(),pSig->GetName(),"png"));
+//     system(Form("mkdir -p %s",sigPath.c_str()));
+//     c->SaveAs(Form("%s/%s.%s",sigPath.c_str(),pSig->GetName(),"png"));
     
     delete pSigEff;
     delete totalBkg;
     delete c;
   }
+  
+  cout << myStream1p5.str();
+  cout << endl;
+  cout << myStream5p0.str();
+  
 }
 
 //#################################################################################
