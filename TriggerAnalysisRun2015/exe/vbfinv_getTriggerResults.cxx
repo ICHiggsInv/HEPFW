@@ -345,7 +345,7 @@ void hltAnalysis(){
   
   // Getting VBF Higgs invisible signal and neutrino gun
   hepfw::File *fSig   = new hepfw::File("PU40bx25_VBFInv.root");
-  hepfw::File *fNugun = new hepfw::File("PU40bx25_NeutrinoGun.root");
+  //hepfw::File *fNugun = new hepfw::File("PU40bx25_NeutrinoGun.root");
 
   // Getting QCD samples
   map<string,hepfw::File*> fQCD;
@@ -360,6 +360,17 @@ void hltAnalysis(){
   fQCD["QCD_Pt-800to1000"]  = new hepfw::File("PU40bx25_QCD_Pt-800to1000.root");
   fQCD["QCD_Pt-1000to1400"] = new hepfw::File("PU40bx25_QCD_Pt-1000to1400.root");
   fQCD["QCD_Pt-1400to1800"] = new hepfw::File("PU40bx25_QCD_Pt-1400to1800.root");
+  //fQCD["QCD_Pt-1800"]       = new hepfw::File("PU40bx25_QCD_Pt-1800.root");
+  
+  if(!fSig)  {cout << "ERROR: Could not find file PU40bx25_VBFInv.root aborting;"      << endl; return;}
+  //if(!fNugun){cout << "ERROR: Could not find file PU40bx25_NeutrinoGun.root aborting;" << endl; return;}
+  
+  for(auto it=fQCD.begin(); it!=fQCD.end(); it++){
+    if(!it->second){
+      cout << "ERROR: Could not find file for sample " << it->first << " aborting;" << endl;
+      return;
+    }
+  }
 
   // Creating output file and replicating directory structure
   hepfw::File *fOut = new hepfw::File("PU40bx25_HLTAnalysis_eff.root","RECREATE");
@@ -383,9 +394,8 @@ void hltAnalysis(){
   TH1I* hSigTotal = (TH1I*) fSig->Get("EventCount");
   double nSigEvents = hSigTotal->GetBinContent(1);
   
-  //   TH1I* hNuGunTotal = (TH1I*) fNugun->Get("EventCount");
-  //   double nBkgEvents = hNuGunTotal->GetBinContent(1);
-  
+  //TH1I* hNuGunTotal = (TH1I*) fNugun->Get("EventCount");
+  //double nBkgEvents = hNuGunTotal->GetBinContent(1);
   
   map<string,double> nQCDEvents;
   for(auto i=fQCD.begin(); i!=fQCD.end(); i++){
@@ -414,7 +424,6 @@ void hltAnalysis(){
       double nEvents = nQCDEvents[it->first];
       double nPass   = it->second->GetBinContent(i);
       qcdRate +=(nPass/nEvents)*xsec[it->first]*(targetLumi*1e-36);
-      
     }
     printf("Path: %40s sigEff: %5.3f qcdRate: %5.3f\n",pathName.c_str(),sigEff,qcdRate);
   }
@@ -422,7 +431,7 @@ void hltAnalysis(){
   // Getting plots 
   //################################################################################
   vector<TH1*> hSig   = fSig  ->getHistograms();
-  vector<TH1*> hNuGun = fNugun->getHistograms();
+  //vector<TH1*> hNuGun = fNugun->getHistograms();
   
   map<string,vector<TH1*> > hQCD;
   for(auto i=fQCD.begin(); i!=fQCD.end(); i++){
@@ -520,7 +529,7 @@ void hltAnalysis(){
     if(sigTitle.find("pf_") != sigTitle.npos){
     
       for(int i=0; i<=pSigEff->GetNbinsX()+1; i++){
-        if(pSigEff->GetBinContent(i)>=0.03 && totalBkg->GetBinContent(i)<=1.5){
+        if(pSigEff->GetBinContent(i)>=0.005 && totalBkg->GetBinContent(i)<=1.5){
           
           myStream1p5 << Form("| %50s | %20s | %7.0f | %5.2f | %6.4f |\n",sigPath.c_str(),sigTitle.c_str(),pSigEff->GetXaxis()->GetBinLowEdge(i),totalBkg->GetBinContent(i),pSigEff->GetBinContent(i));
           break;
@@ -528,23 +537,23 @@ void hltAnalysis(){
       }
       
       for(int i=0; i<=pSigEff->GetNbinsX()+1; i++){
-        if(pSigEff->GetBinContent(i)>=0.03 && totalBkg->GetBinContent(i)<=5.0){
+        if(pSigEff->GetBinContent(i)>=0.010 && totalBkg->GetBinContent(i)<=5.0){
           
           myStream5p0 << Form("| %50s | %20s | %7.0f | %5.2f | %6.4f |\n",sigPath.c_str(),sigTitle.c_str(),pSigEff->GetXaxis()->GetBinLowEdge(i),totalBkg->GetBinContent(i),pSigEff->GetBinContent(i));
           break;
         }
       }
     }
-    
-    //if(sigPath=="L1T_NoCuts/HLT_DijetVBF40-40_DEta3.5_MJJ500" && sigTitle=="pf_met"){
-    //  cout << "=> " <<sigPath << " - " << sigTitle <<  "=> Signal eff: " << pSigEff->GetBinContent( pSigEff->FindBin(170) );
-    //  cout << " Total QCD Rate :" << totalBkg->GetBinContent( totalBkg->FindBin(170) ) << endl;
-    //}
-    //
-    //if(sigPath=="L1T_NoCuts/HLT_DijetVBF40-40_DEta3.5_MJJ800" && sigTitle=="pf_met"){
-    //  cout << "=> " <<sigPath << " - " << sigTitle << " Signal eff: " << pSigEff->GetBinContent( pSigEff->FindBin(170) );
-    //  cout << " Total QCD Rate :" << totalBkg->GetBinContent( totalBkg->FindBin(170) ) << endl;
-    //}
+
+    if(sigPath=="L1T_NoCuts/HLT_DijetVBF40-40_DEta3.5_MJJ600" && sigTitle=="pf_met"){
+      cout << "=> " <<sigPath << " - " << sigTitle <<  "=> Signal eff: " << pSigEff->GetBinContent( pSigEff->FindBin(140) );
+      cout << " Total QCD Rate :" << totalBkg->GetBinContent( totalBkg->FindBin(140) ) << endl;
+    }
+
+    if(sigPath=="L1T_NoCuts/HLT_DijetVBF60-40_DEta3.5_MJJ600" && sigTitle=="pf_met"){
+      cout << "=> " <<sigPath << " - " << sigTitle << " Signal eff: " << pSigEff->GetBinContent( pSigEff->FindBin(140) );
+      cout << " Total QCD Rate :" << totalBkg->GetBinContent( totalBkg->FindBin(140) ) << endl;
+    }
     
     if(totalBkg==0){cout << "No background found!!! Plots path: " << sigPath << " title: " << sigTitle << endl;}
     TCanvas* c = doHLTCanvas(pSigEff,totalBkg,pSig->GetName());
