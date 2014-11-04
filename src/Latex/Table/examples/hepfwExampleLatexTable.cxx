@@ -1,6 +1,6 @@
 // TODO: Description
 
-// ICTools includes
+// HEPFW includes
 #include "Latex/Table/interface/LatexTable.h"
 #include "Latex/Table/interface/LatexTabular.h"
 #include "Latex/Table/interface/LatexCaption.h"
