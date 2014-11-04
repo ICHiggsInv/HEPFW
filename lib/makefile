@@ -14,18 +14,21 @@ BASEDIR  = $(shell pwd)
 # Define include paths
 USERINCLUDES += -I$(ROOTSYS)/include/
 USERINCLUDES += -I$(ROOFITSYS)/include/
-# USERINCLUDES += -I$(CMS_PATH)/$(SCRAM_ARCH)/external/boost/1.47.0/include/
+USERINCLUDES += -I$(CMS_PATH)/$(SCRAM_ARCH)/external/boost/1.47.0/include/
 USERINCLUDES += -I$(realpath $(BASEDIR)/../src/)
 
 # Define libraries to link
-# USERLIBS += $(shell root-config --glibs) -lGenVector -lTreePlayer -lTMVA
+USERLIBS += $(shell root-config --cflags --libs) 
+USERLIBS += -lGenVector -lTreePlayer -lTMVA
 # USERLIBS += -L$(ROOFITSYS)/lib/ -lRooFit -lRooFitCore
-# USERLIBS += -L$(CMS_PATH)/$(SCRAM_ARCH)/external/boost/1.47.0/lib/ -lboost_regex -lboost_program_options -lboost_filesystem
+USERLIBS += -L$(CMS_PATH)/$(SCRAM_ARCH)/external/boost/1.47.0/lib/ -lboost_regex -lboost_program_options -lboost_filesystem
 # USERLIBS += -L$(CMSSW_BASE)/lib/$(SCRAM_ARCH) -lUserCodeICHiggsTauTau -lTauAnalysisCandidateTools
 # USERLIBS += -L$(CMSSW_RELEASE_BASE)/lib/$(SCRAM_ARCH) -lFWCoreFWLite -lPhysicsToolsFWLite -lCommonToolsUtils
 
 # CXXFLAGS = -Wall -W -Wno-unused-function -Wno-parentheses -Wno-char-subscripts -Wno-unused-parameter -O2 
 CXXFLAGS  = -Wall -W -O2
+# Next line is necessary to compile C++0x code with g++ 4.6.X
+CXXFLAGS += -std=c++0x
 CXXFLAGS += -Wno-deprecated-declarations
 CXXFLAGS += -Wno-unused-parameter
 CXXFLAGS += -Wno-unused-but-set-variable
@@ -82,7 +85,7 @@ bin: $(BINS)
 	@$(shell mkdir -p $(dir $@);)
 	@$(MAKEDEPEND) -MT $@ -o $*.d $<
 	@$(shell rm -f ../bin/$(notdir $(subst .exe,,$@));)
-	@$(CXX) -o $@ $(CXXFLAGS) $< $(LIBS) `root-config --cflags --libs`
+	@$(CXX) -o $@ $(CXXFLAGS) $< $(LIBS) $(USERLIBS)
 	@$(shell ln -s $(BASEDIR)/$@ ../bin/$(notdir $(subst .exe,,$@));)
 
 clean:
