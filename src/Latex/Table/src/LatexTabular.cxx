@@ -118,6 +118,15 @@ void hepfw::LatexTabular::setCellColor(int iRow,int iCol,string value){
   }
 }
 
+void hepfw::LatexTabular::setColumnAlignment(int iCol,std::string value){
+  
+  if(iCol<0 || iCol>=int(m_rows[0].size())){
+    cout << "ERROR: Request column position is out of bounds." << endl;
+  }else{
+    m_columnAlignment[iCol]=value;
+  }
+}
+
 void hepfw::LatexTabular::setColumnDecorationBefore(int iCol,std::string value){
   
   if(iCol<0 || iCol>=int(m_rows[0].size())){

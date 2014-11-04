@@ -37,6 +37,8 @@ namespace hepfw{
     void setRowDecorationBefore(int iRow,std::string value);
     void setRowDecorationAfter (int iRow,std::string value);
     
+    void setColumnAlignment(int iCol,std::string value);
+    
     void setTabularColumnDecoration(std::string value);
     void setTabularRowDecoration   (std::string value);
     void setTabularPrecision       (std::string value);
