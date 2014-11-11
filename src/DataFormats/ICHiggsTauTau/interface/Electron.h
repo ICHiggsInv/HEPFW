@@ -1,6 +1,7 @@
 #ifndef ICHiggsTauTau_Electron
 #define ICHiggsTauTau_Electron
 
+#include "Rtypes.h"
 #include "Math/Vector4D.h"
 #include "Math/Vector4Dfwd.h"
 #include "Math/Point3D.h"
@@ -218,8 +219,7 @@ namespace ic {
       // CANDIDATE FOR REMOVAL - store in eventInfo
       // double pfnopu_rho_;
 
-
-      Point ref_point_;
+      ROOT::Math::PositionVector3D<ROOT::Math::Cartesian3D<double>,ROOT::Math::DefaultCoordinateSystemTag> ref_point_;
 
       double dxy_vertex_;
       double dz_vertex_;
@@ -227,10 +227,11 @@ namespace ic {
 
       // std::vector<std::size_t> hlt_match_paths_;
       // std::vector<std::size_t> hlt_match_filters_;
-      std::vector<std::size_t> gen_particles_;
+      std::vector<unsigned long> gen_particles_;
 
-      UFmap elec_idiso_;
-
+      std::map<std::size_t, float> elec_idiso_;
+  public:
+    ClassDef(Electron,1);
   };
 
   typedef std::vector<ic::Electron> ElectronCollection;
