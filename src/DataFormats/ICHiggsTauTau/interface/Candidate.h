@@ -1,6 +1,7 @@
 #ifndef ICHiggsTauTau_Candidate
 #define ICHiggsTauTau_Candidate
 
+#include "Rtypes.h"
 #include "Math/Vector4D.h"
 #include "Math/Vector4Dfwd.h"
 #include <vector>
@@ -59,14 +60,15 @@ namespace ic {
       inline double M() const { return vector_.M(); }
 
       virtual void Print() const;
-
-
+      
     private:
 
-
-      Vector vector_;   
-      std::size_t id_;
+      ROOT::Math::PtEtaPhiEVector vector_;
+      unsigned long id_;
       int charge_;
+      
+  public:
+    ClassDef(Candidate,1);
   };
 
   typedef std::vector<ic::Candidate> CandidateCollection;
