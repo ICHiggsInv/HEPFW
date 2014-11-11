@@ -1,6 +1,7 @@
 #ifndef ICHiggsTauTau_CaloJet
 #define ICHiggsTauTau_CaloJet
 
+#include "Rtypes.h"
 #include <map>
 #include <string>
 #include "DataFormats/ICHiggsTauTau/interface/Jet.h"
@@ -90,6 +91,8 @@ namespace ic {
       float fRBX_;
       bool id_loose_;
       bool id_tight_;
+  public:
+    ClassDef(CaloJet,1);
   };
 
   typedef std::vector<ic::CaloJet> CaloJetCollection;
