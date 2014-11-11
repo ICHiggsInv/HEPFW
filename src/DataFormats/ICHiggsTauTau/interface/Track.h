@@ -1,6 +1,7 @@
 #ifndef ICHiggsTauTau_Track
 #define ICHiggsTauTau_Track
 
+#include "Rtypes.h"
 #include "Math/Point3D.h"
 #include "Math/Point3Dfwd.h"
 #include "Math/Vector3D.h"
@@ -61,6 +62,9 @@ namespace ic {
       Point ref_point_;
       std::size_t id_;
       int charge_;
+      
+  public:
+    ClassDef(Track,1);
   };
 
   typedef std::vector<ic::Track> TrackCollection;

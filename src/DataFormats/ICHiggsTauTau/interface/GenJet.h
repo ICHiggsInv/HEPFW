@@ -1,6 +1,7 @@
 #ifndef ICHiggsTauTau_GenJet
 #define ICHiggsTauTau_GenJet
 
+#include "Rtypes.h"
 #include "Math/Point3D.h"
 #include "Math/Point3Dfwd.h"
 #include <vector>
@@ -31,8 +32,9 @@ namespace ic {
     private:
       int flavour_;
       unsigned n_constituents_;
-      std::vector<std::size_t> constituents_;
-
+      std::vector<unsigned long> constituents_;
+  public:
+    ClassDef(GenJet,1);
   };
 
   typedef std::vector<ic::GenJet> GenJetCollection;

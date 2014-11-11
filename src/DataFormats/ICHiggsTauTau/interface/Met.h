@@ -1,6 +1,7 @@
 #ifndef ICHiggsTauTau_Met
 #define ICHiggsTauTau_Met
 
+#include "Rtypes.h"
 #include <vector>
 #include "DataFormats/ICHiggsTauTau/interface/Candidate.h"
 
@@ -44,7 +45,8 @@ namespace ic {
       double xy_sig_;
       double yx_sig_;
       double yy_sig_;
-
+  public:
+    ClassDef(Met,1);
   };
 
   typedef std::vector<ic::Met> MetCollection;

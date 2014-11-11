@@ -1,6 +1,7 @@
 #ifndef ICHiggsTauTau_JPTJet
 #define ICHiggsTauTau_JPTJet
 
+#include "Rtypes.h"
 #include <map>
 #include <string>
 #include "DataFormats/ICHiggsTauTau/interface/CaloJet.h"
@@ -106,7 +107,8 @@ namespace ic {
       std::vector<std::size_t> elecs_in_vtx_in_calo_;
       std::vector<std::size_t> elecs_in_vtx_out_calo_;
       std::vector<std::size_t> elecs_out_vtx_in_calo_;
-     
+  public:
+    ClassDef(JPTJet,1);
   };
 
   typedef std::vector<ic::JPTJet> JPTJetCollection;

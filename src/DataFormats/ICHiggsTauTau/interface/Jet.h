@@ -1,9 +1,11 @@
 #ifndef ICHiggsTauTau_Jet
 #define ICHiggsTauTau_Jet
 
+#include "Rtypes.h"
 #include "Math/Vector4D.h"
 #include "Math/Vector4Dfwd.h"
 #include <map>
+#include <vector>
 #include <string>
 #include "DataFormats/ICHiggsTauTau/interface/Candidate.h"
 
@@ -47,9 +49,9 @@ namespace ic {
       float GetBDiscriminator(std::string const& name) const;
 
     private:
-      UFmap jec_factors_;
-      UFmap b_discriminators_;
-      std::vector<std::size_t> gen_particles_;
+      std::map<unsigned long,float> jec_factors_;
+      std::map<unsigned long,float> b_discriminators_;
+      std::vector<unsigned long> gen_particles_;
       double uncorrected_energy_;
       float jet_area_;
 
@@ -57,7 +59,8 @@ namespace ic {
       std::string UnHashDiscr(std::size_t dis) const;
 
       int parton_flavour_;
-
+  public:
+    ClassDef(Jet,1);
   };
 
   typedef std::vector<ic::Jet> JetCollection;

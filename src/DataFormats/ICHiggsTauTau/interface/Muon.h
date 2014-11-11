@@ -1,6 +1,7 @@
 #ifndef ICHiggsTauTau_Muon
 #define ICHiggsTauTau_Muon
 
+#include "Rtypes.h"
 #include "Math/Vector4D.h"
 #include "Math/Vector4Dfwd.h"
 #include "Math/Point3D.h"
@@ -167,7 +168,7 @@ namespace ic {
       // double pfnopu_rho_;
 
 
-      Point ref_point_;
+      ROOT::Math::PositionVector3D<ROOT::Math::Cartesian3D<double>,ROOT::Math::DefaultCoordinateSystemTag> ref_point_;
 
       double dxy_vertex_;
       double dz_vertex_;
@@ -176,10 +177,11 @@ namespace ic {
       // std::vector<std::size_t> hlt_match_paths_;
       // std::vector<std::size_t> hlt_match_filters_;
 
-      std::vector<std::size_t> gen_particles_;
+      std::vector<unsigned long> gen_particles_;
 
-      UFmap muon_idiso_;
-
+      std::map<unsigned long,float> muon_idiso_;
+  public:
+    ClassDef(Muon,1);
   };
 
   typedef std::vector<ic::Muon> MuonCollection;

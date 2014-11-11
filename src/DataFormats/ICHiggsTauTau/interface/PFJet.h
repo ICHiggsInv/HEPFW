@@ -1,10 +1,10 @@
 #ifndef ICHiggsTauTau_PFJet
 #define ICHiggsTauTau_PFJet
 
+#include "Rtypes.h"
 #include <map>
 #include <string>
 #include "DataFormats/ICHiggsTauTau/interface/Jet.h"
-
 
 namespace ic {
 
@@ -191,12 +191,13 @@ namespace ic {
       // bool pu_id_mva_medium_;
       // bool pu_id_mva_tight_;
 
-      std::vector<std::size_t> constituent_tracks_;
+      std::vector<unsigned long> constituent_tracks_;
 
       float linear_radial_moment_;
       int charged_multiplicity_nopu_;
 
-
+  public:
+    ClassDef(PFJet,1);
   };
 
   typedef std::vector<ic::PFJet> PFJetCollection;

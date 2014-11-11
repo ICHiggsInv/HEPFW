@@ -1,6 +1,7 @@
 #ifndef ICHiggsTauTau_Tau
 #define ICHiggsTauTau_Tau
 
+#include "Rtypes.h"
 #include "Math/Vector4D.h"
 #include "Math/Vector4Dfwd.h"
 #include "Math/Point3D.h"
@@ -8,7 +9,6 @@
 #include <map>
 #include <string>
 #include "DataFormats/ICHiggsTauTau/interface/Candidate.h"
-
 
 namespace ic {
 
@@ -78,7 +78,7 @@ namespace ic {
       bool HasTauID(std::string const& name) const;
 
     private:
-      UFmap tau_ids_;
+      std::map<unsigned long,float> tau_ids_;
 
       int decay_mode_;
 
@@ -93,16 +93,17 @@ namespace ic {
 
 
       //std::string UnHashDiscr(std::size_t dis) const;
-      Point ref_point_;
+      ROOT::Math::PositionVector3D<ROOT::Math::Cartesian3D<double>,ROOT::Math::DefaultCoordinateSystemTag> ref_point_;
 
 
 
-      std::vector<std::size_t> constituent_tracks_;
+      std::vector<unsigned long> constituent_tracks_;
 
       // std::vector<std::size_t> hlt_match_paths_;
       // std::vector<std::size_t> hlt_match_filters_;
 
-
+  public:
+    ClassDef(Tau,1);
   };
 
   typedef std::vector<ic::Tau> TauCollection;

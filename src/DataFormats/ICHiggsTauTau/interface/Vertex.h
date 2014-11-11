@@ -1,6 +1,7 @@
 #ifndef ICHiggsTauTau_Vertex
 #define ICHiggsTauTau_Vertex
 
+#include "Rtypes.h"
 #include "Math/Point3D.h"
 #include "Math/Point3Dfwd.h"
 #include <utility>
@@ -49,8 +50,8 @@ namespace ic {
       inline float ndof() const { return ndof_; }
       inline void set_ndof(float const& ndof) { ndof_ = ndof; }
 
-      inline std::vector<TrkPair> const& tracks() const { return tracks_; }
-      inline void set_tracks(std::vector<TrkPair> const& tracks) { tracks_ = tracks; }
+      inline std::vector<std::pair<std::size_t, float> > const& tracks() const { return tracks_; }
+      inline void set_tracks(std::vector<std::pair<std::size_t, float> > const& tracks) { tracks_ = tracks; }
 
       inline void AddTrack(std::size_t id, float weight) {
             tracks_.push_back(std::make_pair(id,weight));
@@ -60,7 +61,7 @@ namespace ic {
 
 
     private:
-      Point point_;
+      ROOT::Math::PositionVector3D<ROOT::Math::Cartesian3D<double>,ROOT::Math::DefaultCoordinateSystemTag> point_;
       // float vx_error_;
       // float vy_error_;
       // float vz_error_;
@@ -69,7 +70,10 @@ namespace ic {
       std::vector<TrkPair> tracks_;
 
 
-      std::size_t id_;
+      unsigned long id_;
+      
+  public:
+    ClassDef(Vertex,1);
   };
 
   typedef std::vector<ic::Vertex> VertexCollection;

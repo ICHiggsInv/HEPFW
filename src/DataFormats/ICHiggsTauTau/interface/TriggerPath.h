@@ -1,6 +1,7 @@
 #ifndef ICHiggsTauTau_TriggerPath
 #define ICHiggsTauTau_TriggerPath
 
+#include "Rtypes.h"
 #include <string>
 #include <vector>
 #include <iostream>
@@ -34,6 +35,8 @@ private:
       unsigned prescale_;
       std::size_t id_;
 
+  public:
+    ClassDef(TriggerPath,1);
 };
 
   typedef std::vector<ic::TriggerPath> TriggerPathCollection;

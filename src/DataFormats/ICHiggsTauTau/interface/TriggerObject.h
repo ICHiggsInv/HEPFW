@@ -1,6 +1,7 @@
 #ifndef ICHiggsTauTau_TriggerObject
 #define ICHiggsTauTau_TriggerObject
 
+#include "Rtypes.h"
 #include "Math/Vector4D.h"
 #include "Math/Vector4Dfwd.h"
 #include "Math/Point3D.h"
@@ -27,8 +28,11 @@ namespace ic {
       virtual void Print() const;
 
     private:
-      std::vector<std::size_t> filters_;
+      std::vector<unsigned long> filters_;
 
+      
+  public:
+    ClassDef(TriggerObject,1);
   };
 
   typedef std::vector<ic::TriggerObject> TriggerObjectCollection;

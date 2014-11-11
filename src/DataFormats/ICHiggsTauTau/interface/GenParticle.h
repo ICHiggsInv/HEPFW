@@ -1,6 +1,7 @@
 #ifndef ICHiggsTauTau_GenParticle
 #define ICHiggsTauTau_GenParticle
 
+#include "Rtypes.h"
 #include "Math/Point3D.h"
 #include "Math/Point3Dfwd.h"
 #include <vector>
@@ -40,15 +41,16 @@ namespace ic {
       
       
       virtual void Print() const;
-
-
+      
     private:
       int index_;
       int pdgid_;
       int status_;
       std::vector<int> mothers_;
       std::vector<int> daughters_;
-
+  public:
+    ClassDef(GenParticle,1);
+      
   };
 
   typedef std::vector<ic::GenParticle> GenParticleCollection;

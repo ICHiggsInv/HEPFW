@@ -1,6 +1,7 @@
 #ifndef ICHiggsTauTau_Photon
 #define ICHiggsTauTau_Photon
 
+#include "Rtypes.h"
 #include "Math/Vector4D.h"
 #include "Math/Vector4Dfwd.h"
 #include "DataFormats/ICHiggsTauTau/interface/Candidate.h"
@@ -49,6 +50,8 @@ namespace ic {
 
       bool  pass_electron_veto_;
 
+  public:
+    ClassDef(Photon,1);
   };
 
   typedef std::vector<ic::Photon> PhotonCollection;
