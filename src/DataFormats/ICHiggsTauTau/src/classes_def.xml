@@ -15,8 +15,6 @@
   <class name="std::vector<ic::JPTJet>"/>
   <class name="ic::Track"/>
   <class name="std::vector<ic::Track>"/>
-  <class name="ic::LightTrack"/>
-  <class name="std::vector<ic::LightTrack>"/>
   <class name="std::map<unsigned long, float>"/>
   <class name="std::pair<unsigned long,float>"/> 
   <class name="std::vector<std::pair<unsigned long,float> >"/> 
@@ -44,6 +42,4 @@
   <class name="ic::Met"/>
   <class name="std::vector<ic::Met>"/>
   <class name="std::vector<unsigned long>"/>
-  <class name="edm::Wrapper<std::vector<unsigned long> >"/>
-  <class name="mithep::TH2DAsymErr"/>
 </lcgdict>
