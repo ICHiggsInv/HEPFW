@@ -589,7 +589,7 @@ int main(int argc, char *argv[]){
   
   bool incorrectCmd = false;
   if(argc!=2){incorrectCmd=true;}
-    else{
+  else{
     if      (!strcmp(argv[1],"--l1t")){doL1T=true;}
     else if (!strcmp(argv[1],"--hlt")){doHLT=true;}
     else{incorrectCmd=true;}
