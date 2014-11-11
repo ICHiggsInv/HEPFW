@@ -3,6 +3,8 @@
 
 #include <map>
 #include <string>
+
+#include "Rtypes.h"
 #include "Math/Vector4D.h"
 #include "Math/Vector4Dfwd.h"
 #include "DataFormats/ICHiggsTauTau/interface/Candidate.h"
@@ -24,7 +26,7 @@ namespace ic {
       double DeltaR(std::string name1, std::string name2) const;
       double DeltaPhi(std::string name1, std::string name2) const;
       virtual void Print() const;
-      std::vector<Candidate *> const& AsVector() const {
+      std::vector<ic::Candidate *> const& AsVector() const {
         return cand_vec_;
       }
 
@@ -34,6 +36,8 @@ namespace ic {
 
       //Private method
       bool Verify(std::string const& name) const;
+  public:
+    ClassDef(CompositeCandidate,1);
   };
   
 }
