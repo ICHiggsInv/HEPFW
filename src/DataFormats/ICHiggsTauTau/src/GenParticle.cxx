@@ -1,5 +1,7 @@
 #include "DataFormats/ICHiggsTauTau/interface/GenParticle.h"
 
+ClassImp(ic::GenParticle)
+
 namespace ic {
   //Constructors/Destructors
   GenParticle::GenParticle() {
