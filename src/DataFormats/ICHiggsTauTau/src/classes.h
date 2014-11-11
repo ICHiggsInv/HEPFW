@@ -9,7 +9,7 @@
 #include "DataFormats/ICHiggsTauTau/interface/PFJet.h"
 #include "DataFormats/ICHiggsTauTau/interface/JPTJet.h"
 #include "DataFormats/ICHiggsTauTau/interface/Track.h"
-#include "DataFormats/ICHiggsTauTau/interface/LightTrack.h"
+// #include "DataFormats/ICHiggsTauTau/interface/LightTrack.h"
 #include "DataFormats/ICHiggsTauTau/interface/GenJet.h"
 #include "DataFormats/ICHiggsTauTau/interface/Vertex.h"
 #include "DataFormats/ICHiggsTauTau/interface/Electron.h"
@@ -22,8 +22,8 @@
 #include "DataFormats/ICHiggsTauTau/interface/Tau.h"
 #include "DataFormats/ICHiggsTauTau/interface/SuperCluster.h"
 #include "DataFormats/ICHiggsTauTau/interface/TriggerObject.h"
-#include "DataFormats/ICHiggsTauTau/interface/TH2DAsymErr.h"
-#include "DataFormats/Common/interface/Wrapper.h"
+#include/* "DataFormats/ICHiggsTauTau/interface/TH2DAsymErr.h"
+#include "DataFormats/Common/interface/Wrapper.h"*/
 
 namespace { struct dictionary {
   ic::Candidate dummy1;
@@ -59,8 +59,8 @@ namespace { struct dictionary {
   ic::TriggerPath dummy32;
   std::vector<ic::TriggerPath> dummy33;
   ic::Met dummy34;
-  ic::LightTrack dummy35;
-  std::vector<ic::LightTrack> dummy36;
+//   ic::LightTrack dummy35;
+//   std::vector<ic::LightTrack> dummy36;
   ic::Tau dummy37;
   std::vector<ic::Tau> dummy38;
   ic::SuperCluster dummy39;
@@ -69,8 +69,8 @@ namespace { struct dictionary {
   std::vector<ic::TriggerObject> dummy42;
   std::vector<ic::Met> dummy43;
   std::vector<unsigned long> dummy44;
-  edm::Wrapper<std::vector<unsigned long> > dummy45;
-  mithep::TH2DAsymErr dummy46;
+//   edm::Wrapper<std::vector<unsigned long> > dummy45;
+//   mithep::TH2DAsymErr dummy46;
   ic::Photon dummy47;
   std::vector<ic::Photon> dummy48;
 };
