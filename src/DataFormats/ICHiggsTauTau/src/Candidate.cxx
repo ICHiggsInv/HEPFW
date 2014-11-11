@@ -1,6 +1,9 @@
 #include "DataFormats/ICHiggsTauTau/interface/Candidate.h"
 
+ClassImp(ic::Candidate)
+
 namespace ic {
+
   //Constructors/Destructors
   Candidate::Candidate() : vector_(Vector()), id_(0), charge_(0) {
   }
