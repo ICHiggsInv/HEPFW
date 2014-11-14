@@ -17,6 +17,18 @@ namespace hepfw{
     Dataset();
     ~Dataset();
     
+    void setCrossSection    (double xsec);
+    void setNEventsProcessed(int nEvents);
+    void setName            (std::string name);
+    void setGroup           (std::string group);
+    void setType            (std::string type);
+    
+    double      getCrossSection();
+    int         getNEventsProcessed();
+    std::string getName();
+    std::string getGroup();
+    std::string getType();
+    
   private:
     
     std::string m_name;
