@@ -21,9 +21,9 @@ namespace hepfw{
     AnalysisCut(std::string name);
     ~AnalysisCut();
     
-    bool evaluate(hepfw::Event &event);
+    virtual bool evaluate(hepfw::Event &event);
     
-    std::string getName();
+    virtual std::string getName();
     
   public:
     
