@@ -30,10 +30,10 @@ namespace ic {
 
 
 private:
-      std::string name_;
-      bool accept_;
-      unsigned prescale_;
-      std::size_t id_;
+      std::string   name_;
+      bool          accept_;
+      unsigned      prescale_;
+      unsigned long id_;
 
   public:
     ClassDef(TriggerPath,1);
