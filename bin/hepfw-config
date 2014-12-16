@@ -7,23 +7,23 @@ if [ "x${BASH_ARGV[0]}" = "x" ]; then
 else
   
   if [ "${BASH_ARGV[0]}" = "--cflags" ]; then
-    echo "-I$ICTOOLSSYS/src"
+    echo "-I$HEPFWSYS/src"
   fi
 
   if [ "${BASH_ARGV[0]}" = "--libs" ]; then
   
-    ICLIBS=""
+    HEPFWLIBS=""
   
-    FILES=$ICTOOLSSYS/lib/*.so
+    FILES=$HEPFWSYS/lib/*.so
     for f in $FILES
     do
       a=${f%.*}
       b=${a##*/}
       c=${b#lib}
-      ICLIBS="$ICLIBS -l$c"
+      HEPFWLIBS="$HEPFWLIBS -l$c"
     done
   
-    echo "-L$ICTOOLSSYS/lib $ICLIBS"
+    echo "-L$HEPFWSYS/lib $HEPFWLIBS"
   fi
   
 fi
