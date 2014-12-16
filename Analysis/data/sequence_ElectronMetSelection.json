@@ -1,0 +1,84 @@
+{
+  
+  "load" : [
+    "VBFHiggsToInvisible/Analysis/data/sequence_PreSelection.json", 
+    "VBFHiggsToInvisible/Analysis/data/sequence_SignalSelection.json"
+  ], 
+  
+  "producerElectronsTight" : {
+    "module"  : "hepfw::FilteredElectronCollectionProducer", 
+    "title"   : "Tight Electrons Producer",
+    "parameters" : {
+      "verbose"                     : true, 
+      "inputLabel"                  : "electrons", 
+      "outputLabel"                 : "electrons_CutBased_Tight", 
+      "doElectronID_CutBased_Tight" : true, 
+      "minPt"                       : 20, 
+      "maxEta"                      : 2.4
+      }
+    }, 
+  
+  "selElectronsVeto" : {
+    "module"  : "hepfw::ColSizeFilterElectron", 
+    "title"   : "n_{Electron}>0 - Cut Based - Veto",
+    "parameters" : {
+      "verbose"    : true, 
+      "inputLabel" : "electrons_CutBased_Veto", 
+      "minN"       : 1, 
+      "maxN"       : 1
+      }
+    }, 
+  
+  "electronTight_OverlapCleaning_MuonsLoose" : {
+    "module"  : "hepfw::OverlapCleaning_Electron_Muon", 
+    "title"   : "PFJets-Loose Muon cleaning",
+    "parameters" : {
+      "verbose"                  : true, 
+      "labelCollectionToClean"   : "electrons_CutBased_Tight", 
+      "labelCollectionReference" : "muons_Loose", 
+      "labelCollectionOutput"    : "electronsClean_CutBased_Tight", 
+      "minDeltaR"                : 0.3
+      }
+    },
+    
+    
+  "selElectronsTight" : {
+    "module"  : "hepfw::ColSizeFilterElectron", 
+    "title"   : "n_{Electron}>0 - Cut Based - Tight",
+    "parameters" : {
+      "verbose"    : true, 
+      "inputLabel" : "electronsClean_CutBased_Tight", 
+      "minN"       : 1, 
+      "maxN"       : 1
+      }
+    }, 
+    
+  "electronMetSelection" : {
+    "sequence" : true,
+    "modules"  : [
+      "vertexFilter", 
+      "eventQualityFilters", 
+      "ecalLaserFilter", 
+      "hcalLaserFilter", 
+      "l1tETMFilter", 
+      "parkedDataHLTFilter", 
+      "producerElectronsVeto", 
+      "selElectronsVeto", 
+      "producerElectronsTight", 
+      "electronTight_OverlapCleaning_MuonsLoose", 
+      "selElectronsTight", 
+      "producerMuonLoose", 
+      "vetoMuon", 
+      "producerSelJets", 
+      "jetsLooseElectronCleaning", 
+      "jetsLooseMuonCleaning", 
+      "sigRegion_cutDijet", 
+      "producerMuonTight", 
+      "metModifier_TightMuonSubtraction", 
+      "cut_met", 
+      "sigRegion_cutMetSig", 
+      "sigRegion_cutMinJetMetDPhi"
+      
+    ] 
+  }
+}
