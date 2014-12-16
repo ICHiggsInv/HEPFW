@@ -67,5 +67,5 @@
     "VBF-QCD-Pt-170to300" : {"events" :  1375000000, "crossSection" :   34138.15},
     "VBF-QCD-Pt-300to470" : {"events" :    80000000, "crossSection" :    1759.549},
     "VBF-QCD-Pt-470to600" : {"events" :    25000000, "crossSection" :     113.8791}
-  },
+  }
 }
