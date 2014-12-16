@@ -12,7 +12,6 @@
 // C++ STD includes
 #include <string>
 #include <vector>
-#include <iostream>
 
 namespace hepfw{
   

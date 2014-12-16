@@ -1,5 +1,8 @@
 #include "AnalysisTools/CutFlows/interface/AnalysisCutFlow.h"
 
+// C++ STD includes
+#include <iostream>
+
 using namespace std;
 
 hepfw::AnalysisCutFlow::AnalysisCutFlow(){
@@ -72,8 +75,8 @@ void hepfw::AnalysisCutFlow::addAnalysisCut(hepfw::AnalysisCut* cut){
 
   // Filling bins label
   for(unsigned i=0; i<m_cutFlow.size(); i++){
-    m_eventYields_Absolute->GetXaxis()->SetBinLabel(i,m_cutFlow[i]->getName().c_str());
-    m_eventYields_Weighted->GetXaxis()->SetBinLabel(i,m_cutFlow[i]->getName().c_str());
+    m_eventYields_Absolute->GetXaxis()->SetBinLabel(i+1,m_cutFlow[i]->getName().c_str());
+    m_eventYields_Weighted->GetXaxis()->SetBinLabel(i+1,m_cutFlow[i]->getName().c_str());
   }
 
   // If the output directory is defined put histograms there
