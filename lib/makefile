@@ -55,8 +55,17 @@ BINS = $(subst ../src/,,$(subst $(SRC_EXT),$(EXE_EXT),$(wildcard ../src/*/*/exe/
 -include $(OBJS:.o=.d)
 -include $(BINS:.exe=.d)
 
-all: | obj lib bin
+all: | pre obj lib bin
 	@echo "All done!"
+	@echo ""
+
+pre:
+	@echo ""
+	@echo "Scanning for modules to register:"
+	@echo ""
+	@python ../bin/hepfwModulesScan.py;
+	@echo ""
+	@echo "Scan done!"
 	@echo ""
 
 obj: $(OBJS)
@@ -71,7 +80,7 @@ bin: $(BINS)
 	@echo "Binaries done!"
 	@echo ""
 
-%.o :  %.cxx
+%.o :  %.cxx pre
 	@echo "----->Compiling object: " $@
 	@$(shell mkdir -p $(dir $@);)
 	@$(MAKEDEPEND) -MT $@ -o $*.d $<
