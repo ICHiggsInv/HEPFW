@@ -27,7 +27,7 @@ hepfw::EventProcessor::~EventProcessor(){
 
 }
 
-Long64_t     hepfw::EventProcessor::getNEvent(){
+Long64_t hepfw::EventProcessor::getNEvent(){
   return m_nEvent;
 }
 
