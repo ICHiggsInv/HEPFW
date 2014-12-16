@@ -10,7 +10,7 @@
 namespace hepfw{
   
   /***********************************************/
-  /** \brief AnalysisCut 
+  /** \brief AnalysisCut
    * 
    * AnalysisCut
    ***********************************************/
