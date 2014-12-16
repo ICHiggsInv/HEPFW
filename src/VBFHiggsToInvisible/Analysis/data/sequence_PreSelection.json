@@ -1,0 +1,286 @@
+{
+  
+  "vertexFilter" : {
+    "module" : "hepfw::VertexFilter", 
+    "title"   : "Vertex Filter",
+    "parameters" : {
+      "verbose"       : true, 
+      "inputLabel"    : "vertices", 
+      "minNVertex"    : 0,
+      "pv_minChi2"    : 0, 
+      "pv_minNDof"    : 4, 
+      "pv_maxZ"       : 24, 
+      "pv_maxRho"     : 2
+    }
+  }, 
+
+  "eventQualityFilters" : {
+    "module" : "hepfw::EDMFilterFilter", 
+    "title"  : "Event Quality Filters",
+    "parameters" : {
+      "verbose" : true, 
+      "filters" : {
+        "HBHENoiseFilter"                    : false, 
+        "EcalDeadCellTriggerPrimitiveFilter" : false, 
+        "eeBadScFilter"                      : false, 
+        "trackingFailureFilter"              : false, 
+        "manystripclus53X"                   : false, 
+        "toomanystripclus53X"                : false, 
+        "logErrorTooManyClusters"            : false, 
+        "CSCTightHaloFilter"                 : true
+        }
+      }
+    }, 
+
+  "ecalLaserFilter" :  {
+    "module"  : "hepfw::EventListFilter", 
+    "title"   : "ECAL Laser Filter",
+    "parameters" : {
+      "verbose" : true, 
+      "filename" : "/home/hep/jca10/go/cms02/work/slc6/dev01/ICHiggsTauTau/Analysis/HiggsNuNu/data/met_laser_filters/ecalLaserFilter_MET_Run2012AandB.txt"
+    }
+  },
+   
+  "hcalLaserFilter" : {
+    "module"  : "hepfw::EventListFilter", 
+    "title"   : "HCAL Laser Filter",
+    "parameters" : {
+      "verbose" : true, 
+      "filename" : "/home/hep/jca10/go/cms02/work/slc6/dev01/ICHiggsTauTau/Analysis/HiggsNuNu/data/met_laser_filters/AllBadHCALLaser.txt"
+    }
+  }, 
+  
+  "l1tETMFilter" : {
+    "module"  : "hepfw::L1TETMFilter", 
+    "title"   : "L1T ETM Filter",
+    "parameters" : {
+      "verbose" : true, 
+      "minL1ETM" : 40
+    }
+  }, 
+  
+  "parkedDataHLTFilter" : {
+    "module"  : "hepfw::HLTPathFilter", 
+    "title"   : "HLT Trigger",
+    "parameters" : {
+      "verbose" : true, 
+      "paths" : [
+        {"HLT_DiPFJet40_PFMETnoMu65_MJJ800VBF_AllJets" : [190456,193621]}, 
+        {"HLT_DiJet35_MJJ700_AllJets_DEta3p5_VBF"      : [193833,196531]}, 
+        {"HLT_DiJet35_MJJ700_AllJets_DEta3p5_VBF"      : [198022,203742]}, 
+        {"HLT_DiJet30_MJJ700_AllJets_DEta3p5_VBF"      : [203777,208686]}
+      ]
+    }
+  }, 
+  
+  "producerElectronsVeto" : {
+    "module"  : "hepfw::FilteredElectronCollectionProducer", 
+    "title"   : "Loose Electrons Producer",
+    "parameters" : {
+      "verbose"                    : true, 
+      "inputLabel"                 : "electrons", 
+      "outputLabel"                : "electrons_CutBased_Veto", 
+      "doElectronID_CutBased_Veto" : true, 
+      "minPt"                      : 10, 
+      "maxEta"                     : 2.4
+    }
+  }, 
+  
+  "vetoElectrons" : {
+    "module"  : "hepfw::ColSizeFilterElectron", 
+    "title"   : "Electron veto",
+    "parameters" : {
+      "verbose"    : true, 
+      "inputLabel" : "electrons_CutBased_Veto", 
+      "maxN"       : 0
+    }
+  }, 
+  
+  "producerMuonLoose" : {
+    "module"  : "hepfw::FilteredMuonCollectionProducer", 
+    "title"   : "Loose Muon Producer",
+    "parameters" : {
+      "verbose"       : true, 
+      "inputLabel"    : "muonsPFlow", 
+      "outputLabel"   : "muons_Loose", 
+      "allowedTypes"  : ["Global", "Tracker"], 
+      "minPt"         : 10, 
+      "maxEta"        : 2.1, 
+      "maxRelCombIso" : 0.2
+    }
+  }, 
+  
+  "vetoMuon" : {
+    "module"  : "hepfw::ColSizeFilterMuon", 
+    "title"   : "Muon veto",
+    "parameters" : {
+      "verbose"    : true, 
+      "inputLabel" : "muons_Loose", 
+      "maxN"       : 0
+    }
+  },
+  
+  "producerSelJets" : {
+    "module"  : "hepfw::FilteredJetCollectionProducer", 
+    "title"   : "Selected Jet Producer",
+    "parameters" : {
+      "verbose"        : true, 
+      "inputLabel"     : "pfJetsPFlow", 
+      "outputLabel"    : "selPFJets", 
+      "doPFJetID"      : true, 
+      "doLoosePUIdMVA" : true
+    }
+  },
+  
+  "jetsLooseElectronCleaning" : {
+    "module"  : "hepfw::OverlapCleaning_PFJet_Electron", 
+    "title"   : "PFJets-Loose Electron cleaning",
+    "parameters" : {
+      "verbose"                  : true, 
+      "labelCollectionToClean"   : "selPFJets", 
+      "labelCollectionReference" : "electrons_CutBased_Veto", 
+      "labelCollectionOutput"    : "electronCleanPFJets", 
+      "minDeltaR"                : 0.5
+    }
+  },
+  
+  "jetsLooseMuonCleaning" : {
+    "module"  : "hepfw::OverlapCleaning_PFJet_Muon", 
+    "title"   : "PFJets-Loose Muon cleaning",
+    "parameters" : {
+      "verbose"                  : true, 
+      "labelCollectionToClean"   : "electronCleanPFJets", 
+      "labelCollectionReference" : "muons_Loose", 
+      "labelCollectionOutput"    : "cleanPFJets", 
+      "minDeltaR"                : 0.5
+    }
+  },
+  
+  "cut_dijet" : {
+    "module"  : "hepfw::AnalysisCutDijet", 
+    "title"   : "Dijet",
+    "parameters" : {
+      "verbose"       : true, 
+      "jetCollection" : "cleanPFJets", 
+      "dijetFwdBck"   : true, 
+      "dijetMinPt"    : [50.,40.], 
+      "dijetEta"      : [-4.7,4.7], 
+      "dijetMinDEta"  : 3.6, 
+      "dijetMinMjj"   : 1000
+      }
+    },
+  
+  "producerMuonTight" : {
+    "module"  : "hepfw::FilteredMuonCollectionProducer", 
+    "title"   : "Tight Muon Producer",
+    "parameters" : {
+      "verbose"        : true, 
+      "inputLabel"     : "muonsPFlow", 
+      "outputLabel"    : "muons_Tight", 
+      "allowedTypes"   : ["Global"], 
+      "doMuonID_Tight" : true, 
+      "minPt"          : 20, 
+      "maxEta"         : 2.1, 
+      "maxRelCombIso"  : 0.12, 
+      "maxDxy"         : 0.045, 
+      "maxDz"          : 0.2
+    }
+  }, 
+  
+  "metModifier_TightMuonSubtraction" : {
+    "module"  : "hepfw::MetModifier_MuonSubtraction", 
+    "title"   : "MET Modifier: Tight Muon Subtraction",
+    "parameters" : {
+      "verbose"              : true, 
+      "labelMet"             : "pfMetType1", 
+      "labelObjectsSubtract" : "muons_Tight", 
+      "outputLabel"          : "pfMet_subtractedMuonTight"
+      }
+    },
+  
+  "cut_met" : {
+    "module"  : "hepfw::AnalysisCutMet", 
+    "title"   : "MET Cut",
+    "parameters" : {
+      "verbose"       : true, 
+      "metCollection" : "pfMet_subtractedMuonTight", 
+      "minMet"        : 90
+    }
+  },
+  
+  "cut_metSig" : {
+    "module"  : "hepfw::AnalysisCutMet", 
+    "title"   : "MET Significance",
+    "parameters" : {
+      "verbose"            : true, 
+      "metCollection"      : "pfMet_subtractedMuonTight", 
+      "minMetSignificance" : 3.0
+    }
+  },
+  
+  "cut_minJetMetDPhi" : {
+    "module"  : "hepfw::METJetsMinDPhiFilter", 
+    "title"   : "MET Jets DPhi",
+    "parameters" : {
+      "verbose"       : true, 
+      "metCollection" : "pfMet_subtractedMuonTight", 
+      "jetCollection" : "cleanPFJets", 
+      "minJetPt"      : 30, 
+      "minDPhi"       : 1.0
+    }
+  },
+    
+  "preselection" : {
+    "sequence" : true,
+    "modules"  : [
+      "vertexFilter", 
+      "eventQualityFilters", 
+      "ecalLaserFilter", 
+      "hcalLaserFilter", 
+      "l1tETMFilter", 
+      "parkedDataHLTFilter", 
+      "producerElectronsVeto", 
+      "vetoElectrons", 
+      "producerMuonLoose", 
+      "vetoMuon", 
+      "producerSelJets", 
+      "jetsLooseElectronCleaning", 
+      "jetsLooseMuonCleaning", 
+      "cut_dijet", 
+      "producerMuonTight", 
+      "metModifier_TightMuonSubtraction", 
+      "cut_met", 
+      "cut_metSig", 
+      "cut_minJetMetDPhi"
+      ]
+    }, 
+
+  "preselection2" : {
+    "sequence" : true,
+    "modules"  : [
+      "vertexFilter", 
+      "eventQualityFilters", 
+      "hcalLaserFilter", 
+      "ecalLaserFilter", 
+      "l1tETMFilter", 
+      "parkedDataHLTFilter", 
+      "producerElectronsVeto", 
+      "vetoElectrons", 
+      "producerMuonLoose", 
+      "vetoMuon", 
+      "producerSelJets", 
+      "jetsLooseElectronCleaning", 
+      "jetsLooseMuonCleaning", 
+      "cut_met", 
+      "cut_metSig", 
+      "cut_dijet", 
+      "cut_minJetMetDPhi"
+      ], 
+    "blind" : {
+      "type" : "Data", 
+      "modules" : [
+        "cut_minJetMetDPhi"
+        ]
+      }
+    }
+}
