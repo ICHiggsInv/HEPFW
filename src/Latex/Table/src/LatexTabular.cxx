@@ -13,7 +13,8 @@ hepfw::LatexTabular::LatexTabular(int nRow,int nCol){
   
   init();
   
-  if(nRow<1 || nCol<1){cout << "ERROR: tabular size needs to be bigger than 1 in columns or rows!" << endl;}
+  if(nRow<1){cout << "[hepfw::LatexTabular::LatexTabular] ERROR: Number of rows needs to be bigger than 1!" << endl;}
+  if(nCol<1){cout << "[hepfw::LatexTabular::LatexTabular] ERROR: Number of columns needs to be bigger than 1!" << endl;}
   
   for(int a=0; a<nRow; a++){
     m_rows           .push_back(hepfw::LatexTabularRow(nCol));
@@ -33,7 +34,6 @@ hepfw::LatexTabular::LatexTabular(int nRow,int nCol){
 void hepfw::LatexTabular::init(){
   
   m_name = "tabular";
-  
 }
 
 void hepfw::LatexTabular::setCellContent(int iRow,int iCol,bool value){
@@ -41,7 +41,7 @@ void hepfw::LatexTabular::setCellContent(int iRow,int iCol,bool value){
   if(isCoordinateValid(iRow,iCol)){
     ((m_rows[iRow])[iCol]).setCellContent(value);
   }else{
-    cout << "ERROR: Request tabular position is out of bounds." << endl;
+    cout << "[hepfw::LatexTabular::setCellContent] ERROR: Request tabular position (row="<<iRow<<" col="<<iCol<<" for value="<<value<<")  is out of bounds." << endl;
   }
 }
 
@@ -50,7 +50,7 @@ void hepfw::LatexTabular::setCellContent(int iRow,int iCol,int value){
   if(isCoordinateValid(iRow,iCol)){
     ((m_rows[iRow])[iCol]).setCellContent(value);
   }else{
-    cout << "ERROR: Request tabular position is out of bounds." << endl;
+    cout << "[hepfw::LatexTabular::setCellContent] ERROR: Request tabular position (row="<<iRow<<" col="<<iCol<<" for value="<<value<<")  is out of bounds." << endl;
   }
 }
 
@@ -59,7 +59,7 @@ void hepfw::LatexTabular::setCellContent(int iRow,int iCol,unsigned value){
   if(isCoordinateValid(iRow,iCol)){
     ((m_rows[iRow])[iCol]).setCellContent(value);
   }else{
-    cout << "ERROR: Request tabular position is out of bounds." << endl;
+    cout << "[hepfw::LatexTabular::setCellContent] ERROR: Request tabular position (row="<<iRow<<" col="<<iCol<<" for value="<<value<<")  is out of bounds." << endl;
   }
 }
 
@@ -68,7 +68,7 @@ void hepfw::LatexTabular::setCellContent(int iRow,int iCol,float value){
   if(isCoordinateValid(iRow,iCol)){
     ((m_rows[iRow])[iCol]).setCellContent(value);
   }else{
-    cout << "ERROR: Request tabular position is out of bounds." << endl;
+    cout << "[hepfw::LatexTabular::setCellContent] ERROR: Request tabular position (row="<<iRow<<" col="<<iCol<<" for value="<<value<<")  is out of bounds." << endl;
   }
 }
 
@@ -77,7 +77,7 @@ void hepfw::LatexTabular::setCellContent(int iRow,int iCol,double value){
   if(isCoordinateValid(iRow,iCol)){
     ((m_rows[iRow])[iCol]).setCellContent(value);
   }else{
-    cout << "ERROR: Request tabular position is out of bounds." << endl;
+    cout << "[hepfw::LatexTabular::setCellContent] ERROR: Request tabular position (row="<<iRow<<" col="<<iCol<<" for value="<<value<<")  is out of bounds." << endl;
   }
 }
 
@@ -86,7 +86,7 @@ void hepfw::LatexTabular::setCellContent(int iRow,int iCol,const char* value){
   if(isCoordinateValid(iRow,iCol)){
     ((m_rows[iRow])[iCol]).setCellContent(string(value));
   }else{
-    cout << "ERROR: Request tabular position is out of bounds." << endl;
+    cout << "[hepfw::LatexTabular::setCellContent] ERROR: Request tabular position (row="<<iRow<<" col="<<iCol<<" for value="<<value<<")  is out of bounds." << endl;
   }  
 }
 
@@ -95,7 +95,7 @@ void hepfw::LatexTabular::setCellContent(int iRow,int iCol,string value){
   if(isCoordinateValid(iRow,iCol)){
     ((m_rows[iRow])[iCol]).setCellContent(value);
   }else{
-    cout << "ERROR: Request tabular position is out of bounds." << endl;
+    cout << "[hepfw::LatexTabular::setCellContent] ERROR: Request tabular position (row="<<iRow<<" col="<<iCol<<" for value="<<value<<")  is out of bounds." << endl;
   }
 }
 
@@ -104,7 +104,7 @@ void hepfw::LatexTabular::setCellPrecision(int iRow,int iCol,std::string value){
   if(isCoordinateValid(iRow,iCol)){
     ((m_rows[iRow])[iCol]).setCellPrecision(value);
   }else{
-    cout << "ERROR: Request tabular position is out of bounds." << endl;
+    cout << "[hepfw::LatexTabular::setCellPrecision] ERROR: Request tabular position (row="<<iRow<<" col="<<iCol<<" for value="<<value<<")  is out of bounds." << endl;
   }  
 }
 
@@ -114,14 +114,14 @@ void hepfw::LatexTabular::setCellColor(int iRow,int iCol,string value){
     ((m_rows[iRow])[iCol]).setCellColor(value);
     addRequiredPackage("xcolor");
   }else{
-    cout << "ERROR: Request tabular position is out of bounds." << endl;
+    cout << "[hepfw::LatexTabular::setCellColor] ERROR: Request tabular position (row="<<iRow<<" col="<<iCol<<" for value="<<value<<")  is out of bounds." << endl;
   }
 }
 
 void hepfw::LatexTabular::setColumnAlignment(int iCol,std::string value){
   
   if(iCol<0 || iCol>=int(m_rows[0].size())){
-    cout << "ERROR: Request column position is out of bounds." << endl;
+    cout << "[hepfw::LatexTabular::setColumnAlignment] ERROR: Request column (col="<<iCol<<") position is out of bounds." << endl;
   }else{
     m_columnAlignment[iCol]=value;
   }
@@ -130,7 +130,7 @@ void hepfw::LatexTabular::setColumnAlignment(int iCol,std::string value){
 void hepfw::LatexTabular::setColumnDecorationBefore(int iCol,std::string value){
   
   if(iCol<0 || iCol>=int(m_rows[0].size())){
-    cout << "ERROR: Request column position is out of bounds." << endl;
+    cout << "[hepfw::LatexTabular::setColumnDecorationBefore] ERROR: Request column position is out of bounds." << endl;
   }else{
     m_columnDecoration[iCol]=value;
   }
@@ -139,7 +139,7 @@ void hepfw::LatexTabular::setColumnDecorationBefore(int iCol,std::string value){
 void hepfw::LatexTabular::setColumnDecorationAfter (int iCol,std::string value){
   
   if(iCol<0 || iCol>=int(m_rows[0].size())){
-    cout << "ERROR: Request column position is out of bounds." << endl;
+    cout << "[hepfw::LatexTabular::setColumnDecorationAfter] ERROR: Request column position is out of bounds." << endl;
   }else{
     m_columnDecoration[iCol+1]=value;
   }
@@ -148,7 +148,7 @@ void hepfw::LatexTabular::setColumnDecorationAfter (int iCol,std::string value){
 void hepfw::LatexTabular::setRowDecorationBefore(int iRow,std::string value){
   
   if(iRow<0 || iRow>=int(m_rows.size())){
-    cout << "ERROR: Request row position is out of bounds." << endl;
+    cout << "[hepfw::LatexTabular::setRowDecorationBefore] ERROR: Request row position is out of bounds." << endl;
   }else{
     m_rowsDecoration[iRow]=value;
   }
@@ -157,7 +157,7 @@ void hepfw::LatexTabular::setRowDecorationBefore(int iRow,std::string value){
 void hepfw::LatexTabular::setRowDecorationAfter (int iRow,std::string value){
   
   if(iRow<0 || iRow>=int(m_rows.size())){  
-    cout << "ERROR: Request row position is out of bounds." << endl;
+    cout << "[hepfw::LatexTabular::setRowDecorationAfter] ERROR: Request row position is out of bounds." << endl;
   }else{
     m_rowsDecoration[iRow+1]=value;
   }
@@ -174,16 +174,16 @@ void hepfw::LatexTabular::setTabularColumnDecoration(std::string value){
 void hepfw::LatexTabular::setTabularRowDecoration(std::string value){
   
   setRowDecorationBefore(0,value);
-  for(int iRow=0; iRow<int(m_rows.size()); iRow++){      
+  for(int iRow=0; iRow<int(m_rows.size()); iRow++){
     setRowDecorationAfter(iRow,value);
   }
 }
 
 void hepfw::LatexTabular::setTabularPrecision(std::string value){
  
-  for(int iRow=0; iRow<int(m_rows.size()); iRow++){      
+  for(int iRow=0; iRow<int(m_rows.size()); iRow++){
     for(int iCol=0; iCol<int(m_rows[0].size()); iCol++){
-      ((m_rows[iRow])[iCol]).setCellPrecision(value);      
+      ((m_rows[iRow])[iCol]).setCellPrecision(value);
     }  
   }
 }
