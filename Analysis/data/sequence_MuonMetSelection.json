@@ -27,6 +27,28 @@
     }
   }, 
     
+  "metPlots_pre" : {
+    "module"  : "hepfw::MetAnalysis", 
+    "title"   : "Met Plots",
+    "parameters" : {
+      "verbose"    : true, 
+      "labelMet"       : "pfMetType1", 
+      "labelMetNoMuon" : "pfMet_subtractedMuonTight"
+      }
+    }, 
+    
+  "metPlots_pos" : {
+    "module"  : "hepfw::MetAnalysis", 
+    "title"   : "Met Plots",
+    "parameters" : {
+      "verbose"    : true, 
+      "labelMet"        : "pfMetType1", 
+      "labelMetNoMuon"  : "pfMet_subtractedMuonTight", 
+      "labelMuonsLoose" : "muons_Loose",
+      "labelMuonsTight" : "muons_Tight"
+      }
+    }, 
+    
   "muonMetSelection" : {
     "sequence" : true,
     "modules"  : [
@@ -47,7 +69,9 @@
       "jetsLooseMuonCleaning", 
       "sigRegion_cutDijet", 
       "metModifier_TightMuonSubtraction", 
+      "metPlots_pre", 
       "cut_met", 
+      "metPlots_pos", 
       "sigRegion_cutMetSig", 
       "sigRegion_cutMinJetMetDPhi"
     ] 
