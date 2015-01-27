@@ -109,13 +109,18 @@ void hepfw::METModifierObjectSubtraction<MET,Objects>::produce(hepfw::Event &eve
   for(unsigned i=0; i<m_objects->size(); i++){
     
     Objects *obj = &(*m_objects)[i];
-    vecMet -= obj->vector();
-    vecMet.SetEta(0.);
+    vecMet += obj->vector();
+
     //std::cout << "vec OBJ pt=" << obj->vector().pt() << " eta=" << obj->vector().eta() << std::endl;
     //std::cout << "vec MET pt=" << vecMet.pt() << " eta=" << vecMet.eta() << std::endl;
   }
-
+  vecMet.SetEta(0.);
+  
   outMet.set_vector(vecMet);
+  
+  // Here we are doing ouput MET significance = (MET_in significance/MET) * MET_out
+  // This is only valid if we assume the added particles have small sum et compared with input sum et
+  outMet.set_et_sig((m_met->et_sig()/m_met->pt())*vecMet.pt());
   
   event.addProduct<MET>(m_outputLabel,outMet);
   
