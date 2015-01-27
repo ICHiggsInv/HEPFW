@@ -1,0 +1,118 @@
+{
+  
+  "load" : [
+    "VBFHiggsToInvisible/Analysis/data/sequence_PreSelection.json", 
+    "VBFHiggsToInvisible/Analysis/data/sequence_SignalSelection.json"
+  ], 
+
+  "producerTaus" : {
+    "module"  : "hepfw::FilteredTauCollectionProducer", 
+    "title"   : "Tau Producer",
+    "parameters" : {
+      "verbose"      : true, 
+      "inputLabel"   : "taus", 
+      "outputLabel"  : "taus_selected", 
+      "minPt"        : 20, 
+      "maxEta"       : 2.3, 
+      "maxDz"        : 0.2, 
+      "descriminants" : [
+        "decayModeFinding",
+        "byTightCombinedIsolationDeltaBetaCorr3Hits", 
+        "againstMuonTight", 
+        "againstElectronTight"
+        ] 
+      }
+    }, 
+  
+  "selTau" : {
+    "module"  : "hepfw::ColSizeFilterTau", 
+    "title"   : "n_{tau}=1",
+    "parameters" : {
+      "verbose"    : true, 
+      "inputLabel" : "taus_selected", 
+      "minN"       : 1, 
+      "maxN"       : 1
+      }
+    }, 
+    
+    
+  "transMassWindow_MET_Tau" : {
+    "module"  : "hepfw::DiobjectTransverseMassWindow_MET_Tau", 
+    "title"   : "Transverse Mass cut (MET,Tau)",
+    "parameters" : {
+      "verbose"    : true, 
+      "inputLabelA" : "pfMet_subtractedMuonTight", 
+      "inputLabelB" : "taus_selected", 
+      "objA_isVector" : false, 
+      "objB_isVector" : true, 
+      "minMass"       : 20
+      }
+    }, 
+
+  "metDijetsMinDPhiFilter" : {
+    "module"  : "hepfw::METDijetMinDPhiFilter", 
+    "title"   : "MET-Dijet DPhi",
+    "parameters" : {
+      "verbose"       : true, 
+      "metCollection" : "pfMet_subtractedMuonTight", 
+      "jetCollection" : "cleanPFJets", 
+      "minDPhi"       : 1.0
+      }
+    },
+    
+  "tauMetSelection" : {
+    "sequence" : true,
+    "modules"  : [
+      "vertexFilter", 
+      "eventQualityFilters", 
+      "ecalLaserFilter", 
+      "hcalLaserFilter", 
+      "l1tETMFilter", 
+      "parkedDataHLTFilter", 
+      "producerElectronsVeto", 
+      "vetoElectrons", 
+      "producerMuonLoose", 
+      "vetoMuon", 
+      "producerSelJets", 
+      "jetsLooseElectronCleaning", 
+      "jetsLooseMuonCleaning", 
+      "sigRegion_cutDijet", 
+      "producerMuonTight", 
+      "metModifier_TightMuonSubtraction", 
+      "cut_met", 
+      "sigRegion_cutMetSig", 
+      "producerTaus", 
+      "selTau", 
+      "transMassWindow_MET_Tau", 
+      "metDijetsMinDPhiFilter"
+    ] 
+  }, 
+  
+  "tauMetSelection_backup" : {
+    "sequence" : true,
+    "modules"  : [
+      "vertexFilter", 
+      "eventQualityFilters", 
+      "ecalLaserFilter", 
+      "hcalLaserFilter", 
+      "l1tETMFilter", 
+      "parkedDataHLTFilter", 
+      "producerElectronsVeto", 
+      "vetoElectrons", 
+      "producerMuonLoose", 
+      "vetoMuon", 
+      "producerTaus", 
+      "selTau", 
+      "producerSelJets", 
+      "jetsLooseElectronCleaning", 
+      "jetsLooseMuonCleaning", 
+      "sigRegion_cutDijet", 
+      "producerMuonTight", 
+      "metModifier_TightMuonSubtraction", 
+      "cut_met", 
+      "transMassWindow_MET_Tau", 
+      "sigRegion_cutMetSig", 
+      "metDijetsMinDPhiFilter"
+      ] 
+    }
+}
