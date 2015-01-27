@@ -100,9 +100,9 @@ void hepfw::FilteredMuonCollectionProducer::produce(hepfw::Event &event){
       
       bool passType = false;
       
-      for(unsigned i=0; i<m_allowedTypes.size(); i++){
+      for(unsigned a=0; a<m_allowedTypes.size(); a++){
         
-        string &muType = m_allowedTypes[i];
+        string &muType = m_allowedTypes[a];
         
         if     (muType=="Global"     && mu->is_global())    {passType = true; break;}
         else if(muType=="Tracker"    && mu->is_tracker())   {passType = true; break;}
