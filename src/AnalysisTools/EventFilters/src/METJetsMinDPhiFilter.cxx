@@ -46,17 +46,18 @@ hepfw::METJetsMinDPhiFilter::METJetsMinDPhiFilter(std::string name,hepfw::Parame
     printf("metCollection : %s\n",  m_metLabel.c_str());
     printf("jetCollection : %s\n",  m_jetsLabel.c_str());
     printf("minJetPt      : %.1f\n",m_minJetPt);
-    printf("minDPhi       : %.2f\n",m_minDPhi);
+    printf("minDPhi       : %.2f\n",m_ref_minDPhi);
+    printf("op(minDPhi)   : %s\n",  m_op_minDPhi.c_str());
   }
 }
 
 void hepfw::METJetsMinDPhiFilter::init(){
   
-  m_metLabel   = "";
-  m_jetsLabel  = "";
-  m_minJetPt   =  0;
-  m_minDPhi    =  0;
-  m_op_minDPhi = ">";
+  m_metLabel    = "";
+  m_jetsLabel   = "";
+  m_minJetPt    = 0;
+  m_ref_minDPhi = 0;
+  m_op_minDPhi  = ">";
 }
 
 hepfw::METJetsMinDPhiFilter::~METJetsMinDPhiFilter(){
@@ -78,17 +79,22 @@ bool hepfw::METJetsMinDPhiFilter::filter(hepfw::Event &event){
   ic::Met           *met  = event.getByName< ic::Met >          (m_metLabel);
   vector<ic::PFJet> *jets = event.getByName< vector<ic::PFJet> >(m_jetsLabel);
   
+  double metPhi  = met->phi();
+  double minDPhi = 999;
+  
   for(unsigned i=0; i<jets->size(); i++){
     
     ic::PFJet *jet = &(*jets)[i];
     
     if(jet->pt()<=m_minJetPt){continue;}
     
-    double metPhi = met->phi();
-    double jetPhi = jet->phi();
-    if(!testFunc(this,metPhi,jetPhi,m_minDPhi)){return false;}
+    double thisDPhi = fabs(hepfw::deltaPhi(metPhi,jet->phi()));
     
+    if(thisDPhi<minDPhi){minDPhi=thisDPhi;}
   }
+  
+  if(minDPhi==999)           {return false;}
+  if(!testFunc(this,minDPhi)){return false;}
   
   return true;
 }
@@ -110,13 +116,13 @@ void hepfw::METJetsMinDPhiFilter::setOperatorMinDPhi(std::string value){
 }
 
 void hepfw::METJetsMinDPhiFilter::setMinDPhi(double minDPhi){
-  m_minDPhi = minDPhi;
+  m_ref_minDPhi = minDPhi;
 }
 
-bool hepfw::METJetsMinDPhiFilter::test_DPhi_BiggerThan(double &metPhi,double &jetPhi,double &value){
-  return fabs(hepfw::deltaPhi(metPhi,jetPhi))>value;
+bool hepfw::METJetsMinDPhiFilter::test_DPhi_BiggerThan(double &value){
+  return value>m_ref_minDPhi;
 }
 
-bool hepfw::METJetsMinDPhiFilter::test_DPhi_LessThan(double &metPhi,double &jetPhi,double &value){
-  return fabs(hepfw::deltaPhi(metPhi,jetPhi))<value;
+bool hepfw::METJetsMinDPhiFilter::test_DPhi_LessThan(double &value){
+  return value<m_ref_minDPhi;
 }

@@ -38,12 +38,12 @@ namespace hepfw{
     
     void init();
     
-    bool test_DPhi_BiggerThan(double &metPhi,double &jetPhi,double &value);
-    bool test_DPhi_LessThan  (double &metPhi,double &jetPhi,double &value);
+    bool test_DPhi_BiggerThan(double &value);
+    bool test_DPhi_LessThan  (double &value);
     
   private:
     
-    std::function<bool (hepfw::METJetsMinDPhiFilter*,double &metPhi,double &jetPhi,double &value)> testFunc;
+    std::function<bool (hepfw::METJetsMinDPhiFilter*,double &value)> testFunc;
     
     bool m_verbose;
     
@@ -52,7 +52,7 @@ namespace hepfw{
     double      m_minJetPt;
     
     std::string m_op_minDPhi;
-    double      m_minDPhi;
+    double      m_ref_minDPhi;
     
   };
   
