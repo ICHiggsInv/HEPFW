@@ -56,7 +56,7 @@
       "producerSelJets", 
       "jetsLooseElectronCleaning", 
       "jetsLooseMuonCleaning", 
-      "cut_dijet", 
+      "sigRegion_cutDijet", 
       "producerMuonTight", 
       "metModifier_TightMuonSubtraction", 
       "cut_met", 
