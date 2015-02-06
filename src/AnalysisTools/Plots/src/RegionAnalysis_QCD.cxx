@@ -144,7 +144,9 @@ void hepfw::RegionAnalysis_QCD::analyse(hepfw::Event &event){
   m_hBase["METDijet_minDPhi"] ->Fill(dijetMET_minDPhi);
   m_hBase["MET_Sig"]          ->Fill(metSig);
   
+  //#########################################################
   // Region: QCD Shape
+  //#########################################################
   if(metSig>4.0){
     m_hEntries->Fill(1);
     m_hQCD["Jets_Multiplicity"]->Fill(jets->size());
@@ -153,7 +155,9 @@ void hepfw::RegionAnalysis_QCD::analyse(hepfw::Event &event){
     m_hQCD["MET_Sig"]         ->Fill(metSig);
   }
   
+  //#########################################################
   // Region: Norm1
+  //#########################################################
   if(
     dijetMET_minDPhi>1.0 &&
     dijetMET_minDPhi<2.0 &&
@@ -167,7 +171,9 @@ void hepfw::RegionAnalysis_QCD::analyse(hepfw::Event &event){
     m_hNorm1["MET_Sig"]         ->Fill(metSig);
   }
   
+  //#########################################################
   // Region: Norm2
+  //#########################################################
   if(
     dijetMET_minDPhi>2.0 &&
     dijetMET_minDPhi<3.0 &&
@@ -181,7 +187,9 @@ void hepfw::RegionAnalysis_QCD::analyse(hepfw::Event &event){
     m_hNorm2["MET_Sig"]        ->Fill(metSig);
   }
   
+  //#########################################################
   // Region: Norm3
+  //#########################################################
   if(
     dijetMET_minDPhi>1.0 &&
     dijetMET_minDPhi<2.0 &&
@@ -193,8 +201,10 @@ void hepfw::RegionAnalysis_QCD::analyse(hepfw::Event &event){
     m_hNorm3["METDijet_minDPhi"]->Fill(dijetMET_minDPhi);
     m_hNorm3["MET_Sig"]         ->Fill(metSig);
   }
-
+  
+  //#########################################################
   // Region: Signal
+  //#########################################################
   if(
     dijetMET_minDPhi>2.3 &&
     metSig          >4.0
