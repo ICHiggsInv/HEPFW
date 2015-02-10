@@ -1,10 +1,9 @@
-#include "FWCore/PostProcessing/interface/PostProcessingPostProcessingModule.h"
+#include "FWCore/PostProcessing/interface/PostProcessingModule.h"
 
 using namespace std;
 
 hepfw::PostProcessingModule::PostProcessingModule(){
   m_name="";
-  m_type=hepfw::PostProcessingModule::PostProcessingModuleType::Generic;
 }
 
 hepfw::PostProcessingModule::PostProcessingModule(std::string name){
