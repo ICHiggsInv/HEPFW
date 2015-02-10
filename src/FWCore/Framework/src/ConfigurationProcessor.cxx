@@ -17,10 +17,7 @@ hepfw::ConfigurationProcessor::ConfigurationProcessor(){
   m_maxEvents      = -1;
 }
 
-hepfw::ConfigurationProcessor::ConfigurationProcessor(string configFilename){
-  
-  // Setting variables
-  m_maxEvents = -1;
+hepfw::ConfigurationProcessor::ConfigurationProcessor(string configFilename,string jobType){
   
   // Determine the absolute location of src directory
   this->getPathSrc();
@@ -55,24 +52,30 @@ hepfw::ConfigurationProcessor::ConfigurationProcessor(string configFilename){
     m_content[ baseMembers[i] ]  = baseFile[ baseMembers[i] ];
   }
   
-  // Get the value of the member of root named 'encoding', return 'UTF-8' if there is no
-  // such member.
-  std::string sampleType = m_content["dataset"].get("type","").asString();
-  std::string sampleName = m_content["dataset"].get("name","").asString();
-  cout << "Dataset type : " << sampleType << endl;
-  cout << "Dataset name : " << sampleName << endl;
-  
-  // Processing input to this jobs
-  const Json::Value input = m_content["input"];
-  m_maxEvents = input.get("maxEvents",-1).asInt();
-  
-  const Json::Value fileNames = input["fileNames"];
-  for ( unsigned index = 0; index < fileNames.size(); ++index ){
-    cout << "inputFiles " << index << " : " << fileNames[index].asString() << endl;
-    m_inputFiles.push_back(fileNames[index].asString());
+  if(jobType=="EventRun"){
+    
+    // Setting variables
+    m_maxEvents = -1;
+    
+    // Get the value of the member of root named 'encoding', return 'UTF-8' if there is no
+    // such member.
+    std::string sampleType = m_content["dataset"].get("type","").asString();
+    std::string sampleName = m_content["dataset"].get("name","").asString();
+    cout << "Dataset type : " << sampleType << endl;
+    cout << "Dataset name : " << sampleName << endl;
+    
+    // Processing input to this jobs
+    const Json::Value input = m_content["input"];
+    m_maxEvents = input.get("maxEvents",-1).asInt();
+    
+    const Json::Value fileNames = input["fileNames"];
+    for ( unsigned index = 0; index < fileNames.size(); ++index ){
+      cout << "inputFiles " << index << " : " << fileNames[index].asString() << endl;
+      m_inputFiles.push_back(fileNames[index].asString());
+    }
+    
+    m_outputFilename = m_content.get("outputFile","out.root").asString();
   }
-
-  m_outputFilename = m_content.get("outputFile","out.root").asString();
 }
 
 hepfw::ConfigurationProcessor::~ConfigurationProcessor(){

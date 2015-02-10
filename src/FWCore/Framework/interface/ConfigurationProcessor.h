@@ -24,7 +24,7 @@ namespace hepfw{
   public:
     
     ConfigurationProcessor();
-    ConfigurationProcessor(std::string configFilename);
+    ConfigurationProcessor(std::string configFilename,std::string jobType="EventRun");
     
     ~ConfigurationProcessor();
     
