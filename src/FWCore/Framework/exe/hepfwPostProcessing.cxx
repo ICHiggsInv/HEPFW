@@ -1,6 +1,7 @@
 // HEPFW includes
 #include "FWCore/IO/interface/File.h"
 #include "FWCore/ErrorManagement/interface/ErrorManagement.h"
+#include "FWCore/Framework/interface/ConfigurationProcessor.h"
 #include "Plots/Style/interface/Style.h"
 
 // ROOT included
@@ -37,6 +38,7 @@ int main(int argc, char *argv[]){
         break;
       }else{
         filename_cfg = argv[i+1];
+        i++;
       }
     }
   }
@@ -46,13 +48,15 @@ int main(int argc, char *argv[]){
     errorManager.addError("hepfwPostProcessing",hepfw::ErrorManagement::ErrorType::ErrorFatal,"No configuration file provided. Please supply one using -c or --cfg.\n");
   }
   
-  // Stopping job here it there are errors
-  if(errorManager.getJobStop()){return errorManager.getJobEnd();}
+  if(errorManager.getJobStop()){return errorManager.getJobEnd();} // Stopping job here it there are errors
   
-  //
+  hepfw::ConfigurationProcessor cfgProcessor(filename_cfg,"PostProcessing");
+  
+  // Setting style for plots
   hepfw::Style myStyle;
   myStyle.setTDRStyle();
 
+  
   return errorManager.getJobEnd();
   
 };
