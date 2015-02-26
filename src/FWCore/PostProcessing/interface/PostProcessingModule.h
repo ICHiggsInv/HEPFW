@@ -1,9 +1,9 @@
-#ifndef FWCore_PostProcessing_PostProcessingPostProcessingModule
-#define FWCore_PostProcessing_PostProcessingPostProcessingModule
+#ifndef FWCore_PostProcessing_PostProcessingModule
+#define FWCore_PostProcessing_PostProcessingModule
 
 // HEPFW includes
-#include "FWCore/Framework/interface/JobSetup.h"
 #include "FWCore/Parameters/interface/ParameterSet.h"
+#include "PostProcessing/Data/interface/ProcessedDataManager.h"
 
 // C++ STD includes
 #include <string>
@@ -25,7 +25,7 @@ namespace hepfw{
     
     std::string getName();
     
-    virtual void process();
+    virtual void process(hepfw::ProcessedDataManager& data);
     
   protected:
     

@@ -18,6 +18,10 @@ hepfw::PostProcessingModule::~PostProcessingModule(){
   
 }
 
+void hepfw::PostProcessingModule::process(ProcessedDataManager& data){
+
+}
+
 string hepfw::PostProcessingModule::getName(){
   return m_name;
 }
