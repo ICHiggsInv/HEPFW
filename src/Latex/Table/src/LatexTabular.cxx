@@ -4,7 +4,7 @@
 
 using namespace std;
 
-/********************************************//**
+ /********************************************//**
  * Constructor for this class
  * @param nRow number of rows for this tabular.
  * @param nCol number of columns for this tabular.
@@ -201,7 +201,7 @@ string hepfw::LatexTabular::toStringEnvBegin(){
     out += "["+m_position+"]";
   }
 
-  // Adding column aligment and decoration
+  // Adding column alignment and decoration
   out += "{";
   for(unsigned i=0; i<m_columnAlignment.size(); i++){
     out += m_columnDecoration[i];
@@ -248,3 +248,28 @@ bool hepfw::LatexTabular::isCoordinateValid(int iRow,int iCol){
 
   return out;
 }
+
+/**
+ * Get cell content (as a string)
+ * @param iRow row coordinate (starts at 0)
+ * @param iCol column coordinate (starts at 0)
+ * @return returns the content of the cell converted to string
+ ***********************************************/
+string hepfw::LatexTabular::getCellContent(int iRow,int iCol){
+  return (m_rows[iRow])[iCol].toString();
+}
+
+/**
+ * Get the number of columns on the tabular
+ ***********************************************/
+int hepfw::LatexTabular::getNColumn(){
+  return m_rows[0].size();
+}
+    
+/**
+ * Get the numnr of rows in the tabular
+ ***********************************************/
+int hepfw::LatexTabular::getNRow(){
+  return m_rows.size();
+}
+
