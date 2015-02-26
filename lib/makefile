@@ -19,14 +19,14 @@ USERINCLUDES += -I$(CMS_PATH)/$(SCRAM_ARCH)/external/boost/1.47.0/include/
 USERINCLUDES += -I$(realpath $(BASEDIR)/../src/)
 
 # Define libraries to link
-USERLIBS += $(shell root-config --cflags --libs) 
+USERLIBS += $(shell root-config --cflags --libs)
 USERLIBS += -lGenVector -lTreePlayer -lTMVA
 # USERLIBS += -L$(ROOFITSYS)/lib/ -lRooFit -lRooFitCore
 USERLIBS += -L$(CMS_PATH)/$(SCRAM_ARCH)/external/boost/1.47.0/lib/ -lboost_regex -lboost_program_options -lboost_filesystem
 # USERLIBS += -L$(CMSSW_BASE)/lib/$(SCRAM_ARCH) -lUserCodeICHiggsTauTau
 # USERLIBS += -L$(CMSSW_RELEASE_BASE)/lib/$(SCRAM_ARCH) -lFWCoreFWLite -lPhysicsToolsFWLite -lCommonToolsUtils
 
-# CXXFLAGS = -Wall -W -Wno-unused-function -Wno-parentheses -Wno-char-subscripts -Wno-unused-parameter -O2 
+# CXXFLAGS = -Wall -W -Wno-unused-function -Wno-parentheses -Wno-char-subscripts -Wno-unused-parameter -O2
 CXXFLAGS  = -W -Wall -O2 -fPIC `root-config --cflags`
 # Next line is necessary to compile C++0x code with g++ 4.6.X
 CXXFLAGS += -std=c++0x
@@ -59,7 +59,7 @@ all: | pre obj lib bin
 	@echo "All done!"
 	@echo ""
 
-pre:
+pre: $(HEAS)
 	@echo ""
 	@echo "Scanning for modules to register:"
 	@echo ""
@@ -90,7 +90,7 @@ bin: $(BINS)
 	@echo "----->Producing shared lib: " $@
 	@$(LD) $(LDFLAGS) -o $@ $(filter $(subst %,%/,$(subst libHEPFW,,$*))%,$(OBJS)) `root-config --glibs`
 
-%.exe : %.cxx  $(LIBS) 
+%.exe : %.cxx  $(LIBS)
 	@echo "----->Producing binary: " $@
 	@$(shell mkdir -p $(dir $@);)
 	@$(MAKEDEPEND) -MT $@ -o $*.d $<
@@ -121,6 +121,6 @@ test:
 	@echo "OBJS : "$(OBJS)
 	@echo ""
 	@echo "EXES : "$(EXES)
-	@echo "BINS : "$(BINS)	
+	@echo "BINS : "$(BINS)
 	@echo ""
 	@echo "LIBS : "$(LIBS)
