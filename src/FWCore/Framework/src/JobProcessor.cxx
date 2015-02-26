@@ -1,7 +1,7 @@
 #include "FWCore/Framework/interface/JobProcessor.h"
 
 // Automatically produced before running
-#include "FWCore/Framework/interface/ModulesScan.h"
+#include "FWCore/Framework/scan/ModulesScan.h"
 
 #include "FWCore/Parameters/interface/ParameterSet.h"
 
