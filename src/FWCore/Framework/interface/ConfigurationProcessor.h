@@ -2,6 +2,7 @@
 #define FWCore_Framework_ConfigurationProcessor
 
 // HEPFW includes
+#include "FWCore/ErrorManagement/interface/ErrorManagement.h"
 #include "FWCore/Framework/interface/Dataset.h"
 #include "FWCore/Parameters/interface/ParameterSet.h"
 #include "Parameters/JSONParser/interface/json.h"
@@ -37,6 +38,12 @@ namespace hepfw{
     std::string              getModuleClass     (std::string moduleName);
     hepfw::ParameterSet      getModuleParameters(std::string moduleName);
     
+    // Remaking for post processing
+    void                setErrorManager(hepfw::ErrorManagement* obj);
+    
+    hepfw::ParameterSet get(std::string name);
+    
+    
   private:
     
     std::string getPathSrc();
@@ -44,6 +51,8 @@ namespace hepfw{
     void        loadAllCfg();
     
   private:
+    
+    hepfw::ErrorManagement*  m_errManager;
     
     std::string              m_pathSrc;
     
