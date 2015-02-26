@@ -1,5 +1,7 @@
 #include "FWCore/Framework/interface/ConfigurationProcessor.h"
 
+// ROOT includes
+#include "TString.h"
 
 // C++ STD includes
 #include <iostream>
@@ -15,17 +17,19 @@ hepfw::ConfigurationProcessor::ConfigurationProcessor(){
 
   m_outputFilename = "out.root"; 
   m_maxEvents      = -1;
+  m_errManager     = 0;
 }
 
 hepfw::ConfigurationProcessor::ConfigurationProcessor(string configFilename,string jobType){
   
+  m_errManager = 0;
+  
   // Determine the absolute location of src directory
   this->getPathSrc();
   
-  //
+  // Loading all configuration files
   m_cfgFiles.push_back(configFilename);
   this->loadAllCfg();
-  
   
   Json::Value baseFile = this->processFile(configFilename);
   
@@ -75,6 +79,9 @@ hepfw::ConfigurationProcessor::ConfigurationProcessor(string configFilename,stri
     }
     
     m_outputFilename = m_content.get("outputFile","out.root").asString();
+  }
+  else if(jobType=="PostProcessing"){
+    
   }
 }
 
@@ -186,7 +193,6 @@ string hepfw::ConfigurationProcessor::getModuleClass(std::string moduleName){
   const Json::Value module = m_content[moduleName];
   
   return module.get("module","").asString();
-  
 }
 
 void hepfw::ConfigurationProcessor::loadAllCfg(){
@@ -228,4 +234,26 @@ void hepfw::ConfigurationProcessor::loadAllCfg(){
       m_content[ fileMembers[a] ]  = (*var)[ fileMembers[a] ];
     }
   }
+}
+
+hepfw::ParameterSet hepfw::ConfigurationProcessor::get(std::string name){
+
+  hepfw::ParameterSet pset;
+  
+  // Filling error in case variable is not found
+  if(m_errManager && !m_content.isMember(name)){
+    m_errManager->addError(
+      "hepfw::ConfigurationProcessor::get",
+      hepfw::ErrorManagement::ErrorType::ErrorFatal,
+      Form("Configuration variable with name \"%s\" not found.\n",name.c_str())
+    );
+  }else{
+    pset = hepfw::ParameterSet(m_content[name]);
+  }
+  
+  return pset;
+}
+
+void hepfw::ConfigurationProcessor::setErrorManager(hepfw::ErrorManagement* obj){
+  m_errManager = obj;
 }
