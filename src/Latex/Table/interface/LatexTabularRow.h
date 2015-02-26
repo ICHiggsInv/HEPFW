@@ -15,7 +15,7 @@ namespace hepfw{
    * This class is an abstraction of a LaTeX tabular row of cells.
    * It allow easy manipulation of its contents.
    ***********************************************/
-  class LatexTabularRow : public std::vector<LatexTabularCell> {
+  class LatexTabularRow : public std::vector<hepfw::LatexTabularCell> {
   public:
     
     LatexTabularRow(unsigned nCell);
