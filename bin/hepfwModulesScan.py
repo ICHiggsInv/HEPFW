@@ -12,9 +12,6 @@ parser.add_option('--EventProcessing', action="store_true", default=False, dest=
 parser.add_option('--PostProcessing',  action="store_true", default=False, dest='psProc', help='')
 (options, args) = parser.parse_args()
 
-print options.evProc
-print options.psProc
-
 def find_between( s, first, last ):
     try:
         start = s.index( first ) + len( first )
@@ -34,7 +31,6 @@ def find_between_r( s, first, last ):
 
 print "HEPFW base directory:",os.environ['HEPFWSYS']
 print ""
-print "Scanning for Event Processing Modules:"
 
 pathSrc = os.environ['HEPFWSYS']+'/src/'
 
@@ -44,6 +40,7 @@ for root, dirnames, filenames in os.walk(pathSrc):
     matches.append(os.path.join(root, filename))
 
 if options.evProc:
+  print "Scanning for Event Processing Modules:"
 
   outFile = open(pathSrc+"FWCore/Framework/scan/ModulesScan.h", 'w')
 
