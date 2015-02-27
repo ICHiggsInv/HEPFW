@@ -1,3 +1,8 @@
+ifndef HEPFWSYS
+  $(error Variable HEPFWSYS is not set... Aborting)
+endif
+
+
 #Necessary to use shell built-in commands
 SHELL      = bash
 CXX        = g++
@@ -89,39 +94,41 @@ bin: $(BINS)
 	@echo "Binaries done!"
 	@echo ""
 
+# Rules to make objects and dependencies
 lib/%.o : src/%.cxx
 	@echo "----->Compiling object: " $@
 	@$(shell mkdir -p $(dir $@);)
 	@$(MAKEDEPEND) -MMD -o lib/$*.d $<
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
+# Rules to make libraries
 lib/%.so : $(OBJS)
 	@echo "----->Producing shared lib: " $@
-	$(LD) $(LDFLAGS) -o $@ $(filter $(subst %,%/,$(subst libHEPFW,,$*))%,$(OBJS)) `root-config --glibs`
+	@$(LD) $(LDFLAGS) -o $@ $(filter $(patsubst %,lib/%,$(subst libHEPFW,,$*))%,$(OBJS)) `root-config --glibs`
 
-# %.exe : %.cxx  $(LIBS)
-# 	@echo "----->Producing binary: " $@
-# 	@$(shell mkdir -p $(dir $@);)
-# 	@$(MAKEDEPEND) -MT $@ -o $*.d $<
-# 	@$(shell rm -f ../bin/$(notdir $(subst .exe,,$@));)
-# 	@$(CXX) -o $@ $(CXXFLAGS) $< $(LIBS) $(USERLIBS)
-# 	@$(shell ln -s $(BASEDIR)/$@ ../bin/$(notdir $(subst .exe,,$@));)
+# Rules to make executables
+lib/%.exe : src/%.cxx  $(LIBS)
+	@echo "----->Producing binary: " $@
+	@$(shell mkdir -p $(dir $@);)
+	@$(MAKEDEPEND) -MMD -o lib/$*.d $<
+	@$(shell rm -f bin/$(notdir $(subst .exe,,$@));)
+	@$(CXX) -o $@ $(CXXFLAGS) $< $(LIBS) $(USERLIBS)
+	@$(shell ln -s $(HEPFWSYS)/$@ bin/$(notdir $(subst .exe,,$@));)
 
 clean:
 	@echo "-----> Cleaning scan files"
 	@rm -r $(SCAN)
 	@echo "-----> Cleaning Objects"
-	@rm -r $(OBJS)
+	@rm -fR $(HEPFWSYS)/bin/*/
 	@echo "-----> Cleaning Libraries"
-	@rm -r $(LIBS)
+	@rm -fR $(HEPFWSYS)/bin/*.so
 	@echo "-----> Cleaning Binaries"
-	@rm -f $(BINS)
-	@$(foreach bin,$(BINS),rm -f ../bin/$(notdir $(subst .exe,,$(bin)));)
+	@find bin/ -maxdepth 1 -type l -exec rm -f {} \;
 	@echo "-----> Cleaning Documentation"
 	@rm -fr ../html
  
-# docs:
-# 	@$(shell doxygen lib/Doxyfile;)
+docs:
+	@$(shell doxygen lib/Doxyfile;)
 
 test:
 	@echo "PKGS : "$(PKGS)
