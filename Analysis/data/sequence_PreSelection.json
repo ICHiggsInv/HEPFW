@@ -163,7 +163,7 @@
       "verbose"       : true, 
       "jetCollection" : "cleanPFJets", 
       "dijetFwdBck"   : true, 
-      "dijetMinPt"    : [50.,40.], 
+      "dijetMinPt"    : [50.0,40.0], 
       "dijetEta"      : [-4.7,4.7], 
       "dijetMinDEta"  : 3.6, 
       "dijetMinMjj"   : 1000
