@@ -1,11 +1,16 @@
+ifndef HEPFWSYS
+  $(error Variable HEPFWSYS is not set... Aborting)
+endif
+
+
 #Necessary to use shell built-in commands
 SHELL      = bash
 CXX        = g++
 LD         = g++
 MAKEDEPEND = g++ $(CXXFLAGS) -M
 
-vpath %.h ../src
-vpath %.cxx ../src
+vpath %.h src/
+vpath %.cxx src/
 
 .PHONY: all objects lib clean
 
@@ -16,7 +21,7 @@ USERINCLUDES += -I$(ROOTSYS)/include/
 USERINCLUDES += -I$(ROOFITSYS)/include/
 # USERINCLUDES += -I$(CMSSW_BASE)/src/
 USERINCLUDES += -I$(CMS_PATH)/$(SCRAM_ARCH)/external/boost/1.47.0/include/
-USERINCLUDES += -I$(realpath $(BASEDIR)/../src/)
+USERINCLUDES += -I$(realpath $(HEPFWSYS)/src/)
 
 # Define libraries to link
 USERLIBS += $(shell root-config --cflags --libs)
@@ -44,35 +49,44 @@ SRC_EXT = cxx
 HEA_EXT = h
 
 # Lists of packages, files and targets
-PKGS = $(subst ../src/,,$(wildcard ../src/*))
-SPKG = $(subst ../src/,,$(wildcard ../src/*/*))
-SRCS = $(wildcard ../src/*/*/src/*.cxx)
-HEAS = $(wildcard ../src/*/*/interface/*.h)
-LIBS = $(patsubst %,libHEPFW%.so,$(PKGS))
-OBJS = $(subst ../src/,,$(subst $(SRC_EXT),$(OBJ_EXT),$(wildcard ../src/*/*/src/*.cxx)))
-BINS = $(subst ../src/,,$(subst $(SRC_EXT),$(EXE_EXT),$(wildcard ../src/*/*/exe/*.cxx)))
+PKGS = $(subst src/,,$(wildcard src/*))
+SPKG = $(subst src/,,$(wildcard src/*/*))
+SRCS = $(wildcard src/*/*/src/*.cxx)
+HEAS = $(wildcard src/*/*/interface/*.h)
+LIBS = $(patsubst %,lib/libHEPFW%.so,$(PKGS))
+OBJS = $(patsubst src/%,lib/%,$(subst $(SRC_EXT),$(OBJ_EXT),$(wildcard src/*/*/src/*.cxx)))
+BINS = $(subst src/,lib/,$(subst $(SRC_EXT),$(EXE_EXT),$(wildcard src/*/*/exe/*.cxx)))
+
+# Pre-processing 
+SCAN = src/FWCore/Framework/scan/ModulesScan.h src/FWCore/Framework/scan/PostProcessingModulesScan.h
 
 -include $(OBJS:.o=.d)
 -include $(BINS:.exe=.d)
 
-all: | pre obj lib bin
-	@echo "All done!"
-	@echo ""
+all: pre obj lib bin
 
-pre: $(HEAS)
-	@echo ""
-	@echo "Scanning for modules to register:"
-	@echo ""
-	@python ../bin/hepfwModulesScan.py;
-	@echo ""
-	@echo "Scan done!"
-	@echo ""
+pre: $(SCAN)
 
-obj: $(OBJS)
+
+# *** Scanning for new modules ***
+# This is made over two stages:
+# 1) Event modules scan
+# 2) Post processing modules scan
+#
+# NOTE: The use of the python command is intended to use
+# the CMSSW version of this command and not the system version 
+# which is currently for my studies SLC5
+src/FWCore/Framework/scan/ModulesScan.h: $(HEAS)
+	@python $(HEPFWSYS)/bin/hepfwModulesScan.py --EventProcessing
+
+src/FWCore/Framework/scan/PostProcessingModulesScan.h: $(HEAS)
+	@python $(HEPFWSYS)/bin/hepfwModulesScan.py --PostProcessing
+
+obj: $(OBJS) $(SCAN)
 	@echo "Objects done!"
 	@echo ""
 
-lib: $(LIBS)
+lib: $(LIBS) $(SCAN)
 	@echo "Libraries done!"
 	@echo ""
 
@@ -80,37 +94,41 @@ bin: $(BINS)
 	@echo "Binaries done!"
 	@echo ""
 
-%.o :  %.cxx pre
+# Rules to make objects and dependencies
+lib/%.o : src/%.cxx
 	@echo "----->Compiling object: " $@
 	@$(shell mkdir -p $(dir $@);)
-	@$(MAKEDEPEND) -MT $@ -o $*.d $<
+	@$(MAKEDEPEND) -MMD -o lib/$*.d $<
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
-%.so : $(OBJS)
+# Rules to make libraries
+lib/%.so : $(OBJS)
 	@echo "----->Producing shared lib: " $@
-	@$(LD) $(LDFLAGS) -o $@ $(filter $(subst %,%/,$(subst libHEPFW,,$*))%,$(OBJS)) `root-config --glibs`
+	@$(LD) $(LDFLAGS) -o $@ $(filter $(patsubst %,lib/%,$(subst libHEPFW,,$*))%,$(OBJS)) `root-config --glibs`
 
-%.exe : %.cxx  $(LIBS)
+# Rules to make executables
+lib/%.exe : src/%.cxx  $(LIBS)
 	@echo "----->Producing binary: " $@
 	@$(shell mkdir -p $(dir $@);)
-	@$(MAKEDEPEND) -MT $@ -o $*.d $<
-	@$(shell rm -f ../bin/$(notdir $(subst .exe,,$@));)
+	@$(MAKEDEPEND) -MMD -o lib/$*.d $<
+	@$(shell rm -f bin/$(notdir $(subst .exe,,$@));)
 	@$(CXX) -o $@ $(CXXFLAGS) $< $(LIBS) $(USERLIBS)
-	@$(shell ln -s $(BASEDIR)/$@ ../bin/$(notdir $(subst .exe,,$@));)
+	@$(shell ln -s $(HEPFWSYS)/$@ bin/$(notdir $(subst .exe,,$@));)
 
 clean:
+	@echo "-----> Cleaning scan files"
+	@rm -r $(SCAN)
 	@echo "-----> Cleaning Objects"
-	@rm -r $(OBJS)
+	@rm -fR $(HEPFWSYS)/lib/*/
 	@echo "-----> Cleaning Libraries"
-	@rm -r $(LIBS)
+	@rm -fR $(HEPFWSYS)/lib/*.so
 	@echo "-----> Cleaning Binaries"
-	@rm -f $(BINS)
-	@$(foreach bin,$(BINS),rm -f ../bin/$(notdir $(subst .exe,,$(bin)));)
+	@find bin/ -maxdepth 1 -type l -exec rm -f {} \;
 	@echo "-----> Cleaning Documentation"
 	@rm -fr ../html
-
+ 
 docs:
-	@$(shell doxygen Doxyfile;)
+	@$(shell doxygen lib/Doxyfile;)
 
 test:
 	@echo "PKGS : "$(PKGS)
