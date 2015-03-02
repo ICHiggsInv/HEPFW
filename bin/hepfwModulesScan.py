@@ -42,7 +42,7 @@ for root, dirnames, filenames in os.walk(pathSrc):
 if options.evProc:
   print "Scanning for Event Processing Modules:"
 
-  outFile = open(pathSrc+"FWCore/Framework/scan/ModulesScan.h", 'w')
+  outFile = open(pathSrc+"FWCore/Framework/scan/ModulesScan.h", 'w');
 
   outFile.write("// This file is generated automatically by the script hepfwModuleScan.py\n");
   outFile.write("// DO NOT change any of the contents below\n");
@@ -88,7 +88,7 @@ if options.evProc:
   outFile.write("\n");
   outFile.write("  }\n");
   outFile.write("}\n");
-  outFile.close()
+  outFile.close();
 
 # PostProcessingModule scanning
 
