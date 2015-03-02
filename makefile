@@ -28,6 +28,7 @@ USERLIBS += $(shell root-config --cflags --libs)
 USERLIBS += -lGenVector -lTreePlayer -lTMVA
 # USERLIBS += -L$(ROOFITSYS)/lib/ -lRooFit -lRooFitCore
 USERLIBS += -L$(CMS_PATH)/$(SCRAM_ARCH)/external/boost/1.47.0/lib/ -lboost_regex -lboost_program_options -lboost_filesystem
+USERLIBS += -L$(HEPFWSYS)/lib/
 # USERLIBS += -L$(CMSSW_BASE)/lib/$(SCRAM_ARCH) -lUserCodeICHiggsTauTau
 # USERLIBS += -L$(CMSSW_RELEASE_BASE)/lib/$(SCRAM_ARCH) -lFWCoreFWLite -lPhysicsToolsFWLite -lCommonToolsUtils
 
@@ -112,7 +113,7 @@ lib/%.exe : src/%.cxx  $(LIBS)
 	@$(shell mkdir -p $(dir $@);)
 	@$(MAKEDEPEND) -MMD -o lib/$*.d $<
 	@$(shell rm -f bin/$(notdir $(subst .exe,,$@));)
-	@$(CXX) -o $@ $(CXXFLAGS) $< $(LIBS) $(USERLIBS)
+	$(CXX) -o $@ $(CXXFLAGS) $(USERLIBS) $(patsubst lib%.so,-l%,$(notdir $(LIBS))) $<
 	@$(shell ln -s $(HEPFWSYS)/$@ bin/$(notdir $(subst .exe,,$@));)
 
 clean:

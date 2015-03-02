@@ -3,8 +3,8 @@
 import os
 import stat
 import sys
-import argparse
-import FWCore.ParameterSet.Config as cms
+import json
+from optparse import OptionParser
 
 def find_between( s, first, last ):
   try:
@@ -14,28 +14,135 @@ def find_between( s, first, last ):
   except ValueError:
     return ""
 
+def makeJobCfg(path,inFiles,outFile):
+  
+  with open(path,'w') as fOut:
+    with open(options.fileCfg) as contentCfg:
+      
+      fileContent = contentCfg.read();
+      content     = json.loads(fileContent);
+      
+      # Setting input file list
+      content["input"]["fileNames"] = inFiles;
+      content["input"]["maxEvents"] = -1;
+      
+      # Setting output file name
+      content["outputFile"] = outFile;
+      
+      # Setting dataset options
+      content["dataset"]["type"]  = options.sampleType
+      content["dataset"]["group"] = options.sampleGroup
+      content["dataset"]["name"]  = options.sampleName
+      
+      fOut.write(json.dumps(content,sort_keys=True,indent=2,separators=(',', ' : ')))
+      fOut.close()
+      
+      # Debug
+      #print json.dumps(content,sort_keys=True,indent=2,separators=(',', ': '))
 
-parser = argparse.ArgumentParser(description='Process some integers.')
-parser.add_argument('--inputFileList',  help='',required=True)
-parser.add_argument('--inputConfigFile',help='',required=True)
-parser.add_argument('--numberOfJobs',   help='',required=True)
+def makeJobCfg_2(path,index):
+  
+  with open(path,'w') as fOut:
+    fOut.write("{\n");
+    fOut.write("\n");
+    fOut.write("  \"load\" : [\"VBFHiggsToInvisible/Analysis/data/sampleData.json\"],\n");
+    fOut.write("  \"load\" : [\"VBFHiggsToInvisible/Analysis/data/sequence_SignalSelection.json\"],\n");
+    fOut.write("  \"load\" : [\"VBFHiggsToInvisible/Analysis/data/sequence_QCDSelection.json\"],\n");
+    fOut.write("\n");
+    fOut.write("  \"job\"  : {\n");
+    fOut.write("    \"verbose\" : \"false\"\n");
+    fOut.write("  }, \n");
+    fOut.write("\n");
+    fOut.write("  \"dataset\" : {\n"); 
+    fOut.write("    \"type\"  : \""+options.sampleType+"\",\n");
+    fOut.write("    \"group\" : \""+options.sampleGroup+"\",\n");
+    fOut.write("    \"name\"  : \""+options.sampleName+"\"\n");
+    fOut.write("  },\n");
+    fOut.write("\n");
+    fOut.write("  \"runSequences\" : [\"qcdRegion\"],\n");
+    fOut.write("\n");
+    fOut.write("  \"input\" : {\n");
+    fOut.write("    \"maxEvents\" : -1,\n");
+    fOut.write("    \"fileNames\" : [\n");
+    for idx,val in enumerate(jobInputFiles):
+      fOut.write("      \""+val+"\"");
+      if idx<len(jobInputFiles)-1:
+        fOut.write(",");
+      fOut.write("\n");
+    fOut.write("    ]\n");
+    fOut.write("  },\n");
+    fOut.write("\n");
+    fOut.write("  \"outputFile\" : \"results_Job"+str(x)+".root\"\n");
+    fOut.write("\n");
+    fOut.write("}\n");
+    fOut.write("\n");
 
-args = vars(parser.parse_args())
-print args['inputFileList']
-print args['inputConfigFile']
-print args['numberOfJobs']
+def makeJobExe(path,index):
+  
+  with open(path,'w') as fOut:
+    fOut.write("#!/bin/bash\n")
+    fOut.write("\n")
+    fOut.write("cd /vols/cms02/jca10/work/slc6/dev01/CMSSW_5_3_11/src\n");
+    fOut.write("eval `scramv1 runtime -sh`\n");
+    fOut.write("cd /vols/cms02/jca10/work/slc6/dev01/HEPFW/bin\n");
+    fOut.write("source thisHEPFW.sh\n");
+    fOut.write("cd "+os.getcwd()+"/"+outputFolder+"\n")
+    fOut.write("vbfinvRun job"+str(index)+"_cfg.json\n")
 
-nJobs = int(args['numberOfJobs'])
+  os.chmod(outputFolder+'runJob'+str(index)+'.sh', stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IROTH | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
+
+
+
+
+
+
+
+parser = OptionParser()
+parser.add_option('--fileList',    dest="fileList",    help='')
+parser.add_option('--filePrefix',  dest="filePrefix",  help='')
+parser.add_option('--fileCfg',     dest="fileCfg",     help='')
+parser.add_option('--sampleType',  dest="sampleType",  help='')
+parser.add_option('--sampleGroup', dest="sampleGroup", help='')
+parser.add_option('--sampleName',  dest="sampleName",  help='')
+parser.add_option('--numberOfJobs',dest="numberOfJobs",help='')
+parser.add_option('--outputFolder',dest="outputFolder",help='')
+(options, args) = parser.parse_args()
+
+outputFolder = '';
+
+if options.fileList is None:
+  parser.error('fileList not given')
+if options.filePrefix is None:
+  parser.error('filePrefix not given')
+if options.fileCfg is None:
+  parser.error('fileCfg not given')
+if options.sampleType is None:
+  parser.error('sampleType not given')
+if options.sampleGroup is None:
+  parser.error('sampleGroup not given')
+if options.sampleName is None:
+  parser.error('sampleName not given')
+if options.numberOfJobs is None:
+  parser.error('numberOfJobs not given')
+
+
+# If the output folder does not exist create it
+if options.outputFolder is not None:
+  outputFolder=options.outputFolder+"/"
+  if not os.path.exists(outputFolder):
+    os.makedirs(outputFolder)
+
+
+# Now beginning processing
+nJobs = int(options.numberOfJobs)
 inputFiles = list()
 
-with open(args['inputFileList'], 'r') as f:
+with open(options.fileList, 'r') as f:
   for line in f:
-    pos = find_between(line,str("\'"),str("\'"))
-    if len(pos)>0:
-      inputFiles.append(pos)
-      
+    if line.find('.root') != -1:
+      inputFiles.append(options.filePrefix+line.rstrip())
     
-print "Found "+str(len(inputFiles))+" input files."
+#print "Found "+str(len(inputFiles))+" input files."
 
 nInputFiles = len(inputFiles)
 
@@ -44,9 +151,9 @@ if nInputFiles<nJobs:
   sys.exit()
 
 filesPerJob = float(nInputFiles) / float(nJobs)
-print "Files per job "+str(filesPerJob)
+print "Making Jobs "+options.numberOfJobs+" ("+str(filesPerJob)+" files per job) for type="+options.sampleType+" group="+options.sampleGroup+" name="+options.sampleName+" with filelist="+options.fileList
 
-fSubmit = open('submitJobs.sh','w')
+fSubmit = open(outputFolder+'submitJobs.sh','w')
 fSubmit.write("#!/bin/sh\n")
 fSubmit.write("\n")
   
@@ -63,40 +170,13 @@ for x in range(0,nJobs):
     #print "File #"+str(fileIndex)+" - "+inputFiles[fileIndex]
     fileIndex=fileIndex+1
 
-  #print "=> Number of input files: "+str(len(jobInputFiles))
+  makeJobCfg(outputFolder+'job'+str(x)+'_cfg.json',jobInputFiles,"results_Job"+str(x)+".root");
+  makeJobExe(outputFolder+'runJob'+str(x)+'.sh',x);
 
-  with open('job'+str(x)+'_cfg.py','w') as fOut:
-    with open(args['inputConfigFile'], 'r') as fIn:
-      for line in fIn:
-        
-        pos = line.find('process = cms.Process')
-        if pos != -1:
-          fOut.write(line)
-          fOut.write("\n")
-          fOut.write("process.source = cms.Source(\"PoolSource\",\n")
-          fOut.write("  fileNames = cms.untracked.vstring(\n")
-          for f in jobInputFiles:
-            fOut.write("    '"+f+"',\n")
-          fOut.write("  ),\n")
-          fOut.write(")\n")
-          fOut.write("process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )\n")
-          continue
-        
-        pos = line.find('outputFilename')
-        if pos != -1:
-          newLine = line.replace(str(".root"),str('_job'+str(x)+'.root'))
-          fOut.write(newLine)
-        else:
-          fOut.write(line)
-  
-  with open('runJob'+str(x)+'.sh','w') as fOut:
-    fOut.write("#!/bin/sh\n")
-    fOut.write("\n")
-    fOut.write("source /vols/cms/grid/setup.sh\n")
-    fOut.write("cd "+os.getcwd()+"\n")
-    fOut.write("eval `scramv1 runtime -sh`\n")
-    fOut.write("cmsRun job"+str(x)+"_cfg.py\n")
 
-  os.chmod('runJob'+str(x)+'.sh', stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IROTH | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
+  os.chmod(outputFolder+'submitJobs.sh', stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IROTH | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
 
-  os.chmod('submitJobs.sh', stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IROTH | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
+
+
+
+
