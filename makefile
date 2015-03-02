@@ -119,9 +119,9 @@ clean:
 	@echo "-----> Cleaning scan files"
 	@rm -r $(SCAN)
 	@echo "-----> Cleaning Objects"
-	@rm -fR $(HEPFWSYS)/bin/*/
+	@rm -fR $(HEPFWSYS)/lib/*/
 	@echo "-----> Cleaning Libraries"
-	@rm -fR $(HEPFWSYS)/bin/*.so
+	@rm -fR $(HEPFWSYS)/lib/*.so
 	@echo "-----> Cleaning Binaries"
 	@find bin/ -maxdepth 1 -type l -exec rm -f {} \;
 	@echo "-----> Cleaning Documentation"
