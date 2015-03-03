@@ -64,11 +64,11 @@
       "parkedDataHLTFilter", 
       "producerElectronsVeto", 
       "selElectronsVeto", 
+      "producerMuonLoose", 
+      "vetoMuon", 
       "producerElectronsTight", 
       "electronTight_OverlapCleaning_MuonsLoose", 
       "selElectronsTight", 
-      "producerMuonLoose", 
-      "vetoMuon", 
       "producerSelJets", 
       "jetsLooseElectronCleaning", 
       "jetsLooseMuonCleaning", 
@@ -78,7 +78,6 @@
       "cut_met", 
       "sigRegion_cutMetSig", 
       "sigRegion_cutMinJetMetDPhi"
-      
     ] 
   }
 }
