@@ -12,7 +12,7 @@ MAKEDEPEND = g++ $(CXXFLAGS) -M
 vpath %.h src/
 vpath %.cxx src/
 
-.PHONY: all objects lib clean
+.PHONY: all obj lib bin docs clean test
 
 BASEDIR  = $(shell pwd)
 
@@ -64,7 +64,7 @@ SCAN = src/FWCore/Framework/scan/ModulesScan.h src/FWCore/Framework/scan/PostPro
 -include $(OBJS:.o=.d)
 -include $(BINS:.exe=.d)
 
-all: pre obj lib bin
+all: | pre obj lib bin
 
 pre: $(SCAN)
 
@@ -113,7 +113,7 @@ lib/%.exe : src/%.cxx  $(LIBS)
 	@$(shell mkdir -p $(dir $@);)
 	@$(MAKEDEPEND) -MMD -o lib/$*.d $<
 	@$(shell rm -f bin/$(notdir $(subst .exe,,$@));)
-	$(CXX) -o $@ $(CXXFLAGS) $(USERLIBS) $(patsubst lib%.so,-l%,$(notdir $(LIBS))) $<
+	@$(CXX) -o $@ $(CXXFLAGS) $(USERLIBS) $(patsubst lib%.so,-l%,$(notdir $(LIBS))) $<
 	@$(shell ln -s $(HEPFWSYS)/$@ bin/$(notdir $(subst .exe,,$@));)
 
 clean:
