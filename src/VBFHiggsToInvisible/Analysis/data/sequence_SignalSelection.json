@@ -63,14 +63,7 @@
       "cut_met", 
       "sigRegion_cutMetSig", 
       "sigRegion_cutMinJetMetDPhi"
-    ], 
-    "blind" : {
-      "type" : "Data", 
-      "modules" : [
-        "sigRegion_cutMetSig", 
-        "sigRegion_cutDijet", 
-        "sigRegion_cutMinJetMetDPhi"
-      ]
+    ]
     }
   }
 }
