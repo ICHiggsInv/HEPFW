@@ -51,6 +51,8 @@ namespace hepfw{
     std::map<std::string,hepfw::ModuleSequence*> m_sequences;
     
     Long64_t m_maxEvents;
+    Long64_t m_reportEvery;
+    
     Long64_t m_sampleNEvents;
     Long64_t m_processedEvents;
     
