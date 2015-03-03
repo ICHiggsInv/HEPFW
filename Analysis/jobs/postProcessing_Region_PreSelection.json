@@ -55,7 +55,7 @@
         {"command" : "FindAndReplace","find" : "\\rotatebox{90}{ParkedRunC}","replace" : "\\rotatebox{90}{Parked Run C}"},
         {"command" : "FindAndReplace","find" : "cut_met",                    "replace" : "MET Cut"}
       ], 
-      "outputFileName" : "Region_PreSelecion_AbsoluteEventYields.tex"
+      "outputFileName" : "Region_PreSelection_AbsoluteEventYields.tex"
     }
   },
     
