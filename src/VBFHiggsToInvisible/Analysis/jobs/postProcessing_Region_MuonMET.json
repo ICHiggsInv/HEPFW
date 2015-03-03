@@ -1,0 +1,69 @@
+{
+
+  "job" : {
+    "object"       : "Job", 
+    "type"         : "PostProcessing", 
+    "verbose"      : true,
+    "runSequences" : ["Sequence_Region_MuonMET"]
+  }, 
+
+  "Data" : 
+  [
+    {
+      "object"   : "ProcessedData",
+      "name"     : "MuonMET Region", 
+      "datasets" : 
+      [
+        {
+          "type"  : "Data",
+          "name"  : "PromptRunA",
+          "tags"  : ["Data","PromptData","PromptRunA","ParkedDataAnalysis"],
+          "files" : ["Region_MuonMET/DATA_MET-2012A-22Jan2013-v1.root"]
+        }, 
+        {
+          "type"  : "Data",
+          "name"  : "ParkedRunB",
+          "tags"  : ["Data","PromptData","ParkedRunB","ParkedDataAnalysis"],
+          "files" : ["Region_MuonMET/DATA_VBF-Parked-2012B-22Jan2013-v1.root"]
+        }, 
+        {
+          "type"  : "Data",
+          "name"  : "ParkedRunC",
+          "tags"  : ["Data","PromptData","ParkedRunC","ParkedDataAnalysis"],
+          "files" : ["Region_MuonMET/DATA_VBF-Parked-2012C-22Jan2013-v1.root"]
+        }, 
+        {
+          "type"  : "Data",
+          "name"  : "ParkedRunD",
+          "tags"  : ["Data","PromptData","ParkedRunD","ParkedDataAnalysis"],
+          "files" : ["Region_MuonMET/DATA_VBF-Parked-2012D-22Jan2013-v1.root"]
+        }
+      ]
+    }
+  ], 
+
+  "Region_MuonMET_AbsoluteEventYields" : {
+    "object"         : "PostProcessingModule",
+    "module"         : "hepfw::SequenceEventYields", 
+    "parameters" : {
+      "processedData" : "MuonMET Region",
+      "path"           : "Sequences/muonMetSelection/EventYield_Absolute", 
+      "columns"        : ["PromptRunA","ParkedRunB","ParkedRunC","ParkedRunD","ParkedDataAnalysis"], 
+      "commands" : [
+        {"command" : "FindAndReplace","find" : "\\rotatebox{90}{PromptRunA}","replace" : "\\rotatebox{90}{Prompt Run A}"},
+        {"command" : "FindAndReplace","find" : "\\rotatebox{90}{ParkedRunB}","replace" : "\\rotatebox{90}{Parked Run B}"},
+        {"command" : "FindAndReplace","find" : "\\rotatebox{90}{ParkedRunC}","replace" : "\\rotatebox{90}{Parked Run C}"},
+        {"command" : "FindAndReplace","find" : "cut_met",                    "replace" : "MET Cut"}
+      ], 
+      "outputFileName" : "Region_MuonMET_AbsoluteEventYields.tex"
+    }
+  },
+    
+  "Sequence_Region_MuonMET" : {
+    "object" : "Sequence",
+    "modules"  : [
+      "Region_MuonMET_AbsoluteEventYields"
+      ]
+    }
+
+}
