@@ -69,9 +69,7 @@
       "jetsLooseMuonCleaning", 
       "sigRegion_cutDijet", 
       "metModifier_TightMuonSubtraction", 
-      "metPlots_pre", 
       "cut_met", 
-      "metPlots_pos", 
       "sigRegion_cutMetSig", 
       "sigRegion_cutMinJetMetDPhi"
     ] 
