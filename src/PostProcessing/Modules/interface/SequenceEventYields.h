@@ -31,7 +31,8 @@ namespace hepfw{
     
   private:
     
-    void cmdFindAndReplace(hepfw::LatexTabular &tabular,std::string find,std::string replace);
+    void cmdFindAndReplace      (hepfw::LatexTabular &tabular,std::string find,std::string replace);
+    void cmdDeleteRowByFirstCell(hepfw::LatexTabular &tabular,std::string strFind);
     
   private:
     
