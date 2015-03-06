@@ -273,3 +273,22 @@ int hepfw::LatexTabular::getNRow(){
   return m_rows.size();
 }
 
+/**
+ * Delete a tabular column
+ * @param columnNumber column coordinate (starts at 0)
+ ***********************************************/
+void hepfw::LatexTabular::deleteColumn(int columnNumber){
+  
+  for(unsigned i=0; i<m_rows.size(); i++){
+    m_rows[i].erase(m_rows[i].begin()+columnNumber);
+  }
+
+}
+
+/**
+ * Delete a tabular row
+ * @param rowNumber row coordinate (starts at 0)
+ ***********************************************/
+void hepfw::LatexTabular::deleteRow(int rowNumber){
+  m_rows.erase(m_rows.begin()+rowNumber);
+}
