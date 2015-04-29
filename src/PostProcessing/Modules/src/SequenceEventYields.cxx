@@ -64,12 +64,13 @@ void hepfw::SequenceEventYields::process(hepfw::ProcessedDataManager& data){
   tabEvYields.setRowDecorationBefore(1,    "\\hline \\hline");
   tabEvYields.setRowDecorationAfter (nCuts,"\\hline");
   
+  tabEvYields.setColumnDecorationBefore(0,"|");
+  tabEvYields.setColumnDecorationAfter (0,"|");
   for(unsigned i=0; i<hYields.size(); i++){
     tabEvYields.setCellContent(0,i+1,Form("\\rotatebox{90}{%s}",names[i].c_str()));
-    tabEvYields.setColumnDecorationAfter(i,"|");
+    tabEvYields.setColumnDecorationAfter(i+1,"|");
   }
   
-  tabEvYields.setColumnDecorationBefore(0,"|");
   
   for(int i=1; i<=nCuts; i++){
     for(unsigned b=0; b<hYields.size(); b++){
@@ -78,7 +79,7 @@ void hepfw::SequenceEventYields::process(hepfw::ProcessedDataManager& data){
     }
   }
   
-  hepfw::LatexCaption capEvYields("Stuff");
+  hepfw::LatexCaption capEvYields("This is a caption.");
   tblEvYields.innerObjects.push_back(&capEvYields);
 
   // Applying commands
@@ -95,7 +96,14 @@ void hepfw::SequenceEventYields::process(hepfw::ProcessedDataManager& data){
       string strRepalace = iCommand.getParameter<std::string>("replace"); cout << "Replace: " << strRepalace << endl;
       this->cmdFindAndReplace(tabEvYields,strFind,strRepalace);
     }
-    
+    else if(cmdName=="DeleteRowByFirstCell"){
+      string strFind     = iCommand.getParameter<std::string>("find");    cout << "Find: " << strFind << endl;
+      this->cmdDeleteRowByFirstCell(tabEvYields,strFind);
+    }
+    else if(cmdName=="SetCaption"){
+      string strText = iCommand.getParameter<std::string>("text");    cout << "Text: " << strText << endl;
+      capEvYields.set(strText);
+    }
   }
   
   tblEvYields.saveAs(m_outputFileName.c_str());
@@ -106,11 +114,12 @@ void hepfw::SequenceEventYields::process(hepfw::ProcessedDataManager& data){
  * Implementation of command FindAndReplace over the tabular. This will search the cells of
  * an input tabular for a string given by input string find and replace it by input string 
  * replace.
+ * 
  * @param tabular tabular to search for 
  * @param find string to find in all cells
  * @param replace string to replace all instances found
  ***********************************************/
-void hepfw::SequenceEventYields::cmdFindAndReplace(hepfw::LatexTabular &tabular,std::string find,std::string replace){
+void hepfw::SequenceEventYields::cmdFindAndReplace(hepfw::LatexTabular &tabular,string find,string replace){
   
   int nRow = tabular.getNRow();
   int nCol = tabular.getNColumn();
@@ -124,4 +133,21 @@ void hepfw::SequenceEventYields::cmdFindAndReplace(hepfw::LatexTabular &tabular,
     }
   }
   
+}
+
+/**
+ * Implementation of command DeleteRowByFirstCell which will delete an entire row according
+ * to the content of its first cell. This is useful in situations where we main want to remove
+ * a line from a reference index.
+ * 
+ * @param tabular tabular to search for 
+ * @param strFind string to be compared with all rows first cell
+ ***********************************************/
+void hepfw::SequenceEventYields::cmdDeleteRowByFirstCell(hepfw::LatexTabular &tabular,string strFind){
+  
+  for(int iRow=0; iRow<tabular.getNRow(); iRow++){
+    if(tabular.getCellContent(iRow,0)==strFind){
+      tabular.deleteRow(iRow);
+    }
+  }
 }

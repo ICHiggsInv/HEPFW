@@ -43,6 +43,9 @@ namespace hepfw{
     void setTabularRowDecoration   (std::string value);
     void setTabularPrecision       (std::string value);
     
+    void deleteColumn(int columnNumber);
+    void deleteRow   (int rowNumber);
+    
     std::string getCellContent(int iRow,int iCol);
     
     int getNColumn();

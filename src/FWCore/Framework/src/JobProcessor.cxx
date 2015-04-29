@@ -13,9 +13,10 @@ using namespace std;
 hepfw::JobProcessor::JobProcessor(){
 
   // Pointer initialisation
-  m_cfgProcessor   = 0;
-  m_eventProcessor = 0;
-  m_jobSetup       = 0;
+  m_cfgProcessor       = 0;
+  m_eventProcessor     = 0;
+  m_reportEvery        = 10000;
+  m_jobSetup           = 0;
   
   // Variable initialisation
   m_maxEvents = 0;
@@ -30,8 +31,14 @@ hepfw::JobProcessor::JobProcessor(string configFilename){
   m_eventProcessor = new hepfw::EventProcessor(m_cfgProcessor);
   m_jobSetup       = new hepfw::JobSetup();
   
-  m_processedEvents     = 0;
-  m_maxEvents           = m_cfgProcessor->getMaxEvents();
+  m_processedEvents    = 0;
+  m_maxEvents          = m_cfgProcessor->getMaxEvents();
+  
+  // TODO: This is the my new preferred way to deal with parameter retrieval 
+  // convert other lines to this
+  hepfw::ParameterSet jobOptions = m_cfgProcessor->get("job");
+  m_reportEvery = jobOptions.isParameterDefined("reportEvery") ? jobOptions.getParameter<int>("reportEvery") : 10000;
+  
   string outputFilename = m_cfgProcessor->getOutputFile();
   
   m_sampleNEvents = m_eventProcessor->getNEvent();
@@ -114,7 +121,7 @@ void hepfw::JobProcessor::run(){
     hepfw::Event* ev = m_eventProcessor->getEvent(i);
     
     //process progress
-    if(i!=0 && (i%10000)==0){std::cout << "- processing event " << i << "\r" << std::flush;}
+    if(i!=0 && (i%m_reportEvery)==0){std::cout << "processing event " << i << "\r" << std::endl;}
     
     // TODO: Make this aware of all sequences
     for(auto iSeq=m_sequences.begin(); iSeq!=m_sequences.end(); iSeq++){

@@ -9,6 +9,7 @@
 // C++ STD includes
 #include <string>
 #include <vector>
+#include <iostream>
 
 namespace hepfw{
   
@@ -110,6 +111,8 @@ hepfw::CollectionSizeFilter<Product>::~CollectionSizeFilter(){
 
 template <class Product>
 bool hepfw::CollectionSizeFilter<Product>::filter(hepfw::Event &event){
+  
+  //if(m_verbose){std::cout << "[hepfw::CollectionSizeFilter<Product>::filter] Method Called" << std::endl;}
   
   inProduct = event.getByName< std::vector<Product> >(m_inputLabel);
   

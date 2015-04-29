@@ -1,10 +1,13 @@
 {
 
-  "load" : ["VBFHiggsToInvisible/Analysis/data/sampleData.json"],
-  "load" : ["VBFHiggsToInvisible/Analysis/data/sequence_PreSelection.json"],
+  "load" : [
+    "VBFHiggsToInvisible/Analysis/data/sampleData.json",
+    "VBFHiggsToInvisible/Analysis/data/sequence_PreSelection.json"
+  ],
 
   "job"  : {
-    "verbose" : "false"
+    "verbose"     : "false",
+    "reportEvery" : 100000
   }, 
 
   "dataset" : {
@@ -22,6 +25,6 @@
     ]
   },
 
-  "outputFile" : "results.root"
+  "outputFile" : "results_Preselection.root"
 }
 
