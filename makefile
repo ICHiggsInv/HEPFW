@@ -113,7 +113,7 @@ lib/%.exe : src/%.cxx  $(LIBS)
 	@$(shell mkdir -p $(dir $@);)
 	@$(MAKEDEPEND) -MMD -o lib/$*.d $<
 	@$(shell rm -f bin/$(notdir $(subst .exe,,$@));)
-	$(CXX) -o $@ $(CXXFLAGS) $(USERLIBS) $(patsubst lib%.so,-l%,$(notdir $(LIBS))) $<
+	@$(CXX) -o $@ $(CXXFLAGS) $(USERLIBS) $(patsubst lib%.so,-l%,$(notdir $(LIBS))) $<
 	@$(shell ln -s $(HEPFWSYS)/$@ bin/$(notdir $(subst .exe,,$@));)
 
 clean:
