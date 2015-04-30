@@ -12,7 +12,7 @@ MAKEDEPEND = g++ $(CXXFLAGS) -M
 vpath %.h src/
 vpath %.cxx src/
 
-.PHONY: all obj lib bin docs clean test
+.PHONY: all dict obj lib bin docs clean test
 
 BASEDIR  = $(shell pwd)
 
@@ -57,6 +57,7 @@ HEAS = $(wildcard src/*/*/interface/*.h)
 LIBS = $(patsubst %,lib/libHEPFW%.so,$(PKGS))
 OBJS = $(patsubst src/%,lib/%,$(subst $(SRC_EXT),$(OBJ_EXT),$(wildcard src/*/*/src/*.cxx)))
 BINS = $(subst src/,lib/,$(subst $(SRC_EXT),$(EXE_EXT),$(wildcard src/*/*/exe/*.cxx)))
+DICT = src/DataFormats/ICHiggsTauTau/src/dict.cxx
 
 # Pre-processing 
 SCAN = src/FWCore/Framework/scan/ModulesScan.h src/FWCore/Framework/scan/PostProcessingModulesScan.h
@@ -64,10 +65,7 @@ SCAN = src/FWCore/Framework/scan/ModulesScan.h src/FWCore/Framework/scan/PostPro
 -include $(OBJS:.o=.d)
 -include $(BINS:.exe=.d)
 
-all: | pre obj lib bin
-
-pre: $(SCAN)
-
+all: | dict pre obj lib bin
 
 # *** Scanning for new modules ***
 # This is made over two stages:
@@ -77,21 +75,32 @@ pre: $(SCAN)
 # NOTE: The use of the python command is intended to use
 # the CMSSW version of this command and not the system version 
 # which is currently for my studies SLC5
+pre: $(SCAN)
+
 src/FWCore/Framework/scan/ModulesScan.h: $(HEAS)
 	@python $(HEPFWSYS)/bin/hepfwModulesScan.py --EventProcessing
 
 src/FWCore/Framework/scan/PostProcessingModulesScan.h: $(HEAS)
 	@python $(HEPFWSYS)/bin/hepfwModulesScan.py --PostProcessing
 
-obj: $(OBJS) $(SCAN)
+# Making dictionaries
+dict: $(DICT)
+
+# TODO: Make this depend on the actual objects where for which dictionaries will be made
+# This should be possible by running dependencies checker on the produced dict file after production
+src/DataFormats/ICHiggsTauTau/src/dict.cxx: DataFormats/ICHiggsTauTau/Linkdef.h
+	@cd src/; rootcint -f DataFormats/ICHiggsTauTau/src/dict.cxx -c -Wall -W -O2 -fPIC `root-config --cflags` -I$ROOTSYS/include -I./ -p DataFormats/ICHiggsTauTau/interface/* DataFormats/ICHiggsTauTau/Linkdef.h
+
+# Building objects
+obj: $(OBJS) $(SCAN) $(DICT)
 	@echo "Objects done!"
 	@echo ""
 
-lib: $(LIBS) $(SCAN)
+lib: $(LIBS) $(SCAN) $(DICT)
 	@echo "Libraries done!"
 	@echo ""
 
-bin: $(BINS)
+bin: $(BINS) $(SCAN) $(DICT)
 	@echo "Binaries done!"
 	@echo ""
 
