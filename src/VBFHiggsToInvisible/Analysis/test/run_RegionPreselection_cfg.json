@@ -1,0 +1,30 @@
+{
+
+  "load" : [
+    "VBFHiggsToInvisible/Analysis/data/sampleData.json",
+    "VBFHiggsToInvisible/Analysis/data/sequence_PreSelection.json"
+  ],
+
+  "job"  : {
+    "verbose"     : "false",
+    "reportEvery" : 100000
+  }, 
+
+  "dataset" : {
+    "type"  : "Data",
+    "group" : "Parked",
+    "name"  : "ParkedRunD"
+  },
+
+  "runSequences" : ["preselection"],
+
+  "input" : {
+    "maxEvents" : -1,
+    "fileNames" : [
+      "root://xrootd.grid.hep.ph.ic.ac.uk//store/user/pdunne/Dec18/PARKED/VBF-Parked-2012D-22Jan2013-v1/EventTree_1_1_M4G.root"
+    ]
+  },
+
+  "outputFile" : "results_Preselection.root"
+}
+

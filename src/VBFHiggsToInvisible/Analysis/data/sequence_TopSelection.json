@@ -1,0 +1,37 @@
+{
+  
+  "load" : [
+    "VBFHiggsToInvisible/Analysis/data/sequence_PreSelection.json", 
+    "VBFHiggsToInvisible/Analysis/data/sequence_SignalSelection.json", 
+    "VBFHiggsToInvisible/Analysis/data/sequence_ElectronMetSelection.json", 
+    "VBFHiggsToInvisible/Analysis/data/sequence_MuonMetSelection.json"
+  ], 
+    
+  "topSelection" : {
+    "sequence" : true,
+    "modules"  : [
+      "vertexFilter", 
+      "eventQualityFilters", 
+      "ecalLaserFilter", 
+      "hcalLaserFilter", 
+      "l1tETMFilter", 
+      "parkedDataHLTFilter", 
+      "producerMuonLoose", 
+      "producerMuonTight",
+      "selMuonsLoose", 
+      "selMuonsTight", 
+      "producerElectronsVeto", 
+      "producerElectronsTight", 
+      "electronTight_OverlapCleaning_MuonsLoose", 
+      "selElectronsVeto", 
+      "selElectronsTight", 
+      "producerSelJets", 
+      "jetsLooseElectronCleaning", 
+      "jetsLooseMuonCleaning", 
+      "sigRegion_cutDijet", 
+      "metModifier_TightMuonSubtraction", 
+      "cut_met", 
+      "sigRegion_cutMetSig"
+    ] 
+  }
+}

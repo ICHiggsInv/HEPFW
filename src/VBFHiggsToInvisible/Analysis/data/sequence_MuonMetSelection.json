@@ -1,0 +1,77 @@
+{
+  
+  "load" : [
+    "VBFHiggsToInvisible/Analysis/data/sequence_PreSelection.json", 
+    "VBFHiggsToInvisible/Analysis/data/sequence_SignalSelection.json"
+  ], 
+
+  "selMuonsLoose" : {
+    "module"  : "hepfw::ColSizeFilterMuon", 
+    "title"   : "n_{Muon}>0 - ID Loose",
+    "parameters" : {
+      "verbose"    : true, 
+      "inputLabel" : "muons_Loose", 
+      "minN"       : 1, 
+      "maxN"       : 1
+      }
+    }, 
+  
+  "selMuonsTight" : {
+    "module"  : "hepfw::ColSizeFilterMuon", 
+    "title"   : "n_{Muon}>0 - ID Tight",
+    "parameters" : {
+      "verbose"    : true, 
+      "inputLabel" : "muons_Tight", 
+      "minN"       : 1, 
+      "maxN"       : 1
+    }
+  }, 
+    
+  "metPlots_pre" : {
+    "module"  : "hepfw::MetAnalysis", 
+    "title"   : "Met Plots",
+    "parameters" : {
+      "verbose"    : true, 
+      "labelMet"       : "pfMetType1", 
+      "labelMetNoMuon" : "pfMet_subtractedMuonTight"
+      }
+    }, 
+    
+  "metPlots_pos" : {
+    "module"  : "hepfw::MetAnalysis", 
+    "title"   : "Met Plots",
+    "parameters" : {
+      "verbose"    : true, 
+      "labelMet"        : "pfMetType1", 
+      "labelMetNoMuon"  : "pfMet_subtractedMuonTight", 
+      "labelMuonsLoose" : "muons_Loose",
+      "labelMuonsTight" : "muons_Tight"
+      }
+    }, 
+    
+  "muonMetSelection" : {
+    "sequence" : true,
+    "modules"  : [
+      "vertexFilter", 
+      "eventQualityFilters", 
+      "ecalLaserFilter", 
+      "hcalLaserFilter", 
+      "l1tETMFilter", 
+      "parkedDataHLTFilter", 
+      "producerElectronsVeto", 
+      "vetoElectrons", 
+      "producerMuonLoose", 
+      "producerMuonTight",
+      "selMuonsLoose", 
+      "selMuonsTight", 
+      "producerSelJets", 
+      "jetsLooseElectronCleaning", 
+      "jetsLooseMuonCleaning", 
+      "sigRegion_cutDijet", 
+      "metModifier_TightMuonSubtraction", 
+      "cut_met", 
+      "sigRegion_cutMetSig", 
+      "sigRegion_cutMinJetMetDPhi"
+    ] 
+  }
+}

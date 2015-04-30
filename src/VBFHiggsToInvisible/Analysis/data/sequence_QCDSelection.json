@@ -1,0 +1,68 @@
+{
+
+  "load" : [
+    "VBFHiggsToInvisible/Analysis/data/sequence_PreSelection.json", 
+    "VBFHiggsToInvisible/Analysis/data/sequence_SignalSelection.json"
+    ], 
+
+  "QCDRegion_minJetMetDPhi" : {
+    "module"  : "hepfw::METJetsMinDPhiFilter", 
+    "title"   : "MET Jets DPhi",
+    "parameters" : {
+      "verbose"       : true, 
+      "metCollection" : "pfMet_subtractedMuonTight", 
+      "jetCollection" : "cleanPFJets", 
+      "minJetPt"      : 30, 
+      "op(minDPhi)"   : "<", 
+      "minDPhi"       : 1.0
+      }
+    },
+
+  "QCDRegion_metDijetsMinDPhiFilter" : {
+    "module"  : "hepfw::METDijetMinDPhiFilter", 
+    "title"   : "MET-Dijet DPhi",
+    "parameters" : {
+      "verbose"       : true, 
+      "metCollection" : "pfMet_subtractedMuonTight", 
+      "jetCollection" : "cleanPFJets", 
+      "minDPhi"       : 2.3
+      }
+    },
+
+    
+  "RegionAnalysis_QCD" : {
+    "module"  : "hepfw::RegionAnalysis_QCD", 
+    "title"   : "RegionAnalysis: QCD",
+    "parameters" : {
+      "verbose"       : true, 
+      "metCollection" : "pfMet_subtractedMuonTight", 
+      "jetCollection" : "cleanPFJets"
+      }
+    },
+    
+  "qcdRegion" : {
+    "sequence" : true,
+    "modules"  : [
+      "vertexFilter", 
+      "eventQualityFilters", 
+      "ecalLaserFilter", 
+      "hcalLaserFilter", 
+      "l1tETMFilter", 
+      "parkedDataHLTFilter", 
+      "producerElectronsVeto", 
+      "vetoElectrons", 
+      "producerMuonLoose", 
+      "vetoMuon", 
+      "producerSelJets", 
+      "jetsLooseElectronCleaning", 
+      "jetsLooseMuonCleaning", 
+      "sigRegion_cutDijet", 
+      "producerMuonTight", 
+      "metModifier_TightMuonSubtraction", 
+      "cut_met", 
+      "cut_metSig", 
+      "QCDRegion_minJetMetDPhi", 
+      "RegionAnalysis_QCD"
+      ]
+    }
+}

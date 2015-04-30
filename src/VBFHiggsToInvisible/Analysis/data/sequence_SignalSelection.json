@@ -1,0 +1,69 @@
+{
+  
+  "load" : [
+    "VBFHiggsToInvisible/Analysis/data/sequence_PreSelection.json", 
+    "VBFHiggsToInvisible/Analysis/data/sequence_SignalSelection.json"
+  ], 
+
+  "sigRegion_cutMetSig" : {
+    "module"  : "hepfw::AnalysisCutMet", 
+    "title"   : "MET Significance",
+    "parameters" : {
+      "verbose"            : true, 
+      "metCollection"      : "pfMet_subtractedMuonTight", 
+      "minMetSignificance" : 4.0
+    }
+  },
+  
+  "sigRegion_cutDijet" : {
+    "module"  : "hepfw::AnalysisCutDijet", 
+    "title"   : "Dijet",
+    "parameters" : {
+      "verbose"       : true, 
+      "jetCollection" : "cleanPFJets", 
+      "dijetFwdBck"   : true, 
+      "dijetMinPt"    : [50.,45.], 
+      "dijetEta"      : [-4.7,4.7], 
+      "dijetMinDEta"  : 3.6, 
+      "dijetMinMjj"   : 1200
+    }
+  },
+  
+  "sigRegion_cutMinJetMetDPhi" : {
+    "module"  : "hepfw::METJetsMinDPhiFilter", 
+    "title"   : "MET Jets DPhi",
+    "parameters" : {
+      "verbose"       : true, 
+      "metCollection" : "pfMet_subtractedMuonTight", 
+      "jetCollection" : "cleanPFJets", 
+      "minJetPt"      : 30, 
+      "minDPhi"       : 2.3
+    }
+  },
+    
+  "signalRegion" : {
+    "sequence" : true,
+    "modules"  : [
+      "vertexFilter", 
+      "eventQualityFilters", 
+      "ecalLaserFilter", 
+      "hcalLaserFilter", 
+      "l1tETMFilter", 
+      "parkedDataHLTFilter", 
+      "producerElectronsVeto", 
+      "vetoElectrons", 
+      "producerMuonLoose", 
+      "vetoMuon", 
+      "producerSelJets", 
+      "jetsLooseElectronCleaning", 
+      "jetsLooseMuonCleaning", 
+      "sigRegion_cutDijet", 
+      "producerMuonTight", 
+      "metModifier_TightMuonSubtraction", 
+      "cut_met", 
+      "sigRegion_cutMetSig", 
+      "sigRegion_cutMinJetMetDPhi"
+    ]
+    }
+  }
+}
