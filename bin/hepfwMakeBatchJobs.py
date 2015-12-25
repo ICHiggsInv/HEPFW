@@ -82,9 +82,9 @@ def makeJobExe(path,index):
   with open(path,'w') as fOut:
     fOut.write("#!/bin/bash\n")
     fOut.write("\n")
-    fOut.write("cd /vols/cms02/jca10/work/slc6/dev01/CMSSW_5_3_11/src\n");
+    fOut.write("cd /vols/cms02/jca10/work/slc6/dev01/cc/CMSSW_5_3_32/src\n");
     fOut.write("eval `scramv1 runtime -sh`\n");
-    fOut.write("cd /vols/cms02/jca10/work/slc6/dev01/HEPFW/bin\n");
+    fOut.write("cd /vols/cms02/jca10/work/slc6/dev01/cc/HEPFW_v2/bin\n");
     fOut.write("source thisHEPFW.sh\n");
     fOut.write("cd "+os.getcwd()+"/"+outputFolder+"\n")
     fOut.write("vbfinvRun job"+str(index)+"_cfg.json\n")
