@@ -33,7 +33,7 @@ USERLIBS += -L$(HEPFWSYS)/lib/
 # USERLIBS += -L$(CMSSW_RELEASE_BASE)/lib/$(SCRAM_ARCH) -lFWCoreFWLite -lPhysicsToolsFWLite -lCommonToolsUtils
 
 # CXXFLAGS = -Wall -W -Wno-unused-function -Wno-parentheses -Wno-char-subscripts -Wno-unused-parameter -O2
-CXXFLAGS  = -W -Wall -O2 -fPIC `root-config --cflags`
+CXXFLAGS  = -g -W -Wall -O2 -fPIC `root-config --cflags`
 # Next line is necessary to compile C++0x code with g++ 4.6.X
 CXXFLAGS += -std=c++0x
 CXXFLAGS += -Wno-deprecated-declarations
