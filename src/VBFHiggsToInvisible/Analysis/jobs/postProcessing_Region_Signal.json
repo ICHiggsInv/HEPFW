@@ -37,6 +37,12 @@
           "name"  : "ParkedRunD",
           "tags"  : ["Data","PromptData","ParkedRunD","ParkedDataAnalysis"],
           "files" : ["Region_Signal/DATA_VBF-Parked-2012D-22Jan2013-v1.root"]
+        },
+        {
+          "type"  : "MC",
+          "name"  : "HtoinvH125",
+          "tags"  : ["MC","Signal"],
+          "files" : ["Region_Signal/MC_Powheg-Htoinv-mH125.root"]
         }
       ]
     }
@@ -48,7 +54,7 @@
     "parameters" : {
       "processedData" : "Signal Region",
       "path"           : "Sequences/signalRegion/EventYield_Absolute", 
-      "columns"        : ["PromptRunA","ParkedRunB","ParkedRunC","ParkedRunD","ParkedDataAnalysis"], 
+      "columns"        : ["PromptRunA","ParkedRunB","ParkedRunC","ParkedRunD","Signal","ParkedDataAnalysis"], 
       "commands" : [
         {"command" : "FindAndReplace","find" : "\\rotatebox{90}{PromptRunA}",        "replace" : "\\rotatebox{90}{Prompt Run A}"},
         {"command" : "FindAndReplace","find" : "\\rotatebox{90}{ParkedRunB}",        "replace" : "\\rotatebox{90}{Parked Run B}"},
@@ -85,9 +91,53 @@
     }
   },
     
+  "Region_Signal_WeightedEventYields" : {
+    "object"         : "PostProcessingModule",
+    "module"         : "hepfw::SequenceEventYields", 
+    "parameters" : {
+      "processedData" : "Signal Region",
+      "path"           : "Sequences/signalRegion/EventYield_Weighted", 
+      "columns"        : ["PromptRunA","ParkedRunB","ParkedRunC","ParkedRunD","HtoinvH125","ParkedDataAnalysis"], 
+      "commands" : [
+        {"command" : "FindAndReplace","find" : "\\rotatebox{90}{PromptRunA}",        "replace" : "\\rotatebox{90}{Prompt Run A}"},
+        {"command" : "FindAndReplace","find" : "\\rotatebox{90}{ParkedRunB}",        "replace" : "\\rotatebox{90}{Parked Run B}"},
+        {"command" : "FindAndReplace","find" : "\\rotatebox{90}{ParkedRunC}",        "replace" : "\\rotatebox{90}{Parked Run C}"},
+        {"command" : "FindAndReplace","find" : "\\rotatebox{90}{ParkedRunD}",        "replace" : "\\rotatebox{90}{Parked Run D}"},
+        {"command" : "FindAndReplace","find" : "\\rotatebox{90}{ParkedDataAnalysis}","replace" : "\\rotatebox{90}{Total Data}"},
+        
+        {"command" : "FindAndReplace","find" : "vertexFilter",                       "replace" : "Vertex Filter"},
+        {"command" : "FindAndReplace","find" : "eventQualityFilters",                "replace" : "Event Quality Filters"},
+        {"command" : "FindAndReplace","find" : "ecalLaserFilter",                    "replace" : "ECAL Laser Filter"},
+        {"command" : "FindAndReplace","find" : "hcalLaserFilter",                    "replace" : "HCAL Laser Filter"},
+        {"command" : "FindAndReplace","find" : "l1tETMFilter",                       "replace" : "L1T ETM Filter"},
+        {"command" : "FindAndReplace","find" : "parkedDataHLTFilter",                "replace" : "HLT Filter"},
+        {"command" : "FindAndReplace","find" : "vetoElectrons",                      "replace" : "$N(Electrons_{veto})=0$"},
+        {"command" : "FindAndReplace","find" : "vetoMuon",                           "replace" : "$N(Muon_{loose})=0$"},
+        {"command" : "FindAndReplace","find" : "sigRegion_cutDijet",                 "replace" : "Dijet cut"},
+        {"command" : "FindAndReplace","find" : "cut_met",                            "replace" : "MET cut"},
+        {"command" : "FindAndReplace","find" : "sigRegion_cutMetSig",                "replace" : "$MET_{Significance}$ cut"},
+        {"command" : "FindAndReplace","find" : "sigRegion_cutMinJetMetDPhi",         "replace" : "$Min(\\Delta\\phi(MET,jets))$ cut"},
+        
+        {"command" : "DeleteRowByFirstCell","find" : "producerElectronsVeto"},
+        {"command" : "DeleteRowByFirstCell","find" : "producerMuonLoose"},
+        {"command" : "DeleteRowByFirstCell","find" : "producerElectronsTight"},
+        {"command" : "DeleteRowByFirstCell","find" : "electronTight_OverlapCleaning_MuonsLoose"},
+        {"command" : "DeleteRowByFirstCell","find" : "producerSelJets"},
+        {"command" : "DeleteRowByFirstCell","find" : "jetsLooseElectronCleaning"},
+        {"command" : "DeleteRowByFirstCell","find" : "jetsLooseMuonCleaning"},
+        {"command" : "DeleteRowByFirstCell","find" : "producerMuonTight"},
+        {"command" : "DeleteRowByFirstCell","find" : "metModifier_TightMuonSubtraction"},
+        
+        {"command" : "SetCaption",    "text" : "Event Yield for the Signal Region."}
+      ], 
+      "outputFileName" : "Region_Signal_WeightedEventYields.tex"
+    }
+  },
+    
   "Sequence_Region_Signal" : {
     "object" : "Sequence",
     "modules"  : [
+      "Region_Signal_WeightedEventYields",
       "Region_Signal_AbsoluteEventYields"
       ]
     }
