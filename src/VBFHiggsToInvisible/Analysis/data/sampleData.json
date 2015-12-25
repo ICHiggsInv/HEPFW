@@ -1,71 +1,93 @@
 {
-  "sampleData" : {
-    "Powheg-Htoinv-mH110" : {"events" : 99885,  "crossSection" : 1.809},
-    "Powheg-Htoinv-mH125" : {"events" : 99885,  "crossSection" : 1.578},
-    "Powheg-Htoinv-mH150" : {"events" : 99874,  "crossSection" : 1.280},
-    "Powheg-Htoinv-mH200" : {"events" : 49922,  "crossSection" : 0.8685},
-    "Powheg-Htoinv-mH300" : {"events" : 49945,  "crossSection" : 0.4408},
-    "Powheg-Htoinv-mH400" : {"events" : 49964,  "crossSection" : 0.2543},
 
-    "Powheg-ggHtoinv-mH110" : {"events" : 199981,  "crossSection" : 24.70},
-    "Powheg-ggHtoinv-mH125" : {"events" : 199981,  "crossSection" : 19.27},
-    "Powheg-ggHtoinv-mH150" : {"events" : 199976,  "crossSection" : 13.55},
-    "Powheg-ggHtoinv-mH200" : {"events" : 199984,  "crossSection" : 7.081},
-    "Powheg-ggHtoinv-mH300" : {"events" : 199988,  "crossSection" : 3.594},
-    "Powheg-ggHtoinv-mH400" : {"events" : 199984,  "crossSection" : 2.921},
-
-    "WJetsToLNu_v1" : {"events" : 76102995, "crossSection" : 37509},
-    "WJetsToLNu_v2" : {"events" : 76102995, "crossSection" : 37509},
-    "W1JetsToLNu"   : {"events" : 76102995, "crossSection" : 37509},
-    "W2JetsToLNu"   : {"events" : 76102995, "crossSection" : 37509},
-    "W3JetsToLNu"   : {"events" : 76102995, "crossSection" : 37509},
-    "W4JetsToLNu"   : {"events" : 76102995, "crossSection" : 37509},
-    "EWK-W2jminus"  : {"events" :  8996164, "crossSection" : 4.09},
-    "EWK-W2jplus "  : {"events" :  8996164, "crossSection" : 6.48},
-
-    "DYJetsToLLHighPt" : {"events" :  2662137, "crossSection" :   40.5},
-    "DYJetsToLL"       : {"events" : 30459503, "crossSection" : 3503.7},
-    "DY1JetsToLL"      : {"events" : 30459503, "crossSection" : 3503.7},
-    "DY2JetsToLL"      : {"events" : 30459503, "crossSection" : 3503.7},
-    "DY3JetsToLL"      : {"events" : 30459503, "crossSection" : 3503.7},
-    "DY4JetsToLL"      : {"events" : 30459503, "crossSection" : 3503.7},
-    "EWK-Z2j"          : {"events" :  2978717, "crossSection" :    0.888},
-
-    "ZJetsToNuNu_50_HT_100"  : {"events" : 4040980,  "crossSection" : 381.2},
-    "ZJetsToNuNu_100_HT_200" : {"events" : 4416646,  "crossSection" : 160.3},
-    "ZJetsToNuNu_200_HT_400" : {"events" : 5055885,  "crossSection" :  41.49},
-    "ZJetsToNuNu_400_HT_inf" : {"events" : 1006928,  "crossSection" :   5.274},
+  "weightsCrossSection" : {
+    "module"  : "hepfw::WeightsCrossSection", 
+    "title"   : "Weights Cross Section",
+    "parameters" : {
+      "intLumi" : 19229,
+      "Powheg-Htoinv-mH110" : {"events" : 99885,  "crossSection" : 1.809},
+      "Powheg-Htoinv-mH125" : {"events" : 99885,  "crossSection" : 1.578},
+      "Powheg-Htoinv-mH150" : {"events" : 99874,  "crossSection" : 1.280},
+      "Powheg-Htoinv-mH200" : {"events" : 49922,  "crossSection" : 0.8685},
+      "Powheg-Htoinv-mH300" : {"events" : 49945,  "crossSection" : 0.4408},
+      "Powheg-Htoinv-mH400" : {"events" : 49964,  "crossSection" : 0.2543},
     
-    "WW" : {"events" : 10000431, "crossSection" : 54.838},
-    "WZ" : {"events" : 10000283, "crossSection" : 33.21},
-    "ZZ" : {"events" :  9799908, "crossSection" : 17.654},
-
-    "SingleT-s"    : {"events" :  259961, "crossSection" :  3.79},
-    "SingleT-t"    : {"events" : 3758227, "crossSection" : 56.4},
-    "SingleTBar-s" : {"events" :  139974, "crossSection" :  1.76},
-    "SingleTBar-t" : {"events" : 1935072, "crossSection" : 30.7},
-    "T-tW"         : {"events" :  497658, "crossSection" : 11.1},
-    "Tbar-tW"      : {"events" :  493460, "crossSection" : 11.1},
+      "Powheg-ggHtoinv-mH110" : {"events" : 199981,  "crossSection" : 24.70},
+      "Powheg-ggHtoinv-mH125" : {"events" : 199981,  "crossSection" : 19.27},
+      "Powheg-ggHtoinv-mH150" : {"events" : 199976,  "crossSection" : 13.55},
+      "Powheg-ggHtoinv-mH200" : {"events" : 199984,  "crossSection" : 7.081},
+      "Powheg-ggHtoinv-mH300" : {"events" : 199988,  "crossSection" : 3.594},
+      "Powheg-ggHtoinv-mH400" : {"events" : 199984,  "crossSection" : 2.921},
     
-    "TTJets" : {"events" : 6923750, "crossSection" : 245.8},
+      "WJetsToLNu_v1" : {"events" : 76102995, "crossSection" : 37509},
+      "WJetsToLNu_v2" : {"events" : 76102995, "crossSection" : 37509},
+      "W1JetsToLNu"   : {"events" : 76102995, "crossSection" : 37509},
+      "W2JetsToLNu"   : {"events" : 76102995, "crossSection" : 37509},
+      "W3JetsToLNu"   : {"events" : 76102995, "crossSection" : 37509},
+      "W4JetsToLNu"   : {"events" : 76102995, "crossSection" : 37509},
+      "EWK-W2jminus"  : {"events" :  8996164, "crossSection" : 4.09},
+      "EWK-W2jplus "  : {"events" :  8996164, "crossSection" : 6.48},
     
-    "QCD-Pt-30to50"     : {"events" : 6000000, "crossSection" : 66285328},
-    "QCD-Pt-50to80"     : {"events" : 5998860, "crossSection" :  8148778.0},
-    "QCD-Pt-80to120"    : {"events" : 5994864, "crossSection" :  1033680.0},
-    "QCD-Pt-120to170"   : {"events" : 5985732, "crossSection" :   156293.3},
-    "QCD-Pt-170to300"   : {"events" : 5814398, "crossSection" :    34138.15},
-    "QCD-Pt-300to470"   : {"events" : 5978500, "crossSection" :     1759.549},
-    "QCD-Pt-470to600"   : {"events" : 3964848, "crossSection" :      113.8791},
-    "QCD-Pt-600to800"   : {"events" : 3996864, "crossSection" :       26.9921},
-    "QCD-Pt-800to1000"  : {"events" : 3998563, "crossSection" :        3.550036},
-    "QCD-Pt-1000to1400" : {"events" :  964088, "crossSection" :        0.737844},
-    "QCD-Pt-1400to1800" : {"events" : 2000062, "crossSection" :        0.03352235},
-    "QCD-Pt-1800"       : {"events" :  977586, "crossSection" :        0.001829005},
-
-    "VBF-QCD-Pt-80to120"  : {"events" : 39376000000, "crossSection" : 1033680.0},
-    "VBF-QCD-Pt-120to170" : {"events" :  7000000000, "crossSection" :  156293.3},
-    "VBF-QCD-Pt-170to300" : {"events" :  1375000000, "crossSection" :   34138.15},
-    "VBF-QCD-Pt-300to470" : {"events" :    80000000, "crossSection" :    1759.549},
-    "VBF-QCD-Pt-470to600" : {"events" :    25000000, "crossSection" :     113.8791}
+      "DYJetsToLLHighPt" : {"events" :  2662137, "crossSection" :   40.5},
+      "DYJetsToLL"       : {"events" : 30459503, "crossSection" : 3503.7},
+      "DY1JetsToLL"      : {"events" : 30459503, "crossSection" : 3503.7},
+      "DY2JetsToLL"      : {"events" : 30459503, "crossSection" : 3503.7},
+      "DY3JetsToLL"      : {"events" : 30459503, "crossSection" : 3503.7},
+      "DY4JetsToLL"      : {"events" : 30459503, "crossSection" : 3503.7},
+      "EWK-Z2j"          : {"events" :  2978717, "crossSection" :    0.888},
+    
+      "ZJetsToNuNu_50_HT_100"  : {"events" : 4040980,  "crossSection" : 381.2},
+      "ZJetsToNuNu_100_HT_200" : {"events" : 4416646,  "crossSection" : 160.3},
+      "ZJetsToNuNu_200_HT_400" : {"events" : 5055885,  "crossSection" :  41.49},
+      "ZJetsToNuNu_400_HT_inf" : {"events" : 1006928,  "crossSection" :   5.274},
+      
+      "WW" : {"events" : 10000431, "crossSection" : 54.838},
+      "WZ" : {"events" : 10000283, "crossSection" : 33.21},
+      "ZZ" : {"events" :  9799908, "crossSection" : 17.654},
+    
+      "SingleT-s"    : {"events" :  259961, "crossSection" :  3.79},
+      "SingleT-t"    : {"events" : 3758227, "crossSection" : 56.4},
+      "SingleTBar-s" : {"events" :  139974, "crossSection" :  1.76},
+      "SingleTBar-t" : {"events" : 1935072, "crossSection" : 30.7},
+      "T-tW"         : {"events" :  497658, "crossSection" : 11.1},
+      "Tbar-tW"      : {"events" :  493460, "crossSection" : 11.1},
+      
+      "TTJets" : {"events" : 6923750, "crossSection" : 245.8},
+      
+      "QCD-Pt-30to50"     : {"events" : 6000000, "crossSection" : 66285328},
+      "QCD-Pt-50to80"     : {"events" : 5998860, "crossSection" :  8148778.0},
+      "QCD-Pt-80to120"    : {"events" : 5994864, "crossSection" :  1033680.0},
+      "QCD-Pt-120to170"   : {"events" : 5985732, "crossSection" :   156293.3},
+      "QCD-Pt-170to300"   : {"events" : 5814398, "crossSection" :    34138.15},
+      "QCD-Pt-300to470"   : {"events" : 5978500, "crossSection" :     1759.549},
+      "QCD-Pt-470to600"   : {"events" : 3964848, "crossSection" :      113.8791},
+      "QCD-Pt-600to800"   : {"events" : 3996864, "crossSection" :       26.9921},
+      "QCD-Pt-800to1000"  : {"events" : 3998563, "crossSection" :        3.550036},
+      "QCD-Pt-1000to1400" : {"events" :  964088, "crossSection" :        0.737844},
+      "QCD-Pt-1400to1800" : {"events" : 2000062, "crossSection" :        0.03352235},
+      "QCD-Pt-1800"       : {"events" :  977586, "crossSection" :        0.001829005},
+    
+      "VBF-QCD-Pt-80to120"  : {"events" : 39376000000, "crossSection" : 1033680.0},
+      "VBF-QCD-Pt-120to170" : {"events" :  7000000000, "crossSection" :  156293.3},
+      "VBF-QCD-Pt-170to300" : {"events" :  1375000000, "crossSection" :   34138.15},
+      "VBF-QCD-Pt-300to470" : {"events" :    80000000, "crossSection" :    1759.549},
+      "VBF-QCD-Pt-470to600" : {"events" :    25000000, "crossSection" :     113.8791}
+    }
+  },
+  
+  "weightsPileUp" : {
+    "module"  : "hepfw::WeightsPileUp", 
+    "title"   : "Weights Pile Up",
+    "parameters" : {
+      "verbose"       : true
+    }
+  },
+  
+    "weightsTrigger" : {
+    "module"  : "hepfw::WeightsTrigger", 
+    "title"   : "Weights Trigger",
+    "parameters" : {
+      "verbose"       : true
+    }
   }
 }
