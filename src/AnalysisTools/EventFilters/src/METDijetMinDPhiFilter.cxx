@@ -24,7 +24,7 @@ hepfw::METDijetMinDPhiFilter::METDijetMinDPhiFilter(string name){
   m_name = name;
 }
 
-hepfw::METDijetMinDPhiFilter::METDijetMinDPhiFilter(std::string name,hepfw::ParameterSet &pset){
+hepfw::METDijetMinDPhiFilter::METDijetMinDPhiFilter(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset){
   
   this->init(); // Setting default values;
   m_name = name;

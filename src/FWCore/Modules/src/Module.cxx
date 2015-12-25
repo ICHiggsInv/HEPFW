@@ -12,7 +12,7 @@ hepfw::Module::Module(std::string name){
   m_type = hepfw::Module::ModuleType::Generic;
 }
 
-hepfw::Module::Module(std::string name,hepfw::ParameterSet pset){
+hepfw::Module::Module(std::string name,hepfw::ParameterSet pset,hepfw::Dataset dataset){
   m_name = name;
   m_type = hepfw::Module::ModuleType::Generic;
 }

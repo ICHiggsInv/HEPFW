@@ -3,6 +3,7 @@
 
 // HEPFW includes
 #include "FWCore/Framework/interface/Event.h"
+#include "FWCore/Framework/interface/Dataset.h"
 #include "AnalysisTools/Producers/interface/FilteredCollectionProducer.h"
 
 // ICHiggsTauTau
@@ -24,7 +25,7 @@ namespace hepfw{
     
     FilteredTauCollectionProducer();
     FilteredTauCollectionProducer(std::string name);
-    FilteredTauCollectionProducer(std::string name,hepfw::ParameterSet &pset);
+    FilteredTauCollectionProducer(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset);
     ~FilteredTauCollectionProducer();
     
     void produce(hepfw::Event &event);

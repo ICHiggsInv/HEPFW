@@ -20,7 +20,7 @@ hepfw::EDMFilterFilter::EDMFilterFilter(string name){
   m_name = name;
 }
 
-hepfw::EDMFilterFilter::EDMFilterFilter(std::string name,hepfw::ParameterSet &pset){
+hepfw::EDMFilterFilter::EDMFilterFilter(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset){
   
   this->init(); // Setting default values;
   m_name = name;

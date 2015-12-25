@@ -18,11 +18,13 @@ hepfw::ConfigurationProcessor::ConfigurationProcessor(){
   m_outputFilename = "out.root"; 
   m_maxEvents      = -1;
   m_errManager     = 0;
+  m_dataset        = 0;
 }
 
 hepfw::ConfigurationProcessor::ConfigurationProcessor(string configFilename,string jobType){
   
   m_errManager = 0;
+  m_dataset    = 0;
   
   // Determine the absolute location of src directory
   this->getPathSrc();
@@ -63,10 +65,17 @@ hepfw::ConfigurationProcessor::ConfigurationProcessor(string configFilename,stri
     
     // Get the value of the member of root named 'encoding', return 'UTF-8' if there is no
     // such member.
-    std::string sampleType = m_content["dataset"].get("type","").asString();
-    std::string sampleName = m_content["dataset"].get("name","").asString();
-    cout << "Dataset type : " << sampleType << endl;
-    cout << "Dataset name : " << sampleName << endl;
+    std::string sampleType  = m_content["dataset"].get("type", "").asString();
+    std::string sampleGroup = m_content["dataset"].get("group","").asString();
+    std::string sampleName  = m_content["dataset"].get("name", "").asString();
+    cout << "Dataset type  : " << sampleType  << endl;
+    cout << "Dataset group : " << sampleGroup << endl;
+    cout << "Dataset name  : " << sampleName << endl;
+
+    m_dataset = new hepfw::Dataset();
+    m_dataset->setName (sampleName);
+    m_dataset->setGroup(sampleGroup);
+    m_dataset->setType (sampleType);
     
     // Processing input to this jobs
     const Json::Value input = m_content["input"];
@@ -256,4 +265,9 @@ hepfw::ParameterSet hepfw::ConfigurationProcessor::get(std::string name){
 
 void hepfw::ConfigurationProcessor::setErrorManager(hepfw::ErrorManagement* obj){
   m_errManager = obj;
+}
+
+hepfw::Dataset* hepfw::ConfigurationProcessor::getDataset(){
+  
+  return m_dataset;
 }

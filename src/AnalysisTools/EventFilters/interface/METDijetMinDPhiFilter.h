@@ -3,6 +3,7 @@
 
 // HEPFW includes
 #include "FWCore/Framework/interface/Event.h"
+#include "FWCore/Framework/interface/Dataset.h"
 #include "FWCore/Modules/interface/FilterModule.h"
 
 // C++ STD includes
@@ -21,7 +22,7 @@ namespace hepfw{
     
     METDijetMinDPhiFilter();
     METDijetMinDPhiFilter(std::string name);
-    METDijetMinDPhiFilter(std::string name,hepfw::ParameterSet &pset);
+    METDijetMinDPhiFilter(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset);
     ~METDijetMinDPhiFilter();
     
     bool filter(hepfw::Event &event);

@@ -3,6 +3,7 @@
 
 // HEPFW includes
 #include "FWCore/Framework/interface/Event.h"
+#include "FWCore/Framework/interface/Dataset.h"
 #include "FWCore/Modules/interface/FilterModule.h"
 #include "FWCore/Parameters/interface/ParameterSet.h"
 
@@ -29,7 +30,7 @@ namespace hepfw{
     
     DiobjectMassWindow();
     DiobjectMassWindow(std::string name);
-    DiobjectMassWindow(std::string name,hepfw::ParameterSet &pset);
+    DiobjectMassWindow(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset);
     ~DiobjectMassWindow();
     
     bool filter(hepfw::Event &event);
@@ -71,7 +72,7 @@ hepfw::DiobjectMassWindow<Product>::DiobjectMassWindow(std::string name){
 }
 
 template <class Product>
-hepfw::DiobjectMassWindow<Product>::DiobjectMassWindow(std::string name,hepfw::ParameterSet &pset){
+hepfw::DiobjectMassWindow<Product>::DiobjectMassWindow(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset){
   
   this->init(); // Setting default values;
   m_name       = name;

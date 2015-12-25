@@ -3,6 +3,7 @@
 
 // HEPFW includes
 #include "FWCore/Framework/interface/Event.h"
+#include "FWCore/Framework/interface/Dataset.h"
 #include "FWCore/Modules/interface/ProducerModule.h"
 #include "Algorithm/Geometric/interface/DeltaR.h"
 
@@ -23,7 +24,7 @@ namespace hepfw{
     
     OverlapCleaning();
     OverlapCleaning(std::string name);
-    OverlapCleaning(std::string name,hepfw::ParameterSet &pset);
+    OverlapCleaning(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset);
     OverlapCleaning(std::string name,std::string labelCollectionToClean,std::string labelCollectionReference);
     ~OverlapCleaning();
     
@@ -70,7 +71,7 @@ hepfw::OverlapCleaning<CollectionToClean,CollectionReference>::OverlapCleaning(s
 }
 
 template <class CollectionToClean, class CollectionReference>
-hepfw::OverlapCleaning<CollectionToClean,CollectionReference>::OverlapCleaning(std::string name,hepfw::ParameterSet &pset){
+hepfw::OverlapCleaning<CollectionToClean,CollectionReference>::OverlapCleaning(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset){
   
   this->init(); // Setting default values
   m_name = name;

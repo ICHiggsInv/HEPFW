@@ -27,7 +27,7 @@ hepfw::VertexFilter::~VertexFilter(){
   
 }
 
-hepfw::VertexFilter::VertexFilter(std::string name,hepfw::ParameterSet &pset){
+hepfw::VertexFilter::VertexFilter(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset){
 
   // Setting default values;
   this->init();

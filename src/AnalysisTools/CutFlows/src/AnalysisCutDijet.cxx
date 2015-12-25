@@ -17,7 +17,7 @@ hepfw::AnalysisCutDijet::AnalysisCutDijet(string name){
   m_name = name;
 }
 
-hepfw::AnalysisCutDijet::AnalysisCutDijet(std::string name,hepfw::ParameterSet &pset){
+hepfw::AnalysisCutDijet::AnalysisCutDijet(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset){
   
   this->init(); // Setting default values;
   m_name = name;

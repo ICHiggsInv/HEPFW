@@ -40,8 +40,12 @@ namespace hepfw{
     void setTreeEventNumber(Long64_t        treeEventNumber);
     void setTree           (TTree          *tree);
     
-    const hepfw::Dataset* getDataset();
-
+    const hepfw::Dataset* getDataset    ();
+    double                getWeight     (std::string name);
+    double                getTotalWeight();
+    
+    void addWeight         (std::string name,double weight);
+    
     template <class Product>
     void addProduct(std::string productName, Product &product);
     
@@ -55,6 +59,7 @@ namespace hepfw{
     TTree                            *m_tree;
     Long64_t                          m_treeEventNumber;
     std::map<std::string,boost::any>  m_products;
+    std::map<std::string,double>      m_weights;
     
   };
 

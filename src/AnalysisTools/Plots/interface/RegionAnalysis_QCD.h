@@ -3,6 +3,7 @@
 
 // HEPFW includes
 #include "FWCore/Framework/interface/Event.h"
+#include "FWCore/Framework/interface/Dataset.h"
 #include "FWCore/Modules/interface/AnalyserModule.h"
 #include "FWCore/Parameters/interface/ParameterSet.h"
 
@@ -26,7 +27,7 @@ namespace hepfw{
     
     RegionAnalysis_QCD();
     RegionAnalysis_QCD(std::string name);
-    RegionAnalysis_QCD(std::string name,hepfw::ParameterSet &pset);
+    RegionAnalysis_QCD(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset);
     ~RegionAnalysis_QCD();
     
     void analyse(hepfw::Event &event);

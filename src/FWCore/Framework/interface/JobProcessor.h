@@ -6,6 +6,7 @@
 #include "FWCore/Framework/interface/EventProcessor.h"
 #include "FWCore/Framework/interface/JobProcessor.h"
 #include "FWCore/Framework/interface/JobSetup.h"
+#include "FWCore/Framework/interface/Dataset.h"
 #include "FWCore/Modules/interface/Module.h"
 #include "FWCore/Modules/interface/ModuleSequence.h"
 #include "FWCore/IO/interface/File.h"
@@ -44,6 +45,7 @@ namespace hepfw{
     hepfw::ConfigurationProcessor *m_cfgProcessor;
     hepfw::EventProcessor         *m_eventProcessor;
     hepfw::JobSetup               *m_jobSetup;
+    hepfw::Dataset                *m_dataset;
     
     hepfw::File                   *m_outputFile;
     

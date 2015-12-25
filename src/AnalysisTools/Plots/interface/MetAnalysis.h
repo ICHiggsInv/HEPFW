@@ -3,6 +3,7 @@
 
 // HEPFW includes
 #include "FWCore/Framework/interface/Event.h"
+#include "FWCore/Framework/interface/Dataset.h"
 #include "FWCore/Modules/interface/AnalyserModule.h"
 #include "FWCore/Parameters/interface/ParameterSet.h"
 
@@ -25,7 +26,7 @@ namespace hepfw{
     
     MetAnalysis();
     MetAnalysis(std::string name);
-    MetAnalysis(std::string name,hepfw::ParameterSet &pset);
+    MetAnalysis(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset);
     ~MetAnalysis();
     
     void analyse(hepfw::Event &event);

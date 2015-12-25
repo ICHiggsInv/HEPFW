@@ -24,7 +24,7 @@ hepfw::L1TETMFilter::L1TETMFilter(string name){
   m_name      = name;
 }
 
-hepfw::L1TETMFilter::L1TETMFilter(std::string name,hepfw::ParameterSet &pset){
+hepfw::L1TETMFilter::L1TETMFilter(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset){
   
   // Setting default values;
   this->init();

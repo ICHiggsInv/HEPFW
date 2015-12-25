@@ -3,6 +3,7 @@
 
 // HEPFW includes
 #include "FWCore/Framework/interface/Event.h"
+#include "FWCore/Framework/interface/Dataset.h"
 #include "FWCore/Modules/interface/FilterModule.h"
 #include "FWCore/Parameters/interface/ParameterSet.h"
 
@@ -23,7 +24,7 @@ namespace hepfw{
     
     HLTPathFilter();
     HLTPathFilter(std::string name);
-    HLTPathFilter(std::string name,hepfw::ParameterSet &pset);
+    HLTPathFilter(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset);
     ~HLTPathFilter();
     
     void addPath(std::string hltAlgo,int firstRun=1,int lastRun=10e9);

@@ -25,7 +25,7 @@ hepfw::FilteredElectronCollectionProducer::FilteredElectronCollectionProducer(st
   m_outputLabel = "";
 }
 
-hepfw::FilteredElectronCollectionProducer::FilteredElectronCollectionProducer(std::string name,hepfw::ParameterSet &pset){
+hepfw::FilteredElectronCollectionProducer::FilteredElectronCollectionProducer(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset){
 
   this->init(); // Setting default values
   m_name = name;

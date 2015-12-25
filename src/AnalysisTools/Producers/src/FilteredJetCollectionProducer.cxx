@@ -18,7 +18,7 @@ hepfw::FilteredJetCollectionProducer::FilteredJetCollectionProducer(string name)
   m_outputLabel = "";
 }
 
-hepfw::FilteredJetCollectionProducer::FilteredJetCollectionProducer(std::string name,hepfw::ParameterSet &pset){
+hepfw::FilteredJetCollectionProducer::FilteredJetCollectionProducer(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset){
 
   this->init(); // Setting default values
   m_name = name;

@@ -3,6 +3,7 @@
 
 // HEPFW includes
 #include "FWCore/Framework/interface/Event.h"
+#include "FWCore/Framework/interface/Dataset.h"
 #include "FWCore/Modules/interface/FilterModule.h"
 
 // ICHiggsTauTau
@@ -23,7 +24,7 @@ namespace hepfw{
     
     AnalysisCutMet();
     AnalysisCutMet(std::string name);
-    AnalysisCutMet(std::string name,hepfw::ParameterSet &pset);
+    AnalysisCutMet(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset);
     ~AnalysisCutMet();
     
     bool filter(hepfw::Event &event);

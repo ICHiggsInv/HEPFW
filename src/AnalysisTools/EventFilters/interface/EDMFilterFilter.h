@@ -3,6 +3,7 @@
 
 // HEPFW includes
 #include "FWCore/Framework/interface/Event.h"
+#include "FWCore/Framework/interface/Dataset.h"
 #include "FWCore/Framework/interface/JobSetup.h"
 #include "FWCore/Modules/interface/FilterModule.h"
 #include "FWCore/Parameters/interface/ParameterSet.h"
@@ -30,7 +31,7 @@ namespace hepfw{
     
     EDMFilterFilter();
     EDMFilterFilter(std::string name);
-    EDMFilterFilter(std::string name,hepfw::ParameterSet &pset);
+    EDMFilterFilter(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset);
     ~EDMFilterFilter();
     
     void addFilter(std::string filterName, bool resultTofilter=false);

@@ -25,7 +25,7 @@ hepfw::HLTPathFilter::HLTPathFilter(string name){
   m_name = name;
 }
 
-hepfw::HLTPathFilter::HLTPathFilter(std::string name,hepfw::ParameterSet &pset){
+hepfw::HLTPathFilter::HLTPathFilter(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset){
   
   this->init(); // Setting default values;
   m_name = name;

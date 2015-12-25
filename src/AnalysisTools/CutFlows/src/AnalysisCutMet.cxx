@@ -17,7 +17,7 @@ hepfw::AnalysisCutMet::AnalysisCutMet(string name){
   m_name = name;
 }
 
-hepfw::AnalysisCutMet::AnalysisCutMet(std::string name,hepfw::ParameterSet &pset){
+hepfw::AnalysisCutMet::AnalysisCutMet(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset){
   
   this->init(); // Setting default values;
   m_name = name;

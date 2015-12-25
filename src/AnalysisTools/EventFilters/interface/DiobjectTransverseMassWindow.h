@@ -3,6 +3,7 @@
 
 // HEPFW includes
 #include "FWCore/Framework/interface/Event.h"
+#include "FWCore/Framework/interface/Dataset.h"
 #include "FWCore/Modules/interface/FilterModule.h"
 #include "FWCore/Parameters/interface/ParameterSet.h"
 
@@ -34,7 +35,7 @@ namespace hepfw{
     
     DiobjectTransverseMassWindow();
     DiobjectTransverseMassWindow(std::string name);
-    DiobjectTransverseMassWindow(std::string name,hepfw::ParameterSet &pset);
+    DiobjectTransverseMassWindow(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset);
     ~DiobjectTransverseMassWindow();
     
     bool filter(hepfw::Event &event);
@@ -79,7 +80,7 @@ hepfw::DiobjectTransverseMassWindow<ObjA,ObjB>::DiobjectTransverseMassWindow(std
 }
 
 template <class ObjA,class ObjB>
-hepfw::DiobjectTransverseMassWindow<ObjA,ObjB>::DiobjectTransverseMassWindow(std::string name,hepfw::ParameterSet &pset){
+hepfw::DiobjectTransverseMassWindow<ObjA,ObjB>::DiobjectTransverseMassWindow(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset){
   
   this->init(); // Setting default values;
   m_name        = name;

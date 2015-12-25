@@ -28,7 +28,7 @@ hepfw::EventListFilter::EventListFilter(string name){
   m_name = name;
 }
 
-hepfw::EventListFilter::EventListFilter(std::string name,hepfw::ParameterSet &pset){
+hepfw::EventListFilter::EventListFilter(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset){
   
   // Setting default values;
   this->init();

@@ -3,6 +3,7 @@
 
 // HEPFW includes
 #include "FWCore/Framework/interface/Event.h"
+#include "FWCore/Framework/interface/Dataset.h"
 #include "FWCore/Modules/interface/FilterModule.h"
 #include "FWCore/Parameters/interface/ParameterSet.h"
 
@@ -23,7 +24,7 @@ namespace hepfw{
     
     L1TETMFilter();
     L1TETMFilter(std::string name);
-    L1TETMFilter(std::string name,hepfw::ParameterSet &pset);
+    L1TETMFilter(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset);
     ~L1TETMFilter();
     
     bool filter(hepfw::Event &event);

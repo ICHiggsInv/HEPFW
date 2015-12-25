@@ -3,6 +3,7 @@
 
 // HEPFW includes
 #include "FWCore/Framework/interface/Event.h"
+#include "FWCore/Framework/interface/Dataset.h"
 #include "FWCore/Parameters/interface/ParameterSet.h"
 #include "AnalysisTools/Producers/interface/FilteredCollectionProducer.h"
 
@@ -24,7 +25,7 @@ namespace hepfw{
     
     FilteredElectronCollectionProducer();
     FilteredElectronCollectionProducer(std::string name);
-    FilteredElectronCollectionProducer(std::string name,hepfw::ParameterSet &pset);
+    FilteredElectronCollectionProducer(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset);
     FilteredElectronCollectionProducer(std::string name,std::string inputLabel,std::string outputLabel);
     ~FilteredElectronCollectionProducer();
     

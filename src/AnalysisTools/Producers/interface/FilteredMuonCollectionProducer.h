@@ -3,6 +3,7 @@
 
 // HEPFW includes
 #include "FWCore/Framework/interface/Event.h"
+#include "FWCore/Framework/interface/Dataset.h"
 #include "AnalysisTools/Producers/interface/FilteredCollectionProducer.h"
 
 // ICHiggsTauTau
@@ -24,7 +25,7 @@ namespace hepfw{
     
     FilteredMuonCollectionProducer();
     FilteredMuonCollectionProducer(std::string name);
-    FilteredMuonCollectionProducer(std::string name,hepfw::ParameterSet &pset);
+    FilteredMuonCollectionProducer(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset);
     FilteredMuonCollectionProducer(std::string name,std::string inputLabel,std::string outputLabel);
     ~FilteredMuonCollectionProducer();
     

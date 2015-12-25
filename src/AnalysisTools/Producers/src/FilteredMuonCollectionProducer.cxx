@@ -21,7 +21,7 @@ hepfw::FilteredMuonCollectionProducer::FilteredMuonCollectionProducer(string nam
   m_outputLabel = "";
 }
 
-hepfw::FilteredMuonCollectionProducer::FilteredMuonCollectionProducer(std::string name,hepfw::ParameterSet &pset){
+hepfw::FilteredMuonCollectionProducer::FilteredMuonCollectionProducer(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset){
 
   this->init(); // Setting default values;
   m_name = name;

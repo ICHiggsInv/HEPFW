@@ -17,6 +17,7 @@ hepfw::JobProcessor::JobProcessor(){
   m_eventProcessor     = 0;
   m_reportEvery        = 10000;
   m_jobSetup           = 0;
+  m_dataset            = 0;
   
   // Variable initialisation
   m_maxEvents = 0;
@@ -27,12 +28,12 @@ hepfw::JobProcessor::JobProcessor(){
 
 hepfw::JobProcessor::JobProcessor(string configFilename){
   
-  m_cfgProcessor   = new hepfw::ConfigurationProcessor(configFilename);
-  m_eventProcessor = new hepfw::EventProcessor(m_cfgProcessor);
-  m_jobSetup       = new hepfw::JobSetup();
-  
-  m_processedEvents    = 0;
-  m_maxEvents          = m_cfgProcessor->getMaxEvents();
+  m_cfgProcessor    = new hepfw::ConfigurationProcessor(configFilename);
+  m_eventProcessor  = new hepfw::EventProcessor(m_cfgProcessor);
+  m_jobSetup        = new hepfw::JobSetup();
+  m_processedEvents = 0;
+  m_maxEvents       = m_cfgProcessor->getMaxEvents();
+  m_dataset         = m_cfgProcessor->getDataset();
   
   // TODO: This is the my new preferred way to deal with parameter retrieval 
   // convert other lines to this
@@ -114,6 +115,8 @@ void hepfw::JobProcessor::beginJob(){
 
 void hepfw::JobProcessor::run(){
   
+  cout << "[hepfw::JobProcessor] Starting event processing..." << endl;
+  
   for (Long64_t i=0; i<m_maxEvents; i++){
     
     m_eventCount->Fill(1);
@@ -131,7 +134,7 @@ void hepfw::JobProcessor::run(){
     delete ev;
     m_processedEvents++;
   }
-  
+  cout << "[hepfw::JobProcessor] Finished event processing..." << endl;
 }
 
 void hepfw::JobProcessor::endJob(){
@@ -167,7 +170,7 @@ void hepfw::JobProcessor::buildSequence(std::string sequenceName,hepfw::ModuleSe
       string              moduleClass = m_cfgProcessor->getModuleClass     (*name);
       hepfw::ParameterSet modulePSet  = m_cfgProcessor->getModuleParameters(*name);
       
-      thisModule = hepfw::hepfwGetModule(moduleClass,*name,modulePSet);
+      thisModule = hepfw::hepfwGetModule(moduleClass,*name,modulePSet,*m_dataset);
       
       // Adding this module to the list of active modules
       m_modules[*name] = thisModule;

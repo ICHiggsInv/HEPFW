@@ -3,6 +3,7 @@
 
 // HEPFW includes
 #include "FWCore/Framework/interface/Event.h"
+#include "FWCore/Framework/interface/Dataset.h"
 #include "FWCore/Modules/interface/FilterModule.h"
 #include "FWCore/Parameters/interface/ParameterSet.h"
 
@@ -25,7 +26,7 @@ namespace hepfw{
     CollectionSizeFilter();
     CollectionSizeFilter(std::string name);
     CollectionSizeFilter(std::string name,std::string inputLabel);
-    CollectionSizeFilter(std::string name,hepfw::ParameterSet &pset);
+    CollectionSizeFilter(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset);
     ~CollectionSizeFilter();
     
     bool filter(hepfw::Event &event);
@@ -75,7 +76,7 @@ hepfw::CollectionSizeFilter<Product>::CollectionSizeFilter(std::string name,std:
 }
 
 template <class Product>
-hepfw::CollectionSizeFilter<Product>::CollectionSizeFilter(std::string name,hepfw::ParameterSet &pset){
+hepfw::CollectionSizeFilter<Product>::CollectionSizeFilter(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset){
   
   this->init(); // Setting default values;
   m_name       = name;

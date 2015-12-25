@@ -76,7 +76,7 @@ void hepfw::ModuleSequence::addModule(hepfw::Module *module){
 
 bool hepfw::ModuleSequence::execute(hepfw::Event &event){
   
-  bool out = true;
+  bool   out      = true;
   
   for(unsigned i=0; i<m_modules.size(); i++){
     
@@ -107,8 +107,9 @@ bool hepfw::ModuleSequence::execute(hepfw::Event &event){
     }
     
     m_eventYields_Absolute->Fill(i);
-    m_eventYields_Weighted->Fill(i); //TODO: Implement weights
     
+    double evWeight = event.getTotalWeight();
+    m_eventYields_Weighted->Fill(i,evWeight); //TODO: Implement weights
   }
   return out;
 }

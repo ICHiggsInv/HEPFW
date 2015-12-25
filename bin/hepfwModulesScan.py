@@ -58,6 +58,7 @@ if options.evProc:
 
   outFile.write("\n");
   outFile.write("#include \"FWCore/Parameters/interface/ParameterSet.h\"\n");
+  outFile.write("#include \"FWCore/Framework/interface/Dataset.h\"\n");
   outFile.write("#include \"FWCore/Modules/interface/Module.h\"\n");
   outFile.write("\n");
   outFile.write("#include <string>\n");
@@ -66,21 +67,21 @@ if options.evProc:
   outFile.write("\n");
   outFile.write("namespace hepfw{\n");
   outFile.write("\n");
-  outFile.write("  hepfw::Module* hepfwGetModule(std::string className, std::string instanceName, hepfw::ParameterSet &pset){\n");
+  outFile.write("  hepfw::Module* hepfwGetModule(std::string className, std::string instanceName, hepfw::ParameterSet &pset, hepfw::Dataset &dataset){\n");
   outFile.write("\n");
   outFile.write("    hepfw::Module *out = 0;\n");
   outFile.write("    if(className==\"\"){\n");
   outFile.write("      cout << \"[hepfw::hepfwGetModule] Warning: Initialising default class since provided class name was null...\" << endl;\n");
-  outFile.write("      out = new hepfw::Module(instanceName,pset);\n");
+  outFile.write("      out = new hepfw::Module(instanceName,pset,dataset);\n");
   outFile.write("    }\n");
 
   for m in modules:
     name = find_between(m,'(',')')
-    outFile.write("    else if(className==\""+name+"\"){out = new "+name+"(instanceName,pset);}\n");
+    outFile.write("    else if(className==\""+name+"\"){out = new "+name+"(instanceName,pset,dataset);}\n");
     print "Registering module :",name
   
   outFile.write("    else{\n");
-  outFile.write("      out = new hepfw::Module(instanceName,pset);\n");
+  outFile.write("      out = new hepfw::Module(instanceName,pset,dataset);\n");
   outFile.write("      cout << \"[hepfw::hepfwGetModule] Warning: Initialising default class since provided class is not know (name=\"<<className<<\")\" << endl;\n");
   outFile.write("    }\n");
   outFile.write("\n");

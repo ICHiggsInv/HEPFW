@@ -2,6 +2,7 @@
 #define FWCore_Modules_Module
 
 // HEPFW includes
+#include "FWCore/Framework/interface/Dataset.h"
 #include "FWCore/Framework/interface/JobSetup.h"
 #include "FWCore/Parameters/interface/ParameterSet.h"
 
@@ -27,7 +28,7 @@ namespace hepfw{
     
     Module();
     Module(std::string name);
-    Module(std::string name,hepfw::ParameterSet pset);
+    Module(std::string name,hepfw::ParameterSet pset,hepfw::Dataset dataset);
     ~Module();
     
     std::string                       getName();

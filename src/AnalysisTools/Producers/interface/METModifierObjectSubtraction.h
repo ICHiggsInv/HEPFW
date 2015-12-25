@@ -3,6 +3,7 @@
 
 // HEPFW includes
 #include "FWCore/Framework/interface/Event.h"
+#include "FWCore/Framework/interface/Dataset.h"
 #include "FWCore/Modules/interface/ProducerModule.h"
 #include "Algorithm/Geometric/interface/DeltaR.h"
 
@@ -23,7 +24,7 @@ namespace hepfw{
     
     METModifierObjectSubtraction();
     METModifierObjectSubtraction(std::string name);
-    METModifierObjectSubtraction(std::string name,hepfw::ParameterSet &pset);
+    METModifierObjectSubtraction(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset);
     ~METModifierObjectSubtraction();
     
     void produce(hepfw::Event &event);
@@ -59,7 +60,7 @@ hepfw::METModifierObjectSubtraction<MET,Objects>::METModifierObjectSubtraction(s
 }
 
 template <class MET, class Objects>
-hepfw::METModifierObjectSubtraction<MET,Objects>::METModifierObjectSubtraction(std::string name,hepfw::ParameterSet &pset){
+hepfw::METModifierObjectSubtraction<MET,Objects>::METModifierObjectSubtraction(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset){
   
   this->init(); // Setting default values
   m_name = name;

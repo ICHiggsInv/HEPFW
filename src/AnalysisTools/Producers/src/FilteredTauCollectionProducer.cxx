@@ -19,7 +19,7 @@ hepfw::FilteredTauCollectionProducer::FilteredTauCollectionProducer(string name)
   m_name        = name;
 }
 
-hepfw::FilteredTauCollectionProducer::FilteredTauCollectionProducer(std::string name,hepfw::ParameterSet &pset){
+hepfw::FilteredTauCollectionProducer::FilteredTauCollectionProducer(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset){
   
   this->init(); // Setting default values;
   m_name = name;

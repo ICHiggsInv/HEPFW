@@ -28,7 +28,7 @@ hepfw::RegionAnalysis_QCD::RegionAnalysis_QCD(string name){
   m_name = name;
 }
 
-hepfw::RegionAnalysis_QCD::RegionAnalysis_QCD(std::string name,hepfw::ParameterSet &pset){
+hepfw::RegionAnalysis_QCD::RegionAnalysis_QCD(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset){
   
   this->init(); // Setting default values;
   m_name = name;

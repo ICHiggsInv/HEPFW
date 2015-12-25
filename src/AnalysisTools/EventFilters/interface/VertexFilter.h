@@ -3,6 +3,7 @@
 
 // HEPFW includes
 #include "FWCore/Framework/interface/Event.h"
+#include "FWCore/Framework/interface/Dataset.h"
 #include "FWCore/Modules/interface/FilterModule.h"
 #include "FWCore/Parameters/interface/ParameterSet.h"
 
@@ -22,7 +23,7 @@ namespace hepfw{
     
     VertexFilter();
     VertexFilter(std::string name);
-    VertexFilter(std::string name,hepfw::ParameterSet &pset);
+    VertexFilter(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset);
     ~VertexFilter();
     
     bool filter(hepfw::Event &event);

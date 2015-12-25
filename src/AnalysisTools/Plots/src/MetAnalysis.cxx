@@ -22,7 +22,7 @@ hepfw::MetAnalysis::MetAnalysis(string name){
   m_name = name;
 }
 
-hepfw::MetAnalysis::MetAnalysis(std::string name,hepfw::ParameterSet &pset){
+hepfw::MetAnalysis::MetAnalysis(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset){
   
   this->init(); // Setting default values;
   m_name = name;

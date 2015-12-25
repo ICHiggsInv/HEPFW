@@ -32,6 +32,7 @@ namespace hepfw{
     std::vector<std::string> getInputFiles();
     Long64_t                 getMaxEvents();
     std::string              getOutputFile();
+    hepfw::Dataset*          getDataset();
     std::vector<std::string> getRunSequences();
     std::vector<std::string> getSequenceModules(std::string sequenceName);
     
@@ -60,7 +61,7 @@ namespace hepfw{
     std::vector<std::string> m_inputFiles;
     Long64_t                 m_maxEvents;
     std::string              m_outputFilename;
-    hepfw::Dataset           m_dataset;
+    hepfw::Dataset*          m_dataset;
     Json::Value              m_content;
     
   };
