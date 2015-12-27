@@ -1,0 +1,207 @@
+{
+  
+  "load" : [
+    "VBFHiggsToInvisible/Analysis/data/sequence_PreSelection.json", 
+    "VBFHiggsToInvisible/Analysis/data/MC/sequence_SignalSelection.json"
+  ], 
+
+  "producerTaus" : {
+    "module"  : "hepfw::FilteredTauCollectionProducer", 
+    "title"   : "Tau Producer",
+    "parameters" : {
+      "verbose"      : true, 
+      "inputLabel"   : "taus", 
+      "outputLabel"  : "taus_selected", 
+      "minPt"        : 20, 
+      "maxEta"       : 2.3, 
+      "maxDz"        : 0.2, 
+      "descriminants" : [
+        "decayModeFinding",
+        "byTightCombinedIsolationDeltaBetaCorr3Hits", 
+        "againstMuonTight", 
+        "againstElectronTight"
+        ] 
+      }
+    }, 
+  
+  "selTau" : {
+    "module"  : "hepfw::ColSizeFilterTau", 
+    "title"   : "n_{tau}=1",
+    "parameters" : {
+      "verbose"    : true, 
+      "inputLabel" : "taus_selected", 
+      "minN"       : 1, 
+      "maxN"       : 1
+      }
+    }, 
+    
+    
+  "transMassWindow_MET_Tau" : {
+    "module"  : "hepfw::DiobjectTransverseMassWindow_MET_Tau", 
+    "title"   : "Transverse Mass cut (MET,Tau)",
+    "parameters" : {
+      "verbose"    : true, 
+      "inputLabelA" : "pfMet_subtractedMuonTight", 
+      "inputLabelB" : "taus_selected", 
+      "objA_isVector" : false, 
+      "objB_isVector" : true, 
+      "minMass"       : 20
+      }
+    }, 
+
+  "metDijetsMinDPhiFilter" : {
+    "module"  : "hepfw::METDijetMinDPhiFilter", 
+    "title"   : "MET-Dijet DPhi",
+    "parameters" : {
+      "verbose"       : true, 
+      "metCollection" : "pfMet_subtractedMuonTight", 
+      "jetCollection" : "cleanPFJets", 
+      "minDPhi"       : 1.0
+      }
+    },
+    
+  "finalPlots"  : {
+    "module"  : "hepfw::FinalPlots", 
+    "title"   : "Final Plots",
+    "parameters" : {
+      "verbose" : true
+    }
+  },
+    
+  "tauMetSelection" : {
+    "sequence" : true,
+    "modules"  : [
+      "weightsCrossSection",
+      "weightsPileUp",
+      "vertexFilter", 
+      "producerElectronsVeto", 
+      "producerElectronsTight", 
+      "producerMuonLoose", 
+      "producerMuonTight", 
+      "electronTight_OverlapCleaning_MuonsLoose", 
+      "vetoElectrons", 
+      "vetoMuon", 
+      "producerSelJets", 
+      "jetsLooseElectronCleaning", 
+      "jetsLooseMuonCleaning", 
+      "sigRegion_cutDijet", 
+      "metModifier_TightMuonSubtraction", 
+      "weightsTrigger",
+      "weightsTop",
+      "weightsSoup",
+      "zDecayFilter",
+      "weightsLepton_tight",
+      "cut_met", 
+      "sigRegion_cutMetSig", 
+      "producerTaus", 
+      "selTau", 
+      "transMassWindow_MET_Tau", 
+      "metDijetsMinDPhiFilter",
+      "finalPlots"
+    ] 
+  }, 
+  
+  "tauMetSelection_electron" : {
+    "sequence" : true,
+    "modules"  : [
+      "weightsCrossSection",
+      "weightsPileUp",
+      "vertexFilter", 
+      "producerElectronsVeto", 
+      "producerElectronsTight", 
+      "producerMuonLoose", 
+      "producerMuonTight", 
+      "electronTight_OverlapCleaning_MuonsLoose", 
+      "vetoElectrons", 
+      "vetoMuon", 
+      "producerSelJets", 
+      "jetsLooseElectronCleaning", 
+      "jetsLooseMuonCleaning", 
+      "sigRegion_cutDijet", 
+      "metModifier_TightMuonSubtraction", 
+      "weightsTrigger",
+      "weightsTop",
+      "weightsSoup",
+      "wDecayFilter_electron",
+      "zDecayFilter",
+      "weightsLepton_tight",
+      "cut_met", 
+      "sigRegion_cutMetSig", 
+      "producerTaus", 
+      "selTau", 
+      "transMassWindow_MET_Tau", 
+      "metDijetsMinDPhiFilter",
+      "finalPlots"
+    ] 
+  },
+  
+  "tauMetSelection_muon" : {
+    "sequence" : true,
+    "modules"  : [
+      "weightsCrossSection",
+      "weightsPileUp",
+      "vertexFilter", 
+      "producerElectronsVeto", 
+      "producerElectronsTight", 
+      "producerMuonLoose", 
+      "producerMuonTight", 
+      "electronTight_OverlapCleaning_MuonsLoose", 
+      "vetoElectrons", 
+      "vetoMuon", 
+      "producerSelJets", 
+      "jetsLooseElectronCleaning", 
+      "jetsLooseMuonCleaning", 
+      "sigRegion_cutDijet", 
+      "metModifier_TightMuonSubtraction", 
+      "weightsTrigger",
+      "weightsTop",
+      "weightsSoup",
+      "wDecayFilter_muon",
+      "zDecayFilter",
+      "weightsLepton_tight",
+      "cut_met", 
+      "sigRegion_cutMetSig", 
+      "producerTaus", 
+      "selTau", 
+      "transMassWindow_MET_Tau", 
+      "metDijetsMinDPhiFilter",
+      "finalPlots"
+    ] 
+  },
+  
+  "tauMetSelection_tau" : {
+    "sequence" : true,
+    "modules"  : [
+      "weightsCrossSection",
+      "weightsPileUp",
+      "vertexFilter", 
+      "producerElectronsVeto", 
+      "producerElectronsTight", 
+      "producerMuonLoose", 
+      "producerMuonTight", 
+      "electronTight_OverlapCleaning_MuonsLoose", 
+      "vetoElectrons", 
+      "vetoMuon", 
+      "producerSelJets", 
+      "jetsLooseElectronCleaning", 
+      "jetsLooseMuonCleaning", 
+      "sigRegion_cutDijet", 
+      "metModifier_TightMuonSubtraction", 
+      "weightsTrigger",
+      "weightsTop",
+      "weightsSoup",
+      "wDecayFilter_tau",
+      "zDecayFilter",
+      "weightsLepton_tight",
+      "cut_met", 
+      "sigRegion_cutMetSig", 
+      "producerTaus", 
+      "selTau", 
+      "transMassWindow_MET_Tau", 
+      "metDijetsMinDPhiFilter",
+      "finalPlots"
+    ] 
+  },
+  
+}
+
