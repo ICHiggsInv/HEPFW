@@ -1,0 +1,32 @@
+{
+
+  "load" : [
+    "VBFHiggsToInvisible/Analysis/data/sampleData.json",
+    "VBFHiggsToInvisible/Analysis/data/MC/sequence_TauMetSelection.json"
+  ],
+
+  "job"  : {
+    "verbose"     : "false",
+    "reportEvery" : 100000
+  }, 
+
+  "dataset" : {
+    "type"  : "Data",
+    "group" : "PromptMET",
+    "name"  : "PromptRunA"
+  },
+
+  "runSequences" : ["tauMetSelection_muon"],
+
+  "input" : {
+    "maxEvents" : -1,
+    "fileNames" : [
+      "root://xrootd.grid.hep.ph.ic.ac.uk//store/user/pdunne/Dec18/MET/MET-2012A-22Jan2013-v1/EventTree_1_1_iNb.root"
+    ]
+  },
+
+  "outputFile" : "results_TauMET.root"
+
+}
+
+ 
