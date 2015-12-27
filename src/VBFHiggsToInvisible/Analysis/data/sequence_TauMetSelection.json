@@ -59,7 +59,15 @@
       "minDPhi"       : 1.0
       }
     },
-    
+
+ "finalPlots"  : {
+    "module"  : "hepfw::FinalPlots", 
+    "title"   : "Final Plots",
+    "parameters" : {
+      "verbose" : true
+    }
+  },
+  
   "tauMetSelection" : {
     "sequence" : true,
     "modules"  : [

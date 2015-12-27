@@ -38,6 +38,14 @@
       }
   }, 
     
+  "finalPlots"  : {
+    "module"  : "hepfw::FinalPlots", 
+    "title"   : "Final Plots",
+    "parameters" : {
+      "verbose" : true
+    }
+  },
+    
   "zEstimationSelection" : {
     "sequence" : true,
     "modules"  : [
@@ -61,7 +69,8 @@
       "metModifier_TightMuonSubtraction", 
       "cut_met", 
       "sigRegion_cutMetSig", 
-      "sigRegion_cutMinJetMetDPhi"
+      "sigRegion_cutMinJetMetDPhi",
+      "finalPlots"
       ] 
     }
 }

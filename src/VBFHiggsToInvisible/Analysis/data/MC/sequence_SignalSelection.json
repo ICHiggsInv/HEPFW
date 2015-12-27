@@ -1,7 +1,8 @@
 {
   
   "load" : [
-    "VBFHiggsToInvisible/Analysis/data/sequence_PreSelection.json"
+    "VBFHiggsToInvisible/Analysis/data/sequence_PreSelection.json",
+    "VBFHiggsToInvisible/Analysis/data/sequence_ElectronMetSelection.json"
   ], 
 
   "sigRegion_cutMetSig" : {
@@ -39,7 +40,15 @@
       "minDPhi"       : 2.3
     }
   },
-    
+  
+  "finalPlots"  : {
+    "module"  : "hepfw::FinalPlots", 
+    "title"   : "Final Plots",
+    "parameters" : {
+      "verbose" : true
+    }
+  },
+  
   "signalRegion" : {
     "sequence" : true,
     "modules"  : [
@@ -50,6 +59,8 @@
       "vetoElectrons", 
       "producerMuonLoose", 
       "vetoMuon", 
+      "producerElectronsTight", 
+      "electronTight_OverlapCleaning_MuonsLoose", 
       "producerSelJets", 
       "jetsLooseElectronCleaning", 
       "jetsLooseMuonCleaning", 
@@ -57,10 +68,109 @@
       "producerMuonTight", 
       "metModifier_TightMuonSubtraction", 
       "weightsTrigger",
+      "weightsTop",
+      "weightsSoup",
+      "zDecayFilter",
+      "weightsLepton_veto",
       "cut_met", 
       "sigRegion_cutMetSig", 
-      "sigRegion_cutMinJetMetDPhi"
+      "sigRegion_cutMinJetMetDPhi",
+      "finalPlots"
     ]
-    }
+  },
+  
+  
+  "signalRegion_electron" : {
+    "sequence" : true,
+    "modules"  : [
+      "weightsCrossSection",
+      "weightsPileUp",
+      "vertexFilter", 
+      "producerElectronsVeto", 
+      "vetoElectrons", 
+      "producerMuonLoose", 
+      "vetoMuon", 
+      "producerElectronsTight", 
+      "electronTight_OverlapCleaning_MuonsLoose", 
+      "producerSelJets", 
+      "jetsLooseElectronCleaning", 
+      "jetsLooseMuonCleaning", 
+      "sigRegion_cutDijet", 
+      "producerMuonTight", 
+      "metModifier_TightMuonSubtraction", 
+      "weightsTrigger",
+      "weightsTop",
+      "weightsSoup",
+      "wDecayFilter_electron",
+      "zDecayFilter",
+      "weightsLepton_veto",
+      "cut_met", 
+      "sigRegion_cutMetSig", 
+      "sigRegion_cutMinJetMetDPhi",
+      "finalPlots"
+    ]
+  },
+  
+  "signalRegion_muon" : {
+    "sequence" : true,
+    "modules"  : [
+      "weightsCrossSection",
+      "weightsPileUp",
+      "vertexFilter", 
+      "producerElectronsVeto", 
+      "vetoElectrons", 
+      "producerMuonLoose", 
+      "vetoMuon", 
+      "producerElectronsTight", 
+      "electronTight_OverlapCleaning_MuonsLoose", 
+      "producerSelJets", 
+      "jetsLooseElectronCleaning", 
+      "jetsLooseMuonCleaning", 
+      "sigRegion_cutDijet", 
+      "producerMuonTight", 
+      "metModifier_TightMuonSubtraction", 
+      "weightsTrigger",
+      "weightsTop",
+      "weightsSoup",
+      "wDecayFilter_muon",
+      "zDecayFilter",
+      "weightsLepton_veto",
+      "cut_met", 
+      "sigRegion_cutMetSig", 
+      "sigRegion_cutMinJetMetDPhi",
+      "finalPlots"
+    ]
+  },
+  
+  "signalRegion_tau" : {
+    "sequence" : true,
+    "modules"  : [
+      "weightsCrossSection",
+      "weightsPileUp",
+      "vertexFilter", 
+      "producerElectronsVeto", 
+      "vetoElectrons", 
+      "producerMuonLoose", 
+      "vetoMuon", 
+      "producerElectronsTight", 
+      "electronTight_OverlapCleaning_MuonsLoose", 
+      "producerSelJets", 
+      "jetsLooseElectronCleaning", 
+      "jetsLooseMuonCleaning", 
+      "sigRegion_cutDijet", 
+      "producerMuonTight", 
+      "metModifier_TightMuonSubtraction", 
+      "weightsTrigger",
+      "weightsTop",
+      "weightsSoup",
+      "wDecayFilter_tau",
+      "zDecayFilter",
+      "weightsLepton_veto",
+      "cut_met", 
+      "sigRegion_cutMetSig", 
+      "sigRegion_cutMinJetMetDPhi",
+      "finalPlots"
+    ]
   }
+  
 }

@@ -48,6 +48,14 @@
       "labelMuonsTight" : "muons_Tight"
       }
     }, 
+
+  "finalPlots"  : {
+    "module"  : "hepfw::FinalPlots", 
+    "title"   : "Final Plots",
+    "parameters" : {
+      "verbose" : true
+    }
+  },
     
   "muonMetSelection" : {
     "sequence" : true,
@@ -71,7 +79,8 @@
       "metModifier_TightMuonSubtraction", 
       "cut_met", 
       "sigRegion_cutMetSig", 
-      "sigRegion_cutMinJetMetDPhi"
+      "sigRegion_cutMinJetMetDPhi",
+      "finalPlots"
     ] 
   }
 }

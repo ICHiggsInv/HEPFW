@@ -84,6 +84,6 @@ void hepfw::WeightsPileUp::produce(hepfw::Event &event){
     weight = m_weights->GetBinContent(found_bin);
   }
   
-  event.addWeight("weightPu",weight);
+  event.addWeight("weight_pileup",weight);
 }
 
