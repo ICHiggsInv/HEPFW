@@ -1,45 +1,42 @@
 {
-  
-  "load" : [
-    "VBFHiggsToInvisible/Analysis/data/sequence_PreSelection.json",
-    "VBFHiggsToInvisible/Analysis/data/sequence_ElectronMetSelection.json"
-  ], 
 
-  "sigRegion_cutMetSig" : {
-    "module"  : "hepfw::AnalysisCutMet", 
-    "title"   : "MET Significance",
+  "load" : [
+    "VBFHiggsToInvisible/Analysis/data/sequence_PreSelection.json", 
+    "VBFHiggsToInvisible/Analysis/data/MC/sequence_SignalSelection.json"
+    ], 
+
+  "selTwoMuonsLoose" : {
+    "module"  : "hepfw::ColSizeFilterMuon", 
+    "title"   : "n_{Muon}>0 - ID Loose",
     "parameters" : {
-      "verbose"            : true, 
-      "metCollection"      : "pfMet_subtractedMuonTight", 
-      "minMetSignificance" : 4.0
-    }
-  },
-  
-  "sigRegion_cutDijet" : {
-    "module"  : "hepfw::AnalysisCutDijet", 
-    "title"   : "Dijet",
+      "verbose"    : true, 
+      "inputLabel" : "muons_Loose", 
+      "minN"       : 2, 
+      "maxN"       : 2
+      }
+    }, 
+
+  "selTwoMuonsTight" : {
+    "module"  : "hepfw::ColSizeFilterMuon", 
+    "title"   : "n_{Muon}>0 - ID Tight",
     "parameters" : {
-      "verbose"       : true, 
-      "jetCollection" : "cleanPFJets", 
-      "dijetFwdBck"   : true, 
-      "dijetMinPt"    : [50.,45.], 
-      "dijetEta"      : [-4.7,4.7], 
-      "dijetMinDEta"  : 3.6, 
-      "dijetMinMjj"   : 1200
-    }
-  },
-  
-  "sigRegion_cutMinJetMetDPhi" : {
-    "module"  : "hepfw::METJetsMinDPhiFilter", 
-    "title"   : "MET Jets DPhi",
+      "verbose"    : true, 
+      "inputLabel" : "muons_Tight", 
+      "minN"       : 2, 
+      "maxN"       : 2
+      }
+    }, 
+
+  "zMassWindow" : {
+    "module"  : "hepfw::DimuonMassWindow", 
+    "title"   : "Dimuon , ass window",
     "parameters" : {
-      "verbose"       : true, 
-      "metCollection" : "pfMet_subtractedMuonTight", 
-      "jetCollection" : "cleanPFJets", 
-      "minJetPt"      : 30, 
-      "minDPhi"       : 2.3
-    }
-  },
+      "verbose"    : true, 
+      "inputLabel" : "muons_Tight", 
+      "minMass"       : 60, 
+      "maxMass"       : 120
+      }
+  }, 
   
   "finalPlots"  : {
     "module"  : "hepfw::FinalPlots", 
@@ -49,128 +46,135 @@
     }
   },
   
-  "signalRegion" : {
+  "zEstimationSelection" : {
     "sequence" : true,
     "modules"  : [
       "weightsCrossSection",
       "weightsPileUp",
       "vertexFilter", 
       "producerElectronsVeto", 
-      "vetoElectrons", 
-      "producerMuonLoose", 
-      "vetoMuon", 
       "producerElectronsTight", 
+      "producerMuonLoose", 
+      "producerMuonTight",
       "electronTight_OverlapCleaning_MuonsLoose", 
+      "vetoElectrons", 
+      "selTwoMuonsLoose", 
+      "selTwoMuonsTight", 
+      "zMassWindow", 
       "producerSelJets", 
       "jetsLooseElectronCleaning", 
       "jetsLooseMuonCleaning", 
       "sigRegion_cutDijet", 
-      "producerMuonTight", 
       "metModifier_TightMuonSubtraction", 
       "weightsTrigger",
       "weightsTop",
       "weightsSoup",
       "zDecayFilter",
-      "weightsLepton_veto",
+      "weightsLepton_tight",
       "cut_met", 
       "sigRegion_cutMetSig", 
       "sigRegion_cutMinJetMetDPhi",
       "finalPlots"
-    ]
+      ] 
   },
-  
-  
-  "signalRegion_electron" : {
+
+  "zEstimationSelection_electron" : {
     "sequence" : true,
     "modules"  : [
       "weightsCrossSection",
       "weightsPileUp",
       "vertexFilter", 
       "producerElectronsVeto", 
-      "vetoElectrons", 
-      "producerMuonLoose", 
-      "vetoMuon", 
       "producerElectronsTight", 
+      "producerMuonLoose", 
+      "producerMuonTight",
       "electronTight_OverlapCleaning_MuonsLoose", 
+      "vetoElectrons", 
+      "selTwoMuonsLoose", 
+      "selTwoMuonsTight", 
+      "zMassWindow", 
       "producerSelJets", 
       "jetsLooseElectronCleaning", 
       "jetsLooseMuonCleaning", 
       "sigRegion_cutDijet", 
-      "producerMuonTight", 
       "metModifier_TightMuonSubtraction", 
       "weightsTrigger",
       "weightsTop",
       "weightsSoup",
       "wDecayFilter_electron",
       "zDecayFilter",
-      "weightsLepton_veto",
+      "weightsLepton_tight",
       "cut_met", 
       "sigRegion_cutMetSig", 
       "sigRegion_cutMinJetMetDPhi",
       "finalPlots"
-    ]
+      ] 
   },
   
-  "signalRegion_muon" : {
+    "zEstimationSelection_muon" : {
     "sequence" : true,
     "modules"  : [
       "weightsCrossSection",
       "weightsPileUp",
       "vertexFilter", 
       "producerElectronsVeto", 
-      "vetoElectrons", 
-      "producerMuonLoose", 
-      "vetoMuon", 
       "producerElectronsTight", 
+      "producerMuonLoose", 
+      "producerMuonTight",
       "electronTight_OverlapCleaning_MuonsLoose", 
+      "vetoElectrons", 
+      "selTwoMuonsLoose", 
+      "selTwoMuonsTight", 
+      "zMassWindow", 
       "producerSelJets", 
       "jetsLooseElectronCleaning", 
       "jetsLooseMuonCleaning", 
       "sigRegion_cutDijet", 
-      "producerMuonTight", 
       "metModifier_TightMuonSubtraction", 
       "weightsTrigger",
       "weightsTop",
       "weightsSoup",
       "wDecayFilter_muon",
       "zDecayFilter",
-      "weightsLepton_veto",
+      "weightsLepton_tight",
       "cut_met", 
       "sigRegion_cutMetSig", 
       "sigRegion_cutMinJetMetDPhi",
       "finalPlots"
-    ]
+      ] 
   },
   
-  "signalRegion_tau" : {
+    "zEstimationSelection_tau" : {
     "sequence" : true,
     "modules"  : [
       "weightsCrossSection",
       "weightsPileUp",
       "vertexFilter", 
       "producerElectronsVeto", 
-      "vetoElectrons", 
-      "producerMuonLoose", 
-      "vetoMuon", 
       "producerElectronsTight", 
+      "producerMuonLoose", 
+      "producerMuonTight",
       "electronTight_OverlapCleaning_MuonsLoose", 
+      "vetoElectrons", 
+      "selTwoMuonsLoose", 
+      "selTwoMuonsTight", 
+      "zMassWindow", 
       "producerSelJets", 
       "jetsLooseElectronCleaning", 
       "jetsLooseMuonCleaning", 
       "sigRegion_cutDijet", 
-      "producerMuonTight", 
       "metModifier_TightMuonSubtraction", 
       "weightsTrigger",
       "weightsTop",
       "weightsSoup",
       "wDecayFilter_tau",
       "zDecayFilter",
-      "weightsLepton_veto",
+      "weightsLepton_tight",
       "cut_met", 
       "sigRegion_cutMetSig", 
       "sigRegion_cutMinJetMetDPhi",
       "finalPlots"
-    ]
+      ] 
   }
   
 }
