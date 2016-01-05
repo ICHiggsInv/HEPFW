@@ -40,7 +40,15 @@
       "minDPhi"       : 2.3
     }
   },
-    
+ 
+  "finalPlots"  : {
+    "module"  : "hepfw::FinalPlots", 
+    "title"   : "Final Plots",
+    "parameters" : {
+      "verbose" : true
+    }
+  },
+  
   "signalRegion" : {
     "sequence" : true,
     "modules"  : [
@@ -62,7 +70,8 @@
       "metModifier_TightMuonSubtraction", 
       "cut_met", 
       "sigRegion_cutMetSig", 
-      "sigRegion_cutMinJetMetDPhi"
+      "sigRegion_cutMinJetMetDPhi",
+      "finalPlots"
     ]
     }
   }

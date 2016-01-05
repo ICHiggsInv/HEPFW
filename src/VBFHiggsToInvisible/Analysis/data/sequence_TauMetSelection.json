@@ -59,7 +59,15 @@
       "minDPhi"       : 1.0
       }
     },
-    
+
+ "finalPlots"  : {
+    "module"  : "hepfw::FinalPlots", 
+    "title"   : "Final Plots",
+    "parameters" : {
+      "verbose" : true
+    }
+  },
+  
   "tauMetSelection" : {
     "sequence" : true,
     "modules"  : [
@@ -84,7 +92,8 @@
       "producerTaus", 
       "selTau", 
       "transMassWindow_MET_Tau", 
-      "metDijetsMinDPhiFilter"
+      "metDijetsMinDPhiFilter",
+      "finalPlots"
     ] 
   }, 
   
@@ -112,7 +121,8 @@
       "cut_met", 
       "transMassWindow_MET_Tau", 
       "sigRegion_cutMetSig", 
-      "metDijetsMinDPhiFilter"
+      "metDijetsMinDPhiFilter",
+      "finalPlots"
       ] 
     }
 }

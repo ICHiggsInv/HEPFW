@@ -6,6 +6,14 @@
     "VBFHiggsToInvisible/Analysis/data/sequence_ElectronMetSelection.json", 
     "VBFHiggsToInvisible/Analysis/data/sequence_MuonMetSelection.json"
   ], 
+   
+  "finalPlots"  : {
+    "module"  : "hepfw::FinalPlots", 
+    "title"   : "Final Plots",
+    "parameters" : {
+      "verbose" : true
+    }
+  },
     
   "topSelection" : {
     "sequence" : true,
@@ -31,7 +39,8 @@
       "sigRegion_cutDijet", 
       "metModifier_TightMuonSubtraction", 
       "cut_met", 
-      "sigRegion_cutMetSig"
+      "sigRegion_cutMetSig",
+      "finalPlots"
     ] 
   }
 }

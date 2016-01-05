@@ -39,6 +39,14 @@
       "jetCollection" : "cleanPFJets"
       }
     },
+
+  "finalPlots"  : {
+    "module"  : "hepfw::FinalPlots", 
+    "title"   : "Final Plots",
+    "parameters" : {
+      "verbose" : true
+    }
+  },
     
   "qcdRegion" : {
     "sequence" : true,
@@ -62,7 +70,8 @@
       "cut_met", 
       "cut_metSig", 
       "QCDRegion_minJetMetDPhi", 
-      "RegionAnalysis_QCD"
+      "RegionAnalysis_QCD",
+      "finalPlots"
       ]
     }
 }
