@@ -25,9 +25,36 @@ cd MC_W3JetsToLNu; ./submitJobs.sh; cd -;
 cd MC_W4JetsToLNu; ./submitJobs.sh; cd -;
 cd MC_EWK-W2jminus; ./submitJobs.sh; cd -;
 cd MC_EWK-W2jplus; ./submitJobs.sh; cd -;
+# WJets -> electron
+cd MC_WJetsToLNu-v1_electron; ./submitJobs.sh; cd -;
+cd MC_WJetsToLNu-v2_electron; ./submitJobs.sh; cd -;
+cd MC_W1JetsToLNu_electron; ./submitJobs.sh; cd -;
+cd MC_W2JetsToLNu_electron; ./submitJobs.sh; cd -;
+cd MC_W3JetsToLNu_electron; ./submitJobs.sh; cd -;
+cd MC_W4JetsToLNu_electron; ./submitJobs.sh; cd -;
+cd MC_EWK-W2jminus_electron; ./submitJobs.sh; cd -;
+cd MC_EWK-W2jplus_electron; ./submitJobs.sh; cd -;
+# WJets -> muon
+cd MC_WJetsToLNu-v1_muon; ./submitJobs.sh; cd -;
+cd MC_WJetsToLNu-v2_muon; ./submitJobs.sh; cd -;
+cd MC_W1JetsToLNu_muon; ./submitJobs.sh; cd -;
+cd MC_W2JetsToLNu_muon; ./submitJobs.sh; cd -;
+cd MC_W3JetsToLNu_muon; ./submitJobs.sh; cd -;
+cd MC_W4JetsToLNu_muon; ./submitJobs.sh; cd -;
+cd MC_EWK-W2jminus_muon; ./submitJobs.sh; cd -;
+cd MC_EWK-W2jplus_muon; ./submitJobs.sh; cd -;
+# WJets -> tau
+cd MC_WJetsToLNu-v1_tau; ./submitJobs.sh; cd -;
+cd MC_WJetsToLNu-v2_tau; ./submitJobs.sh; cd -;
+cd MC_W1JetsToLNu_tau; ./submitJobs.sh; cd -;
+cd MC_W2JetsToLNu_tau; ./submitJobs.sh; cd -;
+cd MC_W3JetsToLNu_tau; ./submitJobs.sh; cd -;
+cd MC_W4JetsToLNu_tau; ./submitJobs.sh; cd -;
+cd MC_EWK-W2jminus_tau; ./submitJobs.sh; cd -;
+cd MC_EWK-W2jplus_tau; ./submitJobs.sh; cd -;
 
 # Z/Z* to leptons  samples
-cd MC_DYJetsToLL_PtZ-100; ./submitJobs.sh; cd -;
+cd MC_DYJetsToLL_PtZ-100-madgraph; ./submitJobs.sh; cd -;
 cd MC_DYJetsToLL; ./submitJobs.sh; cd -;
 cd MC_DY1JetsToLL; ./submitJobs.sh; cd -;
 cd MC_DY2JetsToLL; ./submitJobs.sh; cd -;
@@ -36,10 +63,10 @@ cd MC_DY4JetsToLL; ./submitJobs.sh; cd -;
 cd MC_EWK-Z2j; ./submitJobs.sh; cd -;
 
 # Z/Z* to nu nu samples
-#cd MC_ZJetsToNuNu_50_HT_100; ./submitJobs.sh; cd -;
-#cd MC_ZJetsToNuNu_100_HT_200; ./submitJobs.sh; cd -;
-#cd MC_ZJetsToNuNu_200_HT_400; ./submitJobs.sh; cd -;
-#cd MC_ZJetsToNuNu_400_HT_inf; ./submitJobs.sh; cd -;
+cd MC_ZJetsToNuNu_50_HT_100; ./submitJobs.sh; cd -;
+cd MC_ZJetsToNuNu_100_HT_200; ./submitJobs.sh; cd -;
+cd MC_ZJetsToNuNu_200_HT_400; ./submitJobs.sh; cd -;
+cd MC_ZJetsToNuNu_400_HT_inf; ./submitJobs.sh; cd -;
 
 # VV samples
 cd MC_WW; ./submitJobs.sh; cd -;

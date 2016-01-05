@@ -19,15 +19,42 @@ hadd MC_Powheg-ggHtoinv-mH400.root MC_Powheg-ggHtoinv-mH400/results_Job*.root
 # WJets
 hadd MC_WJetsToLNu-v1.root MC_WJetsToLNu-v1/results_Job*.root
 hadd MC_WJetsToLNu-v2.root MC_WJetsToLNu-v2/results_Job*.root
-hadd MC_W1JetsToLNu.root MC_W1JetsToLNu/results_Job*.root
-hadd MC_W2JetsToLNu.root MC_W2JetsToLNu/results_Job*.root
-hadd MC_W3JetsToLNu.root MC_W3JetsToLNu/results_Job*.root
-hadd MC_W4JetsToLNu.root MC_W4JetsToLNu/results_Job*.root
-hadd MC_EWK-W2jminus.root MC_EWK-W2jminus/results_Job*.root
-hadd MC_EWK-W2jplus.root MC_EWK-W2jplus/results_Job*.root
+hadd MC_W1JetsToLNu.root   MC_W1JetsToLNu/results_Job*.root
+hadd MC_W2JetsToLNu.root   MC_W2JetsToLNu/results_Job*.root
+hadd MC_W3JetsToLNu.root   MC_W3JetsToLNu/results_Job*.root
+hadd MC_W4JetsToLNu.root   MC_W4JetsToLNu/results_Job*.root
+hadd MC_EWK-W2jminus.root  MC_EWK-W2jminus/results_Job*.root
+hadd MC_EWK-W2jplus.root   MC_EWK-W2jplus/results_Job*.root
+# WJets -> electron
+hadd MC_WJetsToLNu-v1_electron.root MC_WJetsToLNu-v1_electron/results_Job*.root
+hadd MC_WJetsToLNu-v2_electron.root MC_WJetsToLNu-v2_electron/results_Job*.root
+hadd MC_W1JetsToLNu_electron.root   MC_W1JetsToLNu_electron/results_Job*.root
+hadd MC_W2JetsToLNu_electron.root   MC_W2JetsToLNu_electron/results_Job*.root
+hadd MC_W3JetsToLNu_electron.root   MC_W3JetsToLNu_electron/results_Job*.root
+hadd MC_W4JetsToLNu_electron.root   MC_W4JetsToLNu_electron/results_Job*.root
+hadd MC_EWK-W2jminus_electron.root  MC_EWK-W2jminus_electron/results_Job*.root
+hadd MC_EWK-W2jplus_electron.root   MC_EWK-W2jplus_electron/results_Job*.root
+# WJets -> muon
+hadd MC_WJetsToLNu-v1_muon.root MC_WJetsToLNu-v1_muon/results_Job*.root
+hadd MC_WJetsToLNu-v2_muon.root MC_WJetsToLNu-v2_muon/results_Job*.root
+hadd MC_W1JetsToLNu_muon.root   MC_W1JetsToLNu_muon/results_Job*.root
+hadd MC_W2JetsToLNu_muon.root   MC_W2JetsToLNu_muon/results_Job*.root
+hadd MC_W3JetsToLNu_muon.root   MC_W3JetsToLNu_muon/results_Job*.root
+hadd MC_W4JetsToLNu_muon.root   MC_W4JetsToLNu_muon/results_Job*.root
+hadd MC_EWK-W2jminus_muon.root  MC_EWK-W2jminus_muon/results_Job*.root
+hadd MC_EWK-W2jplus_muon.root   MC_EWK-W2jplus_muon/results_Job*.root
+# WJets -> tau
+hadd MC_WJetsToLNu-v1_tau.root MC_WJetsToLNu-v1_tau/results_Job*.root
+hadd MC_WJetsToLNu-v2_tau.root MC_WJetsToLNu-v2_tau/results_Job*.root
+hadd MC_W1JetsToLNu_tau.root   MC_W1JetsToLNu_tau/results_Job*.root
+hadd MC_W2JetsToLNu_tau.root   MC_W2JetsToLNu_tau/results_Job*.root
+hadd MC_W3JetsToLNu_tau.root   MC_W3JetsToLNu_tau/results_Job*.root
+hadd MC_W4JetsToLNu_tau.root   MC_W4JetsToLNu_tau/results_Job*.root
+hadd MC_EWK-W2jminus_tau.root  MC_EWK-W2jminus_tau/results_Job*.root
+hadd MC_EWK-W2jplus_tau.root   MC_EWK-W2jplus_tau/results_Job*.root
 
 # Z/Z* to leptons  samples
-hadd MC_DYJetsToLL_PtZ-100.root MC_DYJetsToLL_PtZ-100/results_Job*.root
+hadd MC_DYJetsToLL_PtZ-100-madgraph.root MC_DYJetsToLL_PtZ-100-madgraph/results_Job*.root
 hadd MC_DYJetsToLL.root MC_DYJetsToLL/results_Job*.root
 hadd MC_DY1JetsToLL.root MC_DY1JetsToLL/results_Job*.root
 hadd MC_DY2JetsToLL.root MC_DY2JetsToLL/results_Job*.root
@@ -36,10 +63,10 @@ hadd MC_DY4JetsToLL.root MC_DY4JetsToLL/results_Job*.root
 hadd MC_EWK-Z2j.root MC_EWK-Z2j/results_Job*.root
 
 # Z/Z* to nu nu samples
-# hadd MC_ZJetsToNuNu_50_HT_100.root MC_ZJetsToNuNu_50_HT_100/results_Job*.root
-# hadd MC_ZJetsToNuNu_100_HT_200.root MC_ZJetsToNuNu_100_HT_200/results_Job*.root
-# hadd MC_ZJetsToNuNu_200_HT_400.root MC_ZJetsToNuNu_200_HT_400/results_Job*.root
-# hadd MC_ZJetsToNuNu_400_HT_inf.root MC_ZJetsToNuNu_400_HT_inf/results_Job*.root
+hadd MC_ZJetsToNuNu_50_HT_100.root MC_ZJetsToNuNu_50_HT_100/results_Job*.root
+hadd MC_ZJetsToNuNu_100_HT_200.root MC_ZJetsToNuNu_100_HT_200/results_Job*.root
+hadd MC_ZJetsToNuNu_200_HT_400.root MC_ZJetsToNuNu_200_HT_400/results_Job*.root
+hadd MC_ZJetsToNuNu_400_HT_inf.root MC_ZJetsToNuNu_400_HT_inf/results_Job*.root
 
 # VV samples
 hadd MC_WW.root MC_WW/results_Job*.root
@@ -88,3 +115,27 @@ hadd DATA_MET-2012D-22Jan2013-v1.root DATA_MET-2012D-22Jan2013-v1/results_Job*.r
 hadd DATA_VBF-Parked-2012B-22Jan2013-v1.root DATA_VBF-Parked-2012B-22Jan2013-v1/results_Job*.root
 hadd DATA_VBF-Parked-2012C-22Jan2013-v1.root DATA_VBF-Parked-2012C-22Jan2013-v1/results_Job*.root
 hadd DATA_VBF-Parked-2012D-22Jan2013-v1.root DATA_VBF-Parked-2012D-22Jan2013-v1/results_Job*.root
+
+###########
+# Additional stuff...
+hadd Data.root DATA_MET-2012A-22Jan2013-v1.root DATA_VBF-Parked-2012B-22Jan2013-v1.root DATA_VBF-Parked-2012C-22Jan2013-v1.root DATA_VBF-Parked-2012D-22Jan2013-v1.root
+
+hadd Z.root MC_EWK-Z2j.root MC_DY1JetsToLL.root MC_DY2JetsToLL.root MC_DY3JetsToLL.root MC_DY4JetsToLL.root MC_DYJetsToLL.root MC_DYJetsToLL_PtZ-100-madgraph.root MC_ZJetsToNuNu_50_HT_100.root MC_ZJetsToNuNu_100_HT_200.root MC_ZJetsToNuNu_200_HT_400.root MC_ZJetsToNuNu_400_HT_inf.root
+hadd Z_QCD.root MC_DY1JetsToLL.root MC_DY2JetsToLL.root MC_DY3JetsToLL.root MC_DY4JetsToLL.root MC_DYJetsToLL.root MC_DYJetsToLL_PtZ-100-madgraph.root MC_ZJetsToNuNu_50_HT_100.root MC_ZJetsToNuNu_100_HT_200.root MC_ZJetsToNuNu_200_HT_400.root MC_ZJetsToNuNu_400_HT_inf.root
+hadd Z_EWK.root MC_EWK-Z2j.root
+
+hadd W.root          MC_WJetsToLNu-v1.root          MC_WJetsToLNu-v2.root          MC_W1JetsToLNu.root          MC_W2JetsToLNu.root          MC_W3JetsToLNu.root          MC_W4JetsToLNu.root          MC_EWK-W2jminus.root          MC_EWK-W2jplus.root
+hadd W_electron.root MC_WJetsToLNu-v1_electron.root MC_WJetsToLNu-v2_electron.root MC_W1JetsToLNu_electron.root MC_W2JetsToLNu_electron.root MC_W3JetsToLNu_electron.root MC_W4JetsToLNu_electron.root MC_EWK-W2jminus_electron.root MC_EWK-W2jplus_electron.root
+hadd W_muon.root     MC_WJetsToLNu-v1_muon.root     MC_WJetsToLNu-v2_muon.root     MC_W1JetsToLNu_muon.root     MC_W2JetsToLNu_muon.root     MC_W3JetsToLNu_muon.root     MC_W4JetsToLNu_muon.root     MC_EWK-W2jminus_muon.root     MC_EWK-W2jplus_muon.root
+hadd W_tau.root      MC_WJetsToLNu-v1_tau.root      MC_WJetsToLNu-v2_tau.root      MC_W1JetsToLNu_tau.root      MC_W2JetsToLNu_tau.root      MC_W3JetsToLNu_tau.root      MC_W4JetsToLNu_tau.root      MC_EWK-W2jminus_tau.root      MC_EWK-W2jplus_tau.root
+
+hadd VV.root MC_WZ.root MC_ZZ.root MC_WW.root
+
+hadd Top.root MC_SingleT-s.root MC_SingleT-t.root MC_SingleTBar-s.root MC_SingleTBar-t.root MC_T-tW.root MC_TTJets.root MC_Tbar-tW.root
+
+hadd QCD.root MC_QCD-Pt-1000to1400.root MC_QCD-Pt-120to170.root MC_QCD-Pt-1400to1800.root MC_QCD-Pt-170to300.root MC_QCD-Pt-1800.root MC_QCD-Pt-300to470.root MC_QCD-Pt-30to50.root MC_QCD-Pt-470to600.root MC_QCD-Pt-50to80.root MC_QCD-Pt-600to800.root MC_QCD-Pt-800to1000.root MC_QCD-Pt-80to120.root
+hadd QCDVBF.root MC_QCD-Pt-120to170_VBF-MET40.root MC_QCD-Pt-170to300_VBF-MET40.root MC_QCD-Pt-300to470_VBF-MET40.root MC_QCD-Pt-470to600_VBF-MET40.root MC_QCD-Pt-80to120_VBF-MET40.root
+
+hadd SigVBF.root MC_Powheg-Htoinv-mH125.root
+hadd SigGGH.root MC_Powheg-ggHtoinv-mH125.root
+
