@@ -59,7 +59,9 @@ void hepfw::ModuleSequence::addModule(hepfw::Module *module){
   // Creating new histograms with the extra cut
   m_eventYields_Absolute = new TH1D("EventYield_Absolute","EventYield_Absolute",m_modules.size(),-0.5,m_modules.size()-0.5);
   m_eventYields_Weighted = new TH1D("EventYield_Weighted","EventYield_Weighted",m_modules.size(),-0.5,m_modules.size()-0.5);
-
+  m_eventYields_Absolute->SetDefaultSumw2(true);
+  m_eventYields_Weighted->SetDefaultSumw2(true);
+  
   // Filling bins label
   for(unsigned i=0; i<m_modules.size(); i++){
     m_eventYields_Absolute->GetXaxis()->SetBinLabel(i+1,m_modules[i]->getName().c_str());
