@@ -70,9 +70,13 @@ hepfw::WeightsTrigger::~WeightsTrigger(){
 
 void hepfw::WeightsTrigger::produce(hepfw::Event &event){
   
+  //double Alumi_  = -1;
+  //double BClumi_ = -1;
+  //double Dlumi_  = -1; //7.315
+  
   double Alumi_  = 0.889;
   double BClumi_ = 11.023;
-  double Dlumi_  = 7.315;
+  double Dlumi_  = 7.315; //7.317 correct
   
   ic::Met *metHLT = event.getByName<ic::Met>("pfMet_subtractedMuonTight");
   ic::Met *metL1  = event.getByName<ic::Met>("pfMet_subtractedMuonTight");
@@ -180,6 +184,6 @@ void hepfw::WeightsTrigger::produce(hepfw::Event &event){
     double trgweight=(trgweights[0]*Alumi_+trgweights[1]*BClumi_+trgweights[2]*Dlumi_)/(Alumi_+BClumi_+Dlumi_);
     //std::cout<<" Total Weight "<<trgweight<<std::endl;                                                                                            
     //SET TRIGGER WEIGHT                                                                                                                             
-    event.addWeight("weightTrigger",trgweight);
+    event.addWeight("weight_Trigger",trgweight);
   }
 }

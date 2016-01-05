@@ -1,5 +1,5 @@
-#ifndef AnalysisTools_Producers_WeightsCrossSection
-#define AnalysisTools_Producers_WeightsCrossSection
+#ifndef AnalysisTools_Producers_WeightsLepton
+#define AnalysisTools_Producers_WeightsLepton
 
 // HEPFW includes
 #include "FWCore/Framework/interface/Event.h"
@@ -7,8 +7,14 @@
 #include "FWCore/Parameters/interface/ParameterSet.h"
 #include "FWCore/Modules/interface/ProducerModule.h"
 
+// ICHiggsTauTau
+#include "DataFormats/ICHiggsTauTau/interface/Electron.h"
+#include "DataFormats/ICHiggsTauTau/interface/Muon.h"
+
 // ROOT includes
+#include "TF1.h"
 #include "TH1F.h"
+#include "TH1D.h"
 #include "TFile.h"
 
 // C++ STD includes
@@ -17,41 +23,32 @@
 namespace hepfw{
   
   /***********************************************/
-  /** \brief WeightsCrossSection 
+  /** \brief WeightsLepton 
    * 
-   * WeightsCrossSection
+   * WeightsLepton
    ***********************************************/
-  class WeightsCrossSection : public hepfw::ProducerModule {
+  class WeightsLepton : public hepfw::ProducerModule {
   public:
     
-    WeightsCrossSection();
-    WeightsCrossSection(std::string name);
-    WeightsCrossSection(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset);
-    ~WeightsCrossSection();
+    WeightsLepton();
+    WeightsLepton(std::string name);
+    WeightsLepton(std::string name,hepfw::ParameterSet &pset,hepfw::Dataset &dataset);
+    ~WeightsLepton();
     
     void beginJob(hepfw::JobSetup &job);
     
     void produce(hepfw::Event &event);
     
-  private:
+    void     fillVector(const std::string & aFileName, std::vector<double> & aVector);
+    unsigned findElectronPtEtaBin(double pt, double eta);
+    unsigned findMuonPtEtaBin(double pt, double eta);
     
   private:
     
-    bool   m_verbose;
-    bool   m_do_w_soup;
-    
-    double m_weightXSec;
-    
-    TFile *triggerSF_;
-    TH1F  *hist_trigSF_METL1;
-    TH1F  *hist_trigSF_METHLT;
-    TH1F  *hist_trigSF_MjjHLT;
-    TH1F  *hist_trigSF_JetHLT;
-    
-    TH1F* tighteleweight;
-    TH1F* tightmuweight;
-    TH1F* vetoeleweight;
-    TH1F* vetomuweight;
+    bool        m_verbose;
+    bool        m_do_idiso_tight_weights;
+    bool        m_do_idiso_veto_weights;
+    std::string m_datasetName;
     
     std::vector<double> eTight_idisoSF_;
     std::vector<double> eVeto_idisoDataEff_;
@@ -82,4 +79,4 @@ namespace hepfw{
 
 #endif 
 
-//DECLARE_HEPFW_MODULE(hepfw::WeightsCrossSection);
+//DECLARE_HEPFW_MODULE(hepfw::WeightsLepton);
